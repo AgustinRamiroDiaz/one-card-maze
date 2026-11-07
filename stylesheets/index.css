@@ -1,0 +1,228 @@
+:root {
+	font-size: 16px;
+}
+* {
+	box-sizing: border-box;
+	font-family: proxima-nova, sans-serif;
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	touch-action: manipulation;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+html {
+	height: 100%;
+	overflow: hidden;
+	-webkit-tap-highlight-color: transparent;
+	width: 100%;
+}
+body {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	overflow: hidden;
+	width: 100%;
+	-webkit-touch-callout: none !important;
+}
+/* APPLICATION */
+#app-wrapper {
+	background-color: #CCCCCC;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+#app-wrapper[on-table] {
+	background-image: url(../assets/images/wood-seamless-pattern.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+/* GAME */
+#card-wrapper {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	overflow: hidden;
+	justify-content: center;
+	padding: 0 1rem;
+	perspective: 2000px;
+	position: relative;
+	transition: transform 1s;
+	transform-style: preserve-3d;
+	width: 100%;
+}
+
+#card {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	max-width: 450px;
+	/* overflow: hidden; */
+	position: relative;
+	transition: transform 1s;
+	transform-style: preserve-3d;
+	width: 100%;
+}
+#card.flip-right {
+	transform: rotateY(180deg);
+}
+#card.flip-right .front.card {
+	pointer-events: none;
+}
+.card {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	background-color: #FFFFFF;
+	border-radius: .75rem;
+	box-shadow: 0 0 .25rem .25rem rgba(0,0,0,0.1);
+	/* height: 100%; */
+	display: flex;
+	flex-direction: column;
+	/* padding: 1rem; */
+	position: absolute;
+	width: 100%;
+}
+.card:after {
+	content: '';
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: calc(100% - 8px);
+	height: calc(100% - 8px);
+	border: solid 4px black;
+	border-radius: .75rem;
+}
+.card img {
+	border-radius: .75rem;
+}
+#card-wrapper[black-background] #card .card {
+	background-color: #000000;
+}
+.card.back {
+	transform: rotateY(180deg);
+	z-index: 1;
+}
+
+#card-wrapper[black-background] .square.selected:after {
+	border: solid 3px #FFFFFF;
+}
+
+#rotate-counterclockwise.rotate-button {
+	background-image: url(../assets/images/counterclockwise.png);
+	margin-right: 4rem;
+}
+#rotate-clockwise.rotate-button {
+	background-image: url(../assets/images/clockwise.png);
+	margin-left: 4rem;
+}
+.rotate-button {
+	align-items: center;
+	background-color: #000000;
+	background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center center;
+	border-radius: 50%;
+	display: flex;
+	height: 50px;
+	justify-content: center;
+	min-height: 50px;
+	min-width: 50px;
+	width: 50px;
+}
+.rotate-button:hover {
+	background-color: #222222;
+	cursor: pointer;
+}
+.rotate-button img {
+	width: 70%;
+	height: 70%;
+}
+
+.hidden { display: none !important; }
+
+/* media queries | width */
+@media only screen and (max-width: 2000px) {
+	#rotate-counterclockwise.rotate-button {
+		margin-right: 8rem;
+	}
+	#rotate-clockwise.rotate-button {
+		margin-left: 8rem;
+	}
+.rotate-button {
+		height: 75px;
+		min-height: 75px;
+		min-width: 75px;
+		width: 75px;
+	}
+}
+@media only screen and (max-width: 800px) {
+	#rotate-counterclockwise.rotate-button {
+		margin-right: 7rem;
+	}
+	#rotate-clockwise.rotate-button {
+		margin-left: 7rem;
+	}
+	.rotate-button {
+		height: 50px;
+		min-height: 50px;
+		min-width: 50px;
+		width: 50px;
+	}
+}
+@media only screen and (max-width: 600px) {
+  .rotate-button {
+	  display: none !important;
+  }
+}
+
+/* media queries | height */
+@media only screen and (max-height: 660px) {
+	#card {
+		max-width: 400px;
+	}
+}
+@media only screen and (max-height: 590px) {
+	#card {
+		max-width: 350px;
+	}
+	#rotate-counterclockwise.rotate-button {
+		margin-right: 7rem;
+	}
+	#rotate-clockwise.rotate-button {
+		margin-left: 7rem;
+	}
+	.rotate-button {
+		height: 50px;
+		min-height: 50px;
+		min-width: 50px;
+		width: 50px;
+	}
+}
+@media only screen and (max-height: 520px) {
+	#card {
+		max-width: 300px;
+	}
+}
+@media only screen and (max-height: 450px) {
+	#card {
+		max-width: 250px;
+	}
+	#rotate-counterclockwise.rotate-button {
+		margin-right: 6rem;
+	}
+	#rotate-clockwise.rotate-button {
+		margin-left: 6rem;
+	}
+}
+
+@media only screen and (max-height: 380px) {
+	#card {
+		max-width: 200px;
+	}
+}
