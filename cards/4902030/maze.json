@@ -1,0 +1,79 @@
+{
+  "status": "draft",
+  "notes": "Mondays #49. Start column leads only through door up (0.86,0.33) to the spin room, which exits via door left (0.77,0.23). No exit printed; the goal is taken to be the Monday zombie's room (front centre), modelled as a special node plus an exit node. Four numbered arrows below it (1 up, 2 down, 3 right, 4 left) read as the orientation sequence; the card does not say how it is performed. Walls are drawn dashed; treated as solid. Region connectivity from a path-colour component pass; door-to-region assignment guessed from position.",
+  "mechanics": [
+    { "type": "boss", "text": "Monday zombie with a 4-step arrow sequence: 1 up, 2 down, 3 right, 4 left" }
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.8, "y": 0.12 },
+        { "id": "top", "type": "room", "x": 0.4, "y": 0.18 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top" },
+        { "id": "d1", "type": "door", "x": 0.14, "y": 0.33, "arrow": "right" },
+        { "id": "d2", "type": "door", "x": 0.26, "y": 0.28, "arrow": "down" },
+        { "id": "west", "type": "room", "x": 0.2, "y": 0.55 },
+        { "id": "flipLeft", "type": "flip", "x": 0.08, "y": 0.64, "edge": "left" },
+        { "id": "d3", "type": "door", "x": 0.38, "y": 0.32, "arrow": "left" },
+        { "id": "d4", "type": "door", "x": 0.5, "y": 0.26, "arrow": "right" },
+        { "id": "d5", "type": "door", "x": 0.61, "y": 0.32, "arrow": "up" },
+        { "id": "d6", "type": "door", "x": 0.77, "y": 0.24, "arrow": "left" },
+        { "id": "d7", "type": "door", "x": 0.86, "y": 0.33, "arrow": "up" },
+        { "id": "spinNE", "type": "spin", "x": 0.82, "y": 0.42 },
+        { "id": "lair", "type": "room", "x": 0.4, "y": 0.55 },
+        { "id": "zombie", "type": "special", "x": 0.5, "y": 0.5, "label": "Monday zombie (sequence up, down, right, left)" },
+        { "id": "exit", "type": "exit", "x": 0.6, "y": 0.45 },
+        { "id": "d8", "type": "door", "x": 0.86, "y": 0.5, "arrow": "right" },
+        { "id": "east", "type": "room", "x": 0.88, "y": 0.65 },
+        { "id": "flipRight", "type": "flip", "x": 0.92, "y": 0.64, "edge": "right" },
+        { "id": "d9", "type": "door", "x": 0.3, "y": 0.79, "arrow": "down" },
+        { "id": "spinSW", "type": "spin", "x": 0.18, "y": 0.88 },
+        { "id": "d10", "type": "door", "x": 0.46, "y": 0.8, "arrow": "down" },
+        { "id": "d11", "type": "door", "x": 0.58, "y": 0.77, "arrow": "up" },
+        { "id": "d12", "type": "door", "x": 0.75, "y": 0.77, "arrow": "up" },
+        { "id": "d13", "type": "door", "x": 0.33, "y": 0.9, "arrow": "right" },
+        { "id": "d14", "type": "door", "x": 0.86, "y": 0.9, "arrow": "left" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.9 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.94, "edge": "bottom" }
+      ],
+      "edges": [
+        ["top", "flipTop"], ["top", "d1"], ["d1", "west"], ["top", "d2"], ["d2", "west"], ["west", "flipLeft"],
+        ["top", "d3"], ["d3", "lair"], ["top", "d4"], ["d4", "lair"], ["top", "d5"], ["d5", "lair"],
+        ["top", "d6"], ["d6", "spinNE"], ["start", "d7"], ["d7", "spinNE"], ["lair", "zombie"], ["lair", "exit"],
+        ["lair", "d8"], ["d8", "east"], ["east", "flipRight"], ["lair", "d9"], ["d9", "spinSW"], ["lair", "d10"],
+        ["d10", "bottom"], ["lair", "d11"], ["d11", "bottom"], ["lair", "d12"], ["d12", "east"], ["spinSW", "d13"],
+        ["d13", "bottom"], ["east", "d14"], ["d14", "bottom"], ["bottom", "flipBottom"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top" },
+        { "id": "blue", "type": "room", "x": 0.48, "y": 0.3 },
+        { "id": "flipRight", "type": "flip", "x": 0.92, "y": 0.64, "edge": "right" },
+        { "id": "b1", "type": "door", "x": 0.67, "y": 0.13, "arrow": "up" },
+        { "id": "spinNE", "type": "spin", "x": 0.82, "y": 0.15 },
+        { "id": "b2", "type": "door", "x": 0.86, "y": 0.3, "arrow": "left" },
+        { "id": "b3", "type": "door", "x": 0.43, "y": 0.29, "arrow": "right" },
+        { "id": "spinLime", "type": "spin", "x": 0.37, "y": 0.41 },
+        { "id": "b4", "type": "door", "x": 0.54, "y": 0.6, "arrow": "left" },
+        { "id": "green", "type": "room", "x": 0.3, "y": 0.72 },
+        { "id": "spinNW", "type": "spin", "x": 0.18, "y": 0.15 },
+        { "id": "b5", "type": "door", "x": 0.23, "y": 0.29, "arrow": "right" },
+        { "id": "b6", "type": "door", "x": 0.14, "y": 0.47, "arrow": "up" },
+        { "id": "pink", "type": "room", "x": 0.15, "y": 0.9 },
+        { "id": "flipLeft", "type": "flip", "x": 0.08, "y": 0.64, "edge": "left" },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.94, "edge": "bottom" },
+        { "id": "b7", "type": "door", "x": 0.26, "y": 0.82, "arrow": "left" },
+        { "id": "b8", "type": "door", "x": 0.63, "y": 0.79, "arrow": "right" },
+        { "id": "spinSE", "type": "spin", "x": 0.82, "y": 0.84 },
+        { "id": "b9", "type": "door", "x": 0.7, "y": 0.92, "arrow": "down" }
+      ],
+      "edges": [
+        ["flipTop", "blue"], ["blue", "flipRight"], ["blue", "b1"], ["b1", "spinNE"], ["spinNE", "b2"], ["b2", "blue"],
+        ["blue", "b3"], ["b3", "spinLime"], ["spinLime", "b4"], ["b4", "green"], ["spinNW", "b5"], ["b5", "green"],
+        ["spinNW", "b6"], ["b6", "pink"], ["pink", "flipLeft"], ["pink", "flipBottom"], ["green", "b7"], ["b7", "pink"],
+        ["green", "b8"], ["b8", "spinSE"], ["spinSE", "b9"], ["b9", "pink"]
+      ]
+    }
+  }
+}

@@ -1,0 +1,832 @@
+{
+ "status": "draft",
+ "notes": "BUFFET #70: two starts (A sandwich, B taco) and two exits (A hotdog, B burrito); presumably route A to exit A and B to exit B (or two players). ROUGH DRAFT ONLY: paths are thin wavy cream lanes between dark red lines and I could not trace them reliably; nearly every edge is a guess from the overview. Needs a full human pass in the editor. Flip triangles are drawn half black/half white; meaning unknown (maybe tied to A/B), modelled as normal flips. Only one exit node type exists, so exit B is an exit too and exit A/B labelling lives in the ids.",
+ "mechanics": [
+  {
+   "type": "other",
+   "text": "Two routes: Start A should reach Exit A, Start B should reach Exit B (inferred from labels, card states no rule)."
+  }
+ ],
+ "sides": {
+  "front": {
+   "nodes": [
+    {
+     "id": "flipT",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.06,
+     "edge": "top"
+    },
+    {
+     "id": "topBlob",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.08
+    },
+    {
+     "id": "doorT1",
+     "type": "door",
+     "x": 0.3,
+     "y": 0.08,
+     "arrow": "right"
+    },
+    {
+     "id": "spinNW",
+     "type": "spin",
+     "x": 0.34,
+     "y": 0.2
+    },
+    {
+     "id": "doorT2",
+     "type": "door",
+     "x": 0.31,
+     "y": 0.27,
+     "arrow": "up"
+    },
+    {
+     "id": "startA",
+     "type": "start",
+     "x": 0.2,
+     "y": 0.25
+    },
+    {
+     "id": "doorT3",
+     "type": "door",
+     "x": 0.55,
+     "y": 0.2,
+     "arrow": "left"
+    },
+    {
+     "id": "spinC",
+     "type": "spin",
+     "x": 0.58,
+     "y": 0.36
+    },
+    {
+     "id": "doorC1",
+     "type": "door",
+     "x": 0.4,
+     "y": 0.32,
+     "arrow": "down"
+    },
+    {
+     "id": "doorC2",
+     "type": "door",
+     "x": 0.42,
+     "y": 0.4,
+     "arrow": "up"
+    },
+    {
+     "id": "leftBlobU",
+     "type": "room",
+     "x": 0.06,
+     "y": 0.36
+    },
+    {
+     "id": "flipLU",
+     "type": "flip",
+     "x": 0.07,
+     "y": 0.36,
+     "edge": "left"
+    },
+    {
+     "id": "doorB1",
+     "type": "door",
+     "x": 0.77,
+     "y": 0.1,
+     "arrow": "up"
+    },
+    {
+     "id": "spinNE",
+     "type": "spin",
+     "x": 0.9,
+     "y": 0.1
+    },
+    {
+     "id": "doorB2",
+     "type": "door",
+     "x": 0.9,
+     "y": 0.21,
+     "arrow": "up"
+    },
+    {
+     "id": "startB",
+     "type": "start",
+     "x": 0.7,
+     "y": 0.22
+    },
+    {
+     "id": "rightBlobU",
+     "type": "room",
+     "x": 0.94,
+     "y": 0.36
+    },
+    {
+     "id": "flipRU",
+     "type": "flip",
+     "x": 0.93,
+     "y": 0.36,
+     "edge": "right"
+    },
+    {
+     "id": "doorC3",
+     "type": "door",
+     "x": 0.55,
+     "y": 0.47,
+     "arrow": "down"
+    },
+    {
+     "id": "spinM",
+     "type": "spin",
+     "x": 0.6,
+     "y": 0.6
+    },
+    {
+     "id": "doorE1",
+     "type": "door",
+     "x": 0.72,
+     "y": 0.52,
+     "arrow": "right"
+    },
+    {
+     "id": "doorE2",
+     "type": "door",
+     "x": 0.94,
+     "y": 0.5,
+     "arrow": "left"
+    },
+    {
+     "id": "doorE3",
+     "type": "door",
+     "x": 0.78,
+     "y": 0.6,
+     "arrow": "down"
+    },
+    {
+     "id": "rightBlobL",
+     "type": "room",
+     "x": 0.94,
+     "y": 0.63
+    },
+    {
+     "id": "flipRL",
+     "type": "flip",
+     "x": 0.93,
+     "y": 0.63,
+     "edge": "right"
+    },
+    {
+     "id": "doorE4",
+     "type": "door",
+     "x": 0.7,
+     "y": 0.68,
+     "arrow": "up"
+    },
+    {
+     "id": "spinL",
+     "type": "spin",
+     "x": 0.39,
+     "y": 0.62
+    },
+    {
+     "id": "doorW1",
+     "type": "door",
+     "x": 0.25,
+     "y": 0.63,
+     "arrow": "left"
+    },
+    {
+     "id": "leftBlobL",
+     "type": "room",
+     "x": 0.06,
+     "y": 0.63
+    },
+    {
+     "id": "flipLL",
+     "type": "flip",
+     "x": 0.07,
+     "y": 0.63,
+     "edge": "left"
+    },
+    {
+     "id": "doorW2",
+     "type": "door",
+     "x": 0.21,
+     "y": 0.77,
+     "arrow": "down"
+    },
+    {
+     "id": "doorW3",
+     "type": "door",
+     "x": 0.08,
+     "y": 0.83,
+     "arrow": "right"
+    },
+    {
+     "id": "bottomLane",
+     "type": "junction",
+     "x": 0.3,
+     "y": 0.85
+    },
+    {
+     "id": "exitA",
+     "type": "exit",
+     "x": 0.53,
+     "y": 0.8
+    },
+    {
+     "id": "doorS1",
+     "type": "door",
+     "x": 0.64,
+     "y": 0.88,
+     "arrow": "up"
+    },
+    {
+     "id": "bottomBlob",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.93
+    },
+    {
+     "id": "flipB",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.95,
+     "edge": "bottom"
+    },
+    {
+     "id": "doorS2",
+     "type": "door",
+     "x": 0.94,
+     "y": 0.77,
+     "arrow": "right"
+    },
+    {
+     "id": "exitB",
+     "type": "exit",
+     "x": 0.87,
+     "y": 0.9
+    }
+   ],
+   "edges": [
+    [
+     "flipT",
+     "topBlob"
+    ],
+    [
+     "topBlob",
+     "doorT1"
+    ],
+    [
+     "doorT1",
+     "spinNW"
+    ],
+    [
+     "spinNW",
+     "doorT2"
+    ],
+    [
+     "doorT2",
+     "startA"
+    ],
+    [
+     "topBlob",
+     "doorT3"
+    ],
+    [
+     "doorT3",
+     "spinC"
+    ],
+    [
+     "startA",
+     "doorC1"
+    ],
+    [
+     "doorC1",
+     "doorC2"
+    ],
+    [
+     "doorC2",
+     "spinC"
+    ],
+    [
+     "leftBlobU",
+     "flipLU"
+    ],
+    [
+     "leftBlobU",
+     "startA"
+    ],
+    [
+     "startB",
+     "doorB1"
+    ],
+    [
+     "doorB1",
+     "spinNE"
+    ],
+    [
+     "spinNE",
+     "doorB2"
+    ],
+    [
+     "doorB2",
+     "startB"
+    ],
+    [
+     "startB",
+     "rightBlobU"
+    ],
+    [
+     "rightBlobU",
+     "flipRU"
+    ],
+    [
+     "spinC",
+     "doorC3"
+    ],
+    [
+     "doorC3",
+     "spinM"
+    ],
+    [
+     "spinM",
+     "doorE1"
+    ],
+    [
+     "doorE1",
+     "doorE2"
+    ],
+    [
+     "doorE2",
+     "rightBlobU"
+    ],
+    [
+     "spinM",
+     "doorE3"
+    ],
+    [
+     "doorE3",
+     "rightBlobL"
+    ],
+    [
+     "rightBlobL",
+     "flipRL"
+    ],
+    [
+     "spinM",
+     "doorE4"
+    ],
+    [
+     "doorE4",
+     "exitA"
+    ],
+    [
+     "spinM",
+     "spinL"
+    ],
+    [
+     "spinL",
+     "doorW1"
+    ],
+    [
+     "doorW1",
+     "leftBlobL"
+    ],
+    [
+     "leftBlobL",
+     "flipLL"
+    ],
+    [
+     "leftBlobL",
+     "doorW2"
+    ],
+    [
+     "doorW2",
+     "bottomLane"
+    ],
+    [
+     "bottomLane",
+     "exitA"
+    ],
+    [
+     "leftBlobL",
+     "doorW3"
+    ],
+    [
+     "doorW3",
+     "bottomLane"
+    ],
+    [
+     "bottomLane",
+     "bottomBlob"
+    ],
+    [
+     "bottomBlob",
+     "flipB"
+    ],
+    [
+     "bottomBlob",
+     "doorS1"
+    ],
+    [
+     "doorS1",
+     "exitA"
+    ],
+    [
+     "rightBlobL",
+     "doorS2"
+    ],
+    [
+     "doorS2",
+     "exitB"
+    ]
+   ]
+  },
+  "back": {
+   "nodes": [
+    {
+     "id": "flipT",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.06,
+     "edge": "top"
+    },
+    {
+     "id": "topBlob",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.08
+    },
+    {
+     "id": "spinNW",
+     "type": "spin",
+     "x": 0.21,
+     "y": 0.1
+    },
+    {
+     "id": "doorA",
+     "type": "door",
+     "x": 0.11,
+     "y": 0.2,
+     "arrow": "up"
+    },
+    {
+     "id": "doorB",
+     "type": "door",
+     "x": 0.31,
+     "y": 0.2,
+     "arrow": "left"
+    },
+    {
+     "id": "leftBlobU",
+     "type": "room",
+     "x": 0.06,
+     "y": 0.36
+    },
+    {
+     "id": "flipLU",
+     "type": "flip",
+     "x": 0.07,
+     "y": 0.36,
+     "edge": "left"
+    },
+    {
+     "id": "doorC",
+     "type": "door",
+     "x": 0.66,
+     "y": 0.18,
+     "arrow": "up"
+    },
+    {
+     "id": "spinNE",
+     "type": "spin",
+     "x": 0.84,
+     "y": 0.1
+    },
+    {
+     "id": "doorD",
+     "type": "door",
+     "x": 0.94,
+     "y": 0.2,
+     "arrow": "left"
+    },
+    {
+     "id": "rightBlobU",
+     "type": "room",
+     "x": 0.94,
+     "y": 0.36
+    },
+    {
+     "id": "flipRU",
+     "type": "flip",
+     "x": 0.93,
+     "y": 0.36,
+     "edge": "right"
+    },
+    {
+     "id": "doorE",
+     "type": "door",
+     "x": 0.4,
+     "y": 0.32,
+     "arrow": "right"
+    },
+    {
+     "id": "doorF",
+     "type": "door",
+     "x": 0.74,
+     "y": 0.31,
+     "arrow": "down"
+    },
+    {
+     "id": "doorG",
+     "type": "door",
+     "x": 0.78,
+     "y": 0.39,
+     "arrow": "left"
+    },
+    {
+     "id": "doorH",
+     "type": "door",
+     "x": 0.07,
+     "y": 0.5,
+     "arrow": "up"
+    },
+    {
+     "id": "doorI",
+     "type": "door",
+     "x": 0.23,
+     "y": 0.5,
+     "arrow": "down"
+    },
+    {
+     "id": "doorJ",
+     "type": "door",
+     "x": 0.35,
+     "y": 0.58,
+     "arrow": "right"
+    },
+    {
+     "id": "hub",
+     "type": "junction",
+     "x": 0.55,
+     "y": 0.62
+    },
+    {
+     "id": "doorK",
+     "type": "door",
+     "x": 0.63,
+     "y": 0.5,
+     "arrow": "up"
+    },
+    {
+     "id": "doorL",
+     "type": "door",
+     "x": 0.42,
+     "y": 0.68,
+     "arrow": "left"
+    },
+    {
+     "id": "leftBlobL",
+     "type": "room",
+     "x": 0.06,
+     "y": 0.63
+    },
+    {
+     "id": "flipLL",
+     "type": "flip",
+     "x": 0.07,
+     "y": 0.63,
+     "edge": "left"
+    },
+    {
+     "id": "doorM",
+     "type": "door",
+     "x": 0.34,
+     "y": 0.8,
+     "arrow": "left"
+    },
+    {
+     "id": "spinSW",
+     "type": "spin",
+     "x": 0.2,
+     "y": 0.88
+    },
+    {
+     "id": "doorN",
+     "type": "door",
+     "x": 0.31,
+     "y": 0.91,
+     "arrow": "down"
+    },
+    {
+     "id": "bottomBlob",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.93
+    },
+    {
+     "id": "flipB",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.95,
+     "edge": "bottom"
+    },
+    {
+     "id": "doorO",
+     "type": "door",
+     "x": 0.61,
+     "y": 0.82,
+     "arrow": "up"
+    },
+    {
+     "id": "doorP",
+     "type": "door",
+     "x": 0.71,
+     "y": 0.91,
+     "arrow": "left"
+    },
+    {
+     "id": "spinSE",
+     "type": "spin",
+     "x": 0.85,
+     "y": 0.88
+    },
+    {
+     "id": "doorQ",
+     "type": "door",
+     "x": 0.85,
+     "y": 0.77,
+     "arrow": "down"
+    },
+    {
+     "id": "rightBlobL",
+     "type": "room",
+     "x": 0.94,
+     "y": 0.63
+    },
+    {
+     "id": "flipRL",
+     "type": "flip",
+     "x": 0.93,
+     "y": 0.63,
+     "edge": "right"
+    }
+   ],
+   "edges": [
+    [
+     "flipT",
+     "topBlob"
+    ],
+    [
+     "topBlob",
+     "doorB"
+    ],
+    [
+     "doorB",
+     "spinNW"
+    ],
+    [
+     "spinNW",
+     "doorA"
+    ],
+    [
+     "doorA",
+     "leftBlobU"
+    ],
+    [
+     "leftBlobU",
+     "flipLU"
+    ],
+    [
+     "topBlob",
+     "doorC"
+    ],
+    [
+     "doorC",
+     "spinNE"
+    ],
+    [
+     "spinNE",
+     "doorD"
+    ],
+    [
+     "doorD",
+     "rightBlobU"
+    ],
+    [
+     "rightBlobU",
+     "flipRU"
+    ],
+    [
+     "topBlob",
+     "doorE"
+    ],
+    [
+     "doorE",
+     "doorF"
+    ],
+    [
+     "doorF",
+     "doorG"
+    ],
+    [
+     "doorG",
+     "rightBlobU"
+    ],
+    [
+     "leftBlobU",
+     "doorH"
+    ],
+    [
+     "doorH",
+     "leftBlobL"
+    ],
+    [
+     "leftBlobL",
+     "flipLL"
+    ],
+    [
+     "leftBlobU",
+     "doorI"
+    ],
+    [
+     "doorI",
+     "doorJ"
+    ],
+    [
+     "doorJ",
+     "hub"
+    ],
+    [
+     "doorF",
+     "doorK"
+    ],
+    [
+     "doorK",
+     "hub"
+    ],
+    [
+     "hub",
+     "doorL"
+    ],
+    [
+     "doorL",
+     "leftBlobL"
+    ],
+    [
+     "hub",
+     "doorO"
+    ],
+    [
+     "doorO",
+     "bottomBlob"
+    ],
+    [
+     "bottomBlob",
+     "flipB"
+    ],
+    [
+     "leftBlobL",
+     "doorM"
+    ],
+    [
+     "doorM",
+     "spinSW"
+    ],
+    [
+     "spinSW",
+     "doorN"
+    ],
+    [
+     "doorN",
+     "bottomBlob"
+    ],
+    [
+     "bottomBlob",
+     "doorP"
+    ],
+    [
+     "doorP",
+     "spinSE"
+    ],
+    [
+     "spinSE",
+     "doorQ"
+    ],
+    [
+     "doorQ",
+     "rightBlobL"
+    ],
+    [
+     "rightBlobL",
+     "flipRL"
+    ],
+    [
+     "rightBlobL",
+     "hub"
+    ]
+   ]
+  }
+ }
+}

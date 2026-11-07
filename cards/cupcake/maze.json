@@ -1,0 +1,346 @@
+{
+  "status": "draft",
+  "notes": "Tutorial-style card. Back is a single ring path joining all four flips. Exit is a framed box entered only through the up door at (0.47,0.39) from the top stem. Could not trace a full solution: under the rotation-on-flip model (screen-vertical flip t -> -t, screen-horizontal flip t -> 180-t) the top stem is only reachable at 180 or CW90, never 0. Intended route is probably: start, door 1, corridor into SPIN 3 room, rotate 180, door 2, flip-text room (text printed upside down), bottom flip, back ring, top flip, exit door. Check: whether the door 1 corridor opens into the SPIN 3 room at (0.62,0.57) (looks open), and whether the exit enclosure (0.37-0.57,0.37-0.535) touches the door 1 corridor (looks walled at x~0.36).",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        {
+          "id": "start",
+          "type": "start",
+          "x": 0.22,
+          "y": 0.37
+        },
+        {
+          "id": "door1",
+          "type": "door",
+          "x": 0.34,
+          "y": 0.47,
+          "arrow": "up"
+        },
+        {
+          "id": "corridor",
+          "type": "junction",
+          "x": 0.33,
+          "y": 0.575
+        },
+        {
+          "id": "spin3room",
+          "type": "room",
+          "x": 0.73,
+          "y": 0.45
+        },
+        {
+          "id": "spin3",
+          "type": "spin",
+          "x": 0.87,
+          "y": 0.37
+        },
+        {
+          "id": "door2",
+          "type": "door",
+          "x": 0.635,
+          "y": 0.665,
+          "arrow": "down"
+        },
+        {
+          "id": "flipRoom",
+          "type": "room",
+          "x": 0.45,
+          "y": 0.67
+        },
+        {
+          "id": "flipBottom",
+          "type": "flip",
+          "x": 0.5,
+          "y": 0.94,
+          "edge": "bottom"
+        },
+        {
+          "id": "doorSW",
+          "type": "door",
+          "x": 0.27,
+          "y": 0.765,
+          "arrow": "left"
+        },
+        {
+          "id": "spinSWroom",
+          "type": "room",
+          "x": 0.15,
+          "y": 0.72
+        },
+        {
+          "id": "spinSW",
+          "type": "spin",
+          "x": 0.13,
+          "y": 0.72
+        },
+        {
+          "id": "doorW",
+          "type": "door",
+          "x": 0.13,
+          "y": 0.63,
+          "arrow": "right"
+        },
+        {
+          "id": "westRoom",
+          "type": "room",
+          "x": 0.15,
+          "y": 0.5
+        },
+        {
+          "id": "flipLeft",
+          "type": "flip",
+          "x": 0.07,
+          "y": 0.53,
+          "edge": "left"
+        },
+        {
+          "id": "doorSE1",
+          "type": "door",
+          "x": 0.805,
+          "y": 0.645,
+          "arrow": "up"
+        },
+        {
+          "id": "spinSEroom",
+          "type": "room",
+          "x": 0.7,
+          "y": 0.72
+        },
+        {
+          "id": "spinSE",
+          "type": "spin",
+          "x": 0.69,
+          "y": 0.73
+        },
+        {
+          "id": "doorSE2",
+          "type": "door",
+          "x": 0.885,
+          "y": 0.705,
+          "arrow": "right"
+        },
+        {
+          "id": "eastRoom",
+          "type": "room",
+          "x": 0.9,
+          "y": 0.58
+        },
+        {
+          "id": "flipRight",
+          "type": "flip",
+          "x": 0.93,
+          "y": 0.52,
+          "edge": "right"
+        },
+        {
+          "id": "flipTop",
+          "type": "flip",
+          "x": 0.5,
+          "y": 0.07,
+          "edge": "top"
+        },
+        {
+          "id": "topStem",
+          "type": "room",
+          "x": 0.47,
+          "y": 0.25
+        },
+        {
+          "id": "doorExit",
+          "type": "door",
+          "x": 0.47,
+          "y": 0.39,
+          "arrow": "up"
+        },
+        {
+          "id": "exit",
+          "type": "exit",
+          "x": 0.47,
+          "y": 0.47
+        }
+      ],
+      "edges": [
+        [
+          "start",
+          "door1"
+        ],
+        [
+          "door1",
+          "corridor"
+        ],
+        [
+          "corridor",
+          "spin3room"
+        ],
+        [
+          "spin3room",
+          "spin3"
+        ],
+        [
+          "corridor",
+          "door2"
+        ],
+        [
+          "door2",
+          "flipRoom"
+        ],
+        [
+          "flipRoom",
+          "flipBottom"
+        ],
+        [
+          "flipRoom",
+          "doorSW"
+        ],
+        [
+          "doorSW",
+          "spinSWroom"
+        ],
+        [
+          "spinSWroom",
+          "spinSW"
+        ],
+        [
+          "spinSWroom",
+          "doorW"
+        ],
+        [
+          "doorW",
+          "westRoom"
+        ],
+        [
+          "westRoom",
+          "flipLeft"
+        ],
+        [
+          "spin3room",
+          "doorSE1"
+        ],
+        [
+          "doorSE1",
+          "spinSEroom"
+        ],
+        [
+          "spinSEroom",
+          "spinSE"
+        ],
+        [
+          "spinSEroom",
+          "doorSE2"
+        ],
+        [
+          "doorSE2",
+          "eastRoom"
+        ],
+        [
+          "eastRoom",
+          "flipRight"
+        ],
+        [
+          "flipTop",
+          "topStem"
+        ],
+        [
+          "topStem",
+          "doorExit"
+        ],
+        [
+          "doorExit",
+          "exit"
+        ]
+      ]
+    },
+    "back": {
+      "nodes": [
+        {
+          "id": "flipTop",
+          "type": "flip",
+          "x": 0.5,
+          "y": 0.07,
+          "edge": "top"
+        },
+        {
+          "id": "flipLeft",
+          "type": "flip",
+          "x": 0.07,
+          "y": 0.5,
+          "edge": "left"
+        },
+        {
+          "id": "flipRight",
+          "type": "flip",
+          "x": 0.93,
+          "y": 0.52,
+          "edge": "right"
+        },
+        {
+          "id": "flipBottom",
+          "type": "flip",
+          "x": 0.5,
+          "y": 0.93,
+          "edge": "bottom"
+        },
+        {
+          "id": "ringTop",
+          "type": "junction",
+          "x": 0.5,
+          "y": 0.33
+        },
+        {
+          "id": "ringLeft",
+          "type": "junction",
+          "x": 0.15,
+          "y": 0.5
+        },
+        {
+          "id": "ringRight",
+          "type": "junction",
+          "x": 0.87,
+          "y": 0.5
+        },
+        {
+          "id": "ringBottom",
+          "type": "junction",
+          "x": 0.52,
+          "y": 0.68
+        }
+      ],
+      "edges": [
+        [
+          "flipTop",
+          "ringTop"
+        ],
+        [
+          "ringTop",
+          "ringLeft"
+        ],
+        [
+          "ringTop",
+          "ringRight"
+        ],
+        [
+          "ringLeft",
+          "ringBottom"
+        ],
+        [
+          "ringRight",
+          "ringBottom"
+        ],
+        [
+          "ringLeft",
+          "flipLeft"
+        ],
+        [
+          "ringRight",
+          "flipRight"
+        ],
+        [
+          "ringBottom",
+          "flipBottom"
+        ]
+      ]
+    }
+  }
+}

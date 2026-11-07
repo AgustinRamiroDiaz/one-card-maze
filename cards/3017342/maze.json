@@ -1,0 +1,75 @@
+{
+  "status": "draft",
+  "notes": "POLAR #30 tutorial; white ice is path, blue is water. The only spin on the back sits in the '4' room reached from the back top room. Exit room on the back connects only along the diagonal ice strip to door up (0.72,0.63) and the right flip area. Front right flip area (0.9,0.63) looks isolated (only the flip). Unsure: front door (0.8,0.27) touches both the top '3' room above and the path to room2 on its left; back left flip area may also touch the exit room at (0.15,0.56) (mapped as separate) and door up (0.32,0.63) top side may open into the exit room.",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.25, "y": 0.4 },
+        { "id": "door1", "type": "door", "x": 0.48, "y": 0.27, "arrow": "up" },
+        { "id": "topRoom", "type": "room", "x": 0.6, "y": 0.13 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "doorTR", "type": "door", "x": 0.81, "y": 0.27, "arrow": "left" },
+        { "id": "room2", "type": "room", "x": 0.65, "y": 0.42 },
+        { "id": "ring", "type": "junction", "x": 0.92, "y": 0.4 },
+        { "id": "ringLow", "type": "junction", "x": 0.64, "y": 0.6 },
+        { "id": "door2", "type": "door", "x": 0.48, "y": 0.47, "arrow": "down" },
+        { "id": "band", "type": "junction", "x": 0.4, "y": 0.63 },
+        { "id": "jDoor", "type": "junction", "x": 0.72, "y": 0.66 },
+        { "id": "doorR", "type": "door", "x": 0.73, "y": 0.72, "arrow": "right" },
+        { "id": "spinRoom", "type": "room", "x": 0.83, "y": 0.85 },
+        { "id": "spin", "type": "spin", "x": 0.82, "y": 0.86 },
+        { "id": "doorL", "type": "door", "x": 0.63, "y": 0.83, "arrow": "left" },
+        { "id": "bottomArea", "type": "room", "x": 0.47, "y": 0.9 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "leftArea", "type": "room", "x": 0.08, "y": 0.66 },
+        { "id": "flipLeft", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left" },
+        { "id": "doorD", "type": "door", "x": 0.2, "y": 0.84, "arrow": "down" },
+        { "id": "rightArea", "type": "room", "x": 0.92, "y": 0.66 },
+        { "id": "flipRight", "type": "flip", "x": 0.93, "y": 0.63, "edge": "right" }
+      ],
+      "edges": [
+        ["start", "door1"], ["door1", "topRoom"], ["topRoom", "flipTop"], ["topRoom", "doorTR"],
+        ["doorTR", "room2"], ["doorTR", "ring"], ["ring", "ringLow"], ["ringLow", "jDoor"],
+        ["room2", "door2"], ["door2", "band"], ["band", "jDoor"], ["band", "leftArea"],
+        ["jDoor", "doorR"], ["doorR", "spinRoom"], ["spinRoom", "spin"], ["spinRoom", "doorL"],
+        ["doorL", "bottomArea"], ["bottomArea", "flipBottom"], ["leftArea", "flipLeft"],
+        ["leftArea", "doorD"], ["doorD", "bottomArea"], ["rightArea", "flipRight"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "topRoom", "type": "room", "x": 0.5, "y": 0.13 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "strip", "type": "junction", "x": 0.52, "y": 0.28 },
+        { "id": "spinRoom", "type": "room", "x": 0.75, "y": 0.4 },
+        { "id": "spin", "type": "spin", "x": 0.63, "y": 0.39 },
+        { "id": "exit", "type": "exit", "x": 0.37, "y": 0.47 },
+        { "id": "diag", "type": "junction", "x": 0.6, "y": 0.6 },
+        { "id": "doorU2", "type": "door", "x": 0.72, "y": 0.63, "arrow": "up" },
+        { "id": "rightArea", "type": "room", "x": 0.88, "y": 0.66 },
+        { "id": "flipRight", "type": "flip", "x": 0.93, "y": 0.63, "edge": "right" },
+        { "id": "pathR", "type": "junction", "x": 0.75, "y": 0.8 },
+        { "id": "doorR2", "type": "door", "x": 0.69, "y": 0.89, "arrow": "right" },
+        { "id": "bottomArea", "type": "room", "x": 0.5, "y": 0.92 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "pathM", "type": "junction", "x": 0.39, "y": 0.75 },
+        { "id": "doorU1", "type": "door", "x": 0.32, "y": 0.63, "arrow": "up" },
+        { "id": "leftArea", "type": "room", "x": 0.08, "y": 0.64 },
+        { "id": "flipLeft", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left" },
+        { "id": "doorL1", "type": "door", "x": 0.16, "y": 0.77, "arrow": "left" },
+        { "id": "spinRoomL", "type": "room", "x": 0.18, "y": 0.88 },
+        { "id": "spinL", "type": "spin", "x": 0.15, "y": 0.88 },
+        { "id": "doorR1", "type": "door", "x": 0.32, "y": 0.86, "arrow": "right" }
+      ],
+      "edges": [
+        ["topRoom", "flipTop"], ["topRoom", "strip"], ["strip", "spinRoom"], ["spinRoom", "spin"],
+        ["exit", "diag"], ["diag", "doorU2"], ["doorU2", "rightArea"], ["rightArea", "flipRight"],
+        ["rightArea", "pathR"], ["pathR", "doorR2"], ["doorR2", "bottomArea"], ["bottomArea", "flipBottom"],
+        ["bottomArea", "pathM"], ["pathM", "doorU1"], ["doorU1", "leftArea"], ["leftArea", "flipLeft"],
+        ["leftArea", "doorL1"], ["doorL1", "spinRoomL"], ["spinRoomL", "spinL"], ["spinRoomL", "doorR1"],
+        ["doorR1", "bottomArea"]
+      ]
+    }
+  }
+}

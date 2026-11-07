@@ -1,0 +1,78 @@
+{
+  "status": "draft",
+  "notes": "Front paths are the pale outlined bands; back paths are the orange bands. Doubts: (1) front: below the door-up at (0.55,0.4) the path is mapped as reaching the start hill directly; it may instead lead only toward the spin at (0.35,0.6). (2) front: band under the minotaur (0.12-0.3,0.55-0.6) mapped as linking the left column (above its door-down) to the mid spin. (3) front: the band from the door-down (0.55,0.7) joins the path from the start to the exit door near (0.65,0.77). (4) front top: the J1 fork (0.56,0.12) splits to the door-up/spin and to the big band curving down-left; the pale pocket at (0.45,0.15) by the bushes is treated as a dead end. (5) back: door-left band and right-edge band merge near (0.77,0.8) before the bottom flip.",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "J1", "type": "junction", "x": 0.56, "y": 0.12 },
+        { "id": "doorUtop", "type": "door", "x": 0.66, "y": 0.1, "arrow": "up" },
+        { "id": "spinTR", "type": "spin", "x": 0.82, "y": 0.12 },
+        { "id": "doorRtop", "type": "door", "x": 0.86, "y": 0.24, "arrow": "right" },
+        { "id": "rightArea", "type": "room", "x": 0.92, "y": 0.45 },
+        { "id": "flipR", "type": "flip", "x": 0.92, "y": 0.36, "edge": "right" },
+        { "id": "band", "type": "junction", "x": 0.5, "y": 0.3 },
+        { "id": "leftArea", "type": "room", "x": 0.25, "y": 0.33 },
+        { "id": "flipL", "type": "flip", "x": 0.08, "y": 0.36, "edge": "left" },
+        { "id": "doorRmid", "type": "door", "x": 0.3, "y": 0.47, "arrow": "right" },
+        { "id": "spinMid", "type": "spin", "x": 0.35, "y": 0.6 },
+        { "id": "doorUmid", "type": "door", "x": 0.55, "y": 0.4, "arrow": "up" },
+        { "id": "startJ", "type": "junction", "x": 0.55, "y": 0.5 },
+        { "id": "start", "type": "start", "x": 0.73, "y": 0.5 },
+        { "id": "Js", "type": "junction", "x": 0.8, "y": 0.65 },
+        { "id": "Jlow", "type": "junction", "x": 0.66, "y": 0.77 },
+        { "id": "doorLexit", "type": "door", "x": 0.77, "y": 0.79, "arrow": "left" },
+        { "id": "exit", "type": "exit", "x": 0.87, "y": 0.9 },
+        { "id": "doorDmid", "type": "door", "x": 0.55, "y": 0.7, "arrow": "down" },
+        { "id": "bottomPath", "type": "junction", "x": 0.6, "y": 0.9 },
+        { "id": "flipB", "type": "flip", "x": 0.49, "y": 0.93, "edge": "bottom" },
+        { "id": "leftCol", "type": "junction", "x": 0.08, "y": 0.52 },
+        { "id": "doorDl", "type": "door", "x": 0.09, "y": 0.62, "arrow": "down" },
+        { "id": "spinBL", "type": "spin", "x": 0.15, "y": 0.83 },
+        { "id": "doorUbl", "type": "door", "x": 0.3, "y": 0.88, "arrow": "up" },
+        { "id": "bl", "type": "junction", "x": 0.4, "y": 0.9 }
+      ],
+      "edges": [
+        ["flipTop", "J1"], ["J1", "doorUtop"], ["doorUtop", "spinTR"], ["spinTR", "doorRtop"], ["doorRtop", "rightArea"], ["rightArea", "flipR"],
+        ["J1", "band"], ["band", "leftArea"], ["leftArea", "flipL"], ["leftArea", "doorRmid"], ["doorRmid", "spinMid"],
+        ["band", "doorUmid"], ["doorUmid", "startJ"], ["startJ", "start"], ["start", "rightArea"],
+        ["start", "Js"], ["rightArea", "Js"], ["Js", "Jlow"], ["Jlow", "doorLexit"], ["doorLexit", "exit"],
+        ["spinMid", "doorDmid"], ["doorDmid", "Jlow"], ["Jlow", "bottomPath"], ["bottomPath", "flipB"],
+        ["leftArea", "leftCol"], ["leftCol", "spinMid"], ["leftCol", "doorDl"], ["doorDl", "spinBL"], ["spinBL", "doorUbl"], ["doorUbl", "bl"], ["bl", "flipB"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "tb", "type": "junction", "x": 0.48, "y": 0.1 },
+        { "id": "fork", "type": "junction", "x": 0.3, "y": 0.22 },
+        { "id": "leftArea", "type": "room", "x": 0.1, "y": 0.32 },
+        { "id": "flipL", "type": "flip", "x": 0.07, "y": 0.37, "edge": "left" },
+        { "id": "lowBand", "type": "junction", "x": 0.3, "y": 0.39 },
+        { "id": "doorUbl", "type": "door", "x": 0.4, "y": 0.47, "arrow": "up" },
+        { "id": "b1", "type": "junction", "x": 0.3, "y": 0.6 },
+        { "id": "spinBL", "type": "spin", "x": 0.17, "y": 0.76 },
+        { "id": "doorLbl", "type": "door", "x": 0.35, "y": 0.84, "arrow": "left" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.87 },
+        { "id": "flipB", "type": "flip", "x": 0.49, "y": 0.93, "edge": "bottom" },
+        { "id": "doorRm", "type": "door", "x": 0.37, "y": 0.31, "arrow": "right" },
+        { "id": "spinMid", "type": "spin", "x": 0.55, "y": 0.45 },
+        { "id": "doorLm", "type": "door", "x": 0.7, "y": 0.6, "arrow": "left" },
+        { "id": "merge", "type": "junction", "x": 0.77, "y": 0.8 },
+        { "id": "J2", "type": "junction", "x": 0.57, "y": 0.22 },
+        { "id": "doorDtr", "type": "door", "x": 0.63, "y": 0.15, "arrow": "down" },
+        { "id": "spinTR", "type": "spin", "x": 0.78, "y": 0.13 },
+        { "id": "doorUtr", "type": "door", "x": 0.85, "y": 0.25, "arrow": "up" },
+        { "id": "rightArea", "type": "room", "x": 0.88, "y": 0.45 },
+        { "id": "flipR", "type": "flip", "x": 0.92, "y": 0.36, "edge": "right" }
+      ],
+      "edges": [
+        ["flipTop", "tb"], ["tb", "fork"], ["fork", "leftArea"], ["leftArea", "flipL"], ["leftArea", "lowBand"], ["lowBand", "doorUbl"], ["doorUbl", "b1"], ["b1", "spinBL"],
+        ["spinBL", "doorLbl"], ["doorLbl", "bottom"], ["bottom", "flipB"],
+        ["fork", "doorRm"], ["doorRm", "spinMid"], ["spinMid", "doorLm"], ["doorLm", "merge"], ["merge", "bottom"],
+        ["tb", "J2"], ["J2", "doorDtr"], ["doorDtr", "spinTR"], ["spinTR", "doorUtr"], ["doorUtr", "rightArea"], ["rightArea", "flipR"], ["rightArea", "merge"]
+      ]
+    }
+  }
+}

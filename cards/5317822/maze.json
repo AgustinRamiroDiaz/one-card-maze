@@ -1,0 +1,604 @@
+{
+ "status": "draft",
+ "notes": "Cube #53. No exit printed; the goal is taken to be the gelatinous cube (front centre), modelled as a special node plus an exit node. Three numbered arrows below it (1 up, 2 down, 3 left) read as the orientation sequence; the card does not say how it is performed. Region connectivity from a path-colour component pass. Back: the path from spin (0.58,0.36) to door down (0.8,0.49) is split by a bone at (0.68,0.38) in the pass; taken as connected.",
+ "mechanics": [
+  {
+   "type": "boss",
+   "text": "Gelatinous cube with a 3-step arrow sequence: 1 up, 2 down, 3 left"
+  }
+ ],
+ "sides": {
+  "front": {
+   "nodes": [
+    {
+     "id": "top",
+     "type": "room",
+     "x": 0.45,
+     "y": 0.09
+    },
+    {
+     "id": "upperR",
+     "type": "room",
+     "x": 0.77,
+     "y": 0.3
+    },
+    {
+     "id": "big",
+     "type": "room",
+     "x": 0.45,
+     "y": 0.62
+    },
+    {
+     "id": "start",
+     "type": "start",
+     "x": 0.87,
+     "y": 0.13
+    },
+    {
+     "id": "flipTop",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.07,
+     "edge": "top"
+    },
+    {
+     "id": "sp1",
+     "type": "spin",
+     "x": 0.65,
+     "y": 0.18
+    },
+    {
+     "id": "m1",
+     "type": "door",
+     "x": 0.73,
+     "y": 0.13,
+     "arrow": "up"
+    },
+    {
+     "id": "m2",
+     "type": "door",
+     "x": 0.5,
+     "y": 0.19,
+     "arrow": "down"
+    },
+    {
+     "id": "m3",
+     "type": "door",
+     "x": 0.88,
+     "y": 0.21,
+     "arrow": "down"
+    },
+    {
+     "id": "m4",
+     "type": "door",
+     "x": 0.2,
+     "y": 0.29,
+     "arrow": "left"
+    },
+    {
+     "id": "flipRightTop",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.37,
+     "edge": "right"
+    },
+    {
+     "id": "m5",
+     "type": "door",
+     "x": 0.78,
+     "y": 0.44,
+     "arrow": "left"
+    },
+    {
+     "id": "flipLeftTop",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.37,
+     "edge": "left"
+    },
+    {
+     "id": "flipLeftLow",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.63,
+     "edge": "left"
+    },
+    {
+     "id": "flipRightLow",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.63,
+     "edge": "right"
+    },
+    {
+     "id": "flipBottom",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.94,
+     "edge": "bottom"
+    },
+    {
+     "id": "cube",
+     "type": "special",
+     "x": 0.5,
+     "y": 0.45,
+     "label": "gelatinous cube (sequence up, down, left)"
+    },
+    {
+     "id": "exit",
+     "type": "exit",
+     "x": 0.5,
+     "y": 0.58
+    },
+    {
+     "id": "sp2",
+     "type": "spin",
+     "x": 0.22,
+     "y": 0.82
+    },
+    {
+     "id": "m6",
+     "type": "door",
+     "x": 0.22,
+     "y": 0.71,
+     "arrow": "left"
+    },
+    {
+     "id": "m7",
+     "type": "door",
+     "x": 0.39,
+     "y": 0.82,
+     "arrow": "up"
+    }
+   ],
+   "edges": [
+    [
+     "top",
+     "flipTop"
+    ],
+    [
+     "start",
+     "m1"
+    ],
+    [
+     "sp1",
+     "m1"
+    ],
+    [
+     "top",
+     "m2"
+    ],
+    [
+     "sp1",
+     "m2"
+    ],
+    [
+     "sp1",
+     "m3"
+    ],
+    [
+     "upperR",
+     "m3"
+    ],
+    [
+     "top",
+     "m4"
+    ],
+    [
+     "upperR",
+     "m4"
+    ],
+    [
+     "upperR",
+     "flipRightTop"
+    ],
+    [
+     "upperR",
+     "m5"
+    ],
+    [
+     "big",
+     "m5"
+    ],
+    [
+     "big",
+     "flipLeftTop"
+    ],
+    [
+     "big",
+     "flipLeftLow"
+    ],
+    [
+     "big",
+     "flipRightLow"
+    ],
+    [
+     "big",
+     "flipBottom"
+    ],
+    [
+     "big",
+     "cube"
+    ],
+    [
+     "big",
+     "exit"
+    ],
+    [
+     "big",
+     "m6"
+    ],
+    [
+     "sp2",
+     "m6"
+    ],
+    [
+     "sp2",
+     "m7"
+    ],
+    [
+     "big",
+     "m7"
+    ]
+   ]
+  },
+  "back": {
+   "nodes": [
+    {
+     "id": "nw",
+     "type": "room",
+     "x": 0.3,
+     "y": 0.21
+    },
+    {
+     "id": "ne",
+     "type": "room",
+     "x": 0.85,
+     "y": 0.3
+    },
+    {
+     "id": "mid",
+     "type": "room",
+     "x": 0.6,
+     "y": 0.6
+    },
+    {
+     "id": "fll",
+     "type": "room",
+     "x": 0.07,
+     "y": 0.64
+    },
+    {
+     "id": "bottom",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.95
+    },
+    {
+     "id": "s3path",
+     "type": "room",
+     "x": 0.76,
+     "y": 0.4
+    },
+    {
+     "id": "flipTop",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.07,
+     "edge": "top"
+    },
+    {
+     "id": "flipLeftTop",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.37,
+     "edge": "left"
+    },
+    {
+     "id": "s1",
+     "type": "spin",
+     "x": 0.15,
+     "y": 0.13
+    },
+    {
+     "id": "n1",
+     "type": "door",
+     "x": 0.31,
+     "y": 0.13,
+     "arrow": "up"
+    },
+    {
+     "id": "n2",
+     "type": "door",
+     "x": 0.13,
+     "y": 0.22,
+     "arrow": "left"
+    },
+    {
+     "id": "n3",
+     "type": "door",
+     "x": 0.58,
+     "y": 0.2,
+     "arrow": "down"
+    },
+    {
+     "id": "flipRightTop",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.37,
+     "edge": "right"
+    },
+    {
+     "id": "s2",
+     "type": "spin",
+     "x": 0.38,
+     "y": 0.3
+    },
+    {
+     "id": "n4",
+     "type": "door",
+     "x": 0.71,
+     "y": 0.27,
+     "arrow": "up"
+    },
+    {
+     "id": "n5",
+     "type": "door",
+     "x": 0.4,
+     "y": 0.41,
+     "arrow": "left"
+    },
+    {
+     "id": "n6",
+     "type": "door",
+     "x": 0.23,
+     "y": 0.45,
+     "arrow": "right"
+    },
+    {
+     "id": "s3",
+     "type": "spin",
+     "x": 0.58,
+     "y": 0.36
+    },
+    {
+     "id": "n7",
+     "type": "door",
+     "x": 0.55,
+     "y": 0.46,
+     "arrow": "right"
+    },
+    {
+     "id": "n8",
+     "type": "door",
+     "x": 0.8,
+     "y": 0.49,
+     "arrow": "down"
+    },
+    {
+     "id": "flipRightLow",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.63,
+     "edge": "right"
+    },
+    {
+     "id": "flipLeftLow",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.63,
+     "edge": "left"
+    },
+    {
+     "id": "s4",
+     "type": "spin",
+     "x": 0.41,
+     "y": 0.64
+    },
+    {
+     "id": "n9",
+     "type": "door",
+     "x": 0.26,
+     "y": 0.64,
+     "arrow": "up"
+    },
+    {
+     "id": "n10",
+     "type": "door",
+     "x": 0.55,
+     "y": 0.64,
+     "arrow": "left"
+    },
+    {
+     "id": "s5",
+     "type": "spin",
+     "x": 0.23,
+     "y": 0.84
+    },
+    {
+     "id": "n12",
+     "type": "door",
+     "x": 0.39,
+     "y": 0.73,
+     "arrow": "right"
+    },
+    {
+     "id": "n13",
+     "type": "door",
+     "x": 0.39,
+     "y": 0.84,
+     "arrow": "up"
+    },
+    {
+     "id": "s6",
+     "type": "spin",
+     "x": 0.8,
+     "y": 0.84
+    },
+    {
+     "id": "n11",
+     "type": "door",
+     "x": 0.78,
+     "y": 0.7,
+     "arrow": "up"
+    },
+    {
+     "id": "n14",
+     "type": "door",
+     "x": 0.66,
+     "y": 0.9,
+     "arrow": "down"
+    },
+    {
+     "id": "flipBottom",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.94,
+     "edge": "bottom"
+    }
+   ],
+   "edges": [
+    [
+     "nw",
+     "flipTop"
+    ],
+    [
+     "nw",
+     "flipLeftTop"
+    ],
+    [
+     "s1",
+     "n1"
+    ],
+    [
+     "nw",
+     "n1"
+    ],
+    [
+     "s1",
+     "n2"
+    ],
+    [
+     "nw",
+     "n2"
+    ],
+    [
+     "nw",
+     "n3"
+    ],
+    [
+     "ne",
+     "n3"
+    ],
+    [
+     "ne",
+     "flipRightTop"
+    ],
+    [
+     "ne",
+     "n4"
+    ],
+    [
+     "s2",
+     "n4"
+    ],
+    [
+     "s2",
+     "n5"
+    ],
+    [
+     "mid",
+     "n5"
+    ],
+    [
+     "nw",
+     "n6"
+    ],
+    [
+     "mid",
+     "n6"
+    ],
+    [
+     "s3path",
+     "s3"
+    ],
+    [
+     "s3",
+     "n7"
+    ],
+    [
+     "mid",
+     "n7"
+    ],
+    [
+     "s3path",
+     "n8"
+    ],
+    [
+     "mid",
+     "n8"
+    ],
+    [
+     "mid",
+     "flipRightLow"
+    ],
+    [
+     "fll",
+     "flipLeftLow"
+    ],
+    [
+     "fll",
+     "n9"
+    ],
+    [
+     "s4",
+     "n9"
+    ],
+    [
+     "s4",
+     "n10"
+    ],
+    [
+     "mid",
+     "n10"
+    ],
+    [
+     "mid",
+     "n12"
+    ],
+    [
+     "s5",
+     "n12"
+    ],
+    [
+     "s5",
+     "n13"
+    ],
+    [
+     "mid",
+     "n13"
+    ],
+    [
+     "mid",
+     "n11"
+    ],
+    [
+     "s6",
+     "n11"
+    ],
+    [
+     "s6",
+     "n14"
+    ],
+    [
+     "bottom",
+     "n14"
+    ],
+    [
+     "bottom",
+     "flipBottom"
+    ]
+   ]
+  }
+ }
+}

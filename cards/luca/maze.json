@@ -1,0 +1,50 @@
+{
+  "status": "draft",
+  "notes": "Promo card #114 (Renaissance & Write): paths are thin white lines. Unsure: front diamond doors (0.36,0.13) and (0.53,0.13) are mapped as gating the diamond's two sides between the top flip and the spin. Flip y positions differ slightly between sides (front left 0.38/0.85, back right 0.42/0.77), so validator pairing may warn. Route (screen-vertical flip t -> -t): start, door up, left flip; back: up to the top-path junction, left down to left flip; front bottom line to left flip; back lower line, door up (0.52,0.9), spin, set 180, back out to right lower flip; front at 180 bottom line, right flip; back at 180 left flip, junction, right upper flip; front at 180, door down (0.2,0.45), exit.",
+  "mechanics": [ { "type": "other", "text": "Complete the maze then discard this card, you gain a die of any value, place immediately." } ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.2, "y": 0.23 },
+        { "id": "doorStart", "type": "door", "x": 0.19, "y": 0.31, "arrow": "up" },
+        { "id": "fork", "type": "junction", "x": 0.14, "y": 0.38 },
+        { "id": "flipLeft1", "type": "flip", "x": 0.06, "y": 0.38, "edge": "left" },
+        { "id": "doorExit", "type": "door", "x": 0.2, "y": 0.45, "arrow": "down" },
+        { "id": "exit", "type": "exit", "x": 0.2, "y": 0.51 },
+        { "id": "flipTop", "type": "flip", "x": 0.45, "y": 0.06, "edge": "top" },
+        { "id": "doorDiamondL", "type": "door", "x": 0.36, "y": 0.14, "arrow": "left" },
+        { "id": "doorDiamondR", "type": "door", "x": 0.53, "y": 0.14, "arrow": "up" },
+        { "id": "spin", "type": "spin", "x": 0.45, "y": 0.25 },
+        { "id": "flipLeft2", "type": "flip", "x": 0.06, "y": 0.85, "edge": "left" },
+        { "id": "flipRight", "type": "flip", "x": 0.95, "y": 0.85, "edge": "right" }
+      ],
+      "edges": [
+        ["start", "doorStart"], ["doorStart", "fork"], ["fork", "flipLeft1"], ["fork", "doorExit"], ["doorExit", "exit"],
+        ["flipTop", "doorDiamondL"], ["flipTop", "doorDiamondR"], ["doorDiamondL", "spin"], ["doorDiamondR", "spin"],
+        ["flipLeft2", "flipRight"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "junction", "type": "junction", "x": 0.5, "y": 0.42 },
+        { "id": "flipRight1", "type": "flip", "x": 0.95, "y": 0.42, "edge": "right" },
+        { "id": "corner", "type": "junction", "x": 0.11, "y": 0.42 },
+        { "id": "flipLeft", "type": "flip", "x": 0.05, "y": 0.75, "edge": "left" },
+        { "id": "flipRight2", "type": "flip", "x": 0.95, "y": 0.77, "edge": "right" },
+        { "id": "lowLine", "type": "junction", "x": 0.6, "y": 0.77 },
+        { "id": "doorA", "type": "door", "x": 0.31, "y": 0.9, "arrow": "left" },
+        { "id": "spinA", "type": "spin", "x": 0.42, "y": 0.9 },
+        { "id": "doorB", "type": "door", "x": 0.52, "y": 0.9, "arrow": "up" },
+        { "id": "doorC", "type": "door", "x": 0.7, "y": 0.9, "arrow": "right" },
+        { "id": "spinB", "type": "spin", "x": 0.8, "y": 0.9 },
+        { "id": "doorD", "type": "door", "x": 0.91, "y": 0.9, "arrow": "left" }
+      ],
+      "edges": [
+        ["flipTop", "junction"], ["junction", "flipRight1"], ["junction", "corner"], ["corner", "flipLeft"],
+        ["flipRight2", "lowLine"], ["lowLine", "doorA"], ["doorA", "spinA"], ["spinA", "doorB"], ["doorB", "lowLine"],
+        ["lowLine", "doorC"], ["doorC", "spinB"], ["spinB", "doorD"], ["doorD", "lowLine"]
+      ]
+    }
+  }
+}

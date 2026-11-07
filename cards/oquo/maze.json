@@ -1,0 +1,63 @@
+{
+  "status": "draft",
+  "notes": "Line-style maze. Doubts: (1) back X crossing at (0.44,0.47) mapped as a junction (with a plain crossing the card has no solution under my door/flip model, so junction seems intended). (2) front door-right line ends at (0.42,0.23) with a brush stroke just short of the long diagonal; mapped as joining it at diagJ. (3) front bottom flip (0.5,0.96) has no path and no matching triangle on the back; left unconnected. (4) bell curves on the back branch off the lower-left diagonal near (0.46,0.43) and rejoin the line to the right flip.",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "diagJ", "type": "junction", "x": 0.39, "y": 0.22 },
+        { "id": "flipL1", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "doorR", "type": "door", "x": 0.45, "y": 0.28, "arrow": "right" },
+        { "id": "spinA", "type": "spin", "x": 0.41, "y": 0.42 },
+        { "id": "doorD1", "type": "door", "x": 0.21, "y": 0.41, "arrow": "down" },
+        { "id": "spinB", "type": "spin", "x": 0.7, "y": 0.09 },
+        { "id": "doorL", "type": "door", "x": 0.55, "y": 0.22, "arrow": "left" },
+        { "id": "doorD2", "type": "door", "x": 0.89, "y": 0.15, "arrow": "down" },
+        { "id": "flipR1", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "flipL2", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left" },
+        { "id": "doorU1", "type": "door", "x": 0.16, "y": 0.64, "arrow": "up" },
+        { "id": "start", "type": "start", "x": 0.34, "y": 0.63 },
+        { "id": "doorU2", "type": "door", "x": 0.53, "y": 0.64, "arrow": "up" },
+        { "id": "spinC", "type": "spin", "x": 0.7, "y": 0.63 },
+        { "id": "doorR2", "type": "door", "x": 0.86, "y": 0.64, "arrow": "right" },
+        { "id": "flipR2", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right" },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.96, "edge": "bottom" }
+      ],
+      "edges": [
+        ["flipTop", "diagJ"], ["diagJ", "flipL1"], ["diagJ", "doorR"], ["doorR", "spinA"], ["spinA", "doorD1"], ["doorD1", "flipL1"],
+        ["spinB", "doorL"], ["doorL", "flipR1"], ["spinB", "doorD2"], ["doorD2", "flipR1"],
+        ["flipL2", "doorU1"], ["doorU1", "start"], ["start", "doorU2"], ["doorU2", "spinC"], ["spinC", "doorR2"], ["doorR2", "flipR2"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "spinT", "type": "spin", "x": 0.85, "y": 0.1 },
+        { "id": "exit", "type": "exit", "x": 0.33, "y": 0.18 },
+        { "id": "doorL", "type": "door", "x": 0.2, "y": 0.25, "arrow": "left" },
+        { "id": "flipL1", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "cross", "type": "junction", "x": 0.44, "y": 0.47 },
+        { "id": "bellJ", "type": "junction", "x": 0.47, "y": 0.43 },
+        { "id": "doorUp", "type": "door", "x": 0.65, "y": 0.24, "arrow": "up" },
+        { "id": "doorRb", "type": "door", "x": 0.63, "y": 0.33, "arrow": "right" },
+        { "id": "doorD", "type": "door", "x": 0.6, "y": 0.42, "arrow": "down" },
+        { "id": "mergeA", "type": "junction", "x": 0.76, "y": 0.38 },
+        { "id": "flipR1", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "doorR2", "type": "door", "x": 0.8, "y": 0.44, "arrow": "right" },
+        { "id": "spinM", "type": "spin", "x": 0.85, "y": 0.51 },
+        { "id": "doorU", "type": "door", "x": 0.73, "y": 0.55, "arrow": "up" },
+        { "id": "lowJ", "type": "junction", "x": 0.62, "y": 0.6 },
+        { "id": "flipL2", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left" },
+        { "id": "flipR2", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right" }
+      ],
+      "edges": [
+        ["flipTop", "spinT"], ["exit", "doorL"], ["doorL", "flipL1"],
+        ["flipL1", "cross"], ["cross", "lowJ"], ["lowJ", "flipR2"],
+        ["flipL2", "cross"], ["cross", "bellJ"], ["bellJ", "doorD"], ["doorD", "mergeA"], ["mergeA", "flipR1"],
+        ["bellJ", "doorRb"], ["doorRb", "mergeA"], ["bellJ", "doorUp"], ["doorUp", "flipR1"],
+        ["mergeA", "doorR2"], ["doorR2", "spinM"], ["spinM", "doorU"], ["doorU", "lowJ"]
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "status": "draft",
+  "notes": "Tutorial card #32. Connections checked with a connected-component pass. Route (rotation t CW; screen-vertical flip t -> -t, screen-horizontal flip t -> 180-t): front start, door 1 up, spin 3, set 270, door right (0.91,0.17), right flip; back at 270: door right (0.68,0.77), BR spin, set 0, door up (0.84,0.78), right flip; front at 0: door up (0.94,0.8), bottom, door up (0.1,0.89), left flip; back at 0: door up (0.27,0.38), exit.",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.22, "y": 0.3 },
+        { "id": "door1", "type": "door", "x": 0.44, "y": 0.53, "arrow": "up" },
+        { "id": "middle", "type": "room", "x": 0.6, "y": 0.4 },
+        { "id": "spin3", "type": "spin", "x": 0.62, "y": 0.33 },
+        { "id": "door2", "type": "door", "x": 0.27, "y": 0.64, "arrow": "left" },
+        { "id": "leftRegion", "type": "room", "x": 0.08, "y": 0.68 },
+        { "id": "flipLeft", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left" },
+        { "id": "doorSW", "type": "door", "x": 0.1, "y": 0.89, "arrow": "up" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.9 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "doorS", "type": "door", "x": 0.82, "y": 0.72, "arrow": "down" },
+        { "id": "doorSE", "type": "door", "x": 0.94, "y": 0.8, "arrow": "up" },
+        { "id": "rightRegion", "type": "room", "x": 0.9, "y": 0.36 },
+        { "id": "flipRight", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "doorNE", "type": "door", "x": 0.91, "y": 0.17, "arrow": "right" },
+        { "id": "loop", "type": "junction", "x": 0.85, "y": 0.08 },
+        { "id": "doorN", "type": "door", "x": 0.76, "y": 0.08, "arrow": "up" },
+        { "id": "top", "type": "room", "x": 0.55, "y": 0.15 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" }
+      ],
+      "edges": [
+        ["start", "door1"], ["door1", "middle"], ["middle", "spin3"], ["middle", "door2"], ["door2", "leftRegion"], ["leftRegion", "flipLeft"],
+        ["leftRegion", "doorSW"], ["doorSW", "bottom"], ["bottom", "flipBottom"], ["middle", "doorS"], ["doorS", "bottom"], ["rightRegion", "doorSE"], ["doorSE", "bottom"],
+        ["rightRegion", "flipRight"], ["rightRegion", "doorNE"], ["doorNE", "loop"], ["loop", "middle"], ["loop", "doorN"], ["doorN", "top"], ["top", "flipTop"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "top", "type": "room", "x": 0.55, "y": 0.2 },
+        { "id": "doorTL", "type": "door", "x": 0.3, "y": 0.1, "arrow": "down" },
+        { "id": "spinTLroom", "type": "room", "x": 0.16, "y": 0.1 },
+        { "id": "spinTL", "type": "spin", "x": 0.16, "y": 0.1 },
+        { "id": "doorL1", "type": "door", "x": 0.15, "y": 0.2, "arrow": "right" },
+        { "id": "leftRegion", "type": "room", "x": 0.1, "y": 0.36 },
+        { "id": "flipLeft", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "doorExit", "type": "door", "x": 0.27, "y": 0.38, "arrow": "up" },
+        { "id": "exit", "type": "exit", "x": 0.49, "y": 0.6 },
+        { "id": "doorL2", "type": "door", "x": 0.16, "y": 0.62, "arrow": "right" },
+        { "id": "spinBLroom", "type": "room", "x": 0.15, "y": 0.88 },
+        { "id": "spinBL", "type": "spin", "x": 0.15, "y": 0.88 },
+        { "id": "doorBL", "type": "door", "x": 0.29, "y": 0.9, "arrow": "up" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.92 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "spinTRroom", "type": "room", "x": 0.87, "y": 0.36 },
+        { "id": "spinTR", "type": "spin", "x": 0.87, "y": 0.36 },
+        { "id": "doorR1", "type": "door", "x": 0.73, "y": 0.47, "arrow": "left" },
+        { "id": "doorR2", "type": "door", "x": 0.87, "y": 0.48, "arrow": "right" },
+        { "id": "rightRegion", "type": "room", "x": 0.88, "y": 0.64 },
+        { "id": "flipRight", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right" },
+        { "id": "doorR3", "type": "door", "x": 0.68, "y": 0.77, "arrow": "right" },
+        { "id": "doorR4", "type": "door", "x": 0.84, "y": 0.78, "arrow": "up" },
+        { "id": "spinBRroom", "type": "room", "x": 0.85, "y": 0.9 },
+        { "id": "spinBR", "type": "spin", "x": 0.85, "y": 0.9 }
+      ],
+      "edges": [
+        ["flipTop", "top"], ["top", "doorTL"], ["doorTL", "spinTLroom"], ["spinTLroom", "spinTL"], ["spinTLroom", "doorL1"], ["doorL1", "leftRegion"],
+        ["leftRegion", "flipLeft"], ["leftRegion", "doorExit"], ["doorExit", "exit"], ["leftRegion", "doorL2"], ["doorL2", "spinBLroom"], ["spinBLroom", "spinBL"],
+        ["spinBLroom", "doorBL"], ["doorBL", "bottom"], ["bottom", "flipBottom"],
+        ["spinTRroom", "spinTR"], ["spinTRroom", "doorR1"], ["doorR1", "rightRegion"], ["spinTRroom", "doorR2"], ["doorR2", "rightRegion"], ["rightRegion", "flipRight"],
+        ["rightRegion", "doorR3"], ["doorR3", "spinBRroom"], ["rightRegion", "doorR4"], ["doorR4", "spinBRroom"], ["spinBRroom", "spinBR"]
+      ]
+    }
+  }
+}

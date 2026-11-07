@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maze Editor</title>
+<style>
+  :root { --bg: #1d1f24; --panel: #272a31; --line: #3a3e47; --text: #e6e6e6; --muted: #9aa0aa; --accent: #ffcf3f; --bad: #ff6b6b; --ok: #6bd18b; }
+  * { box-sizing: border-box; }
+  body { margin: 0; height: 100vh; display: grid; grid-template-columns: 220px 1fr 300px; grid-template-rows: auto 1fr; background: var(--bg); color: var(--text); font: 13px/1.4 system-ui, sans-serif; }
+  header { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; padding: .4rem .6rem; background: var(--panel); border-bottom: 1px solid var(--line); }
+  header .sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 .2rem; }
+  button, select, input, textarea { font: inherit; color: var(--text); background: #33373f; border: 1px solid var(--line); border-radius: 4px; padding: .2rem .45rem; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--muted); }
+  button[aria-pressed="true"] { background: var(--accent); color: #000; border-color: var(--accent); }
+  kbd { font-size: 11px; color: var(--muted); }
+  #status-line { margin-left: auto; color: var(--muted); }
+  #status-line.dirty { color: var(--accent); }
+  aside { overflow: auto; background: var(--panel); }
+  #list-panel { border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+  #filter { margin: .5rem; }
+  #card-list { list-style: none; margin: 0; padding: 0 0 1rem; overflow: auto; }
+  #card-list li { display: flex; justify-content: space-between; gap: .5rem; padding: .2rem .6rem; cursor: pointer; }
+  #card-list li:hover { background: #30343c; }
+  #card-list li.current { background: #3d4250; }
+  #card-list .badge { font-size: 11px; color: var(--muted); }
+  .st-draft { color: var(--accent) !important; } .st-reviewed { color: var(--ok) !important; } .st-unplayable { color: var(--muted) !important; } .st-missing { color: var(--bad) !important; }
+  #card-list li.dirty .name::after { content: ' •'; color: var(--accent); }
+  main { overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 1rem; }
+  #stage { position: relative; height: var(--h, 85vh); flex: none; user-select: none; }
+  #stage img { height: 100%; display: block; border-radius: 8px; }
+  #stage svg { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
+  #props-panel { border-left: 1px solid var(--line); padding: .6rem; display: flex; flex-direction: column; gap: .8rem; }
+  #props-panel h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 .3rem; }
+  .field { display: grid; grid-template-columns: 70px 1fr; gap: .3rem; align-items: center; margin-bottom: .3rem; }
+  textarea { width: 100%; resize: vertical; }
+  #issues { list-style: none; padding: 0; margin: 0; font-size: 12px; }
+  #issues li.error { color: var(--bad); } #issues li.warn { color: var(--accent); }
+  .help { color: var(--muted); font-size: 12px; }
+  .help b { color: var(--text); font-weight: 600; }
+  svg .edge { stroke: #000; stroke-linecap: round; }
+  svg .edge-in { stroke: #ffe066; stroke-linecap: round; pointer-events: none; }
+  svg .edge.selected + .edge-in { stroke: var(--bad); }
+  svg .node { cursor: grab; }
+  svg .node circle { stroke: #000; }
+  svg .node.selected circle { stroke: var(--bad); }
+  svg .node text { pointer-events: none; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+  svg .ghost { fill: none; stroke: #ff3fd8; stroke-dasharray: 6 4; pointer-events: none; }
+  svg .ghost-label { fill: #ff3fd8; font-weight: 700; pointer-events: none; text-anchor: middle; }
+</style>
+</head>
+<body>
+<header>
+  <button id="prev" title="Previous card ( [ )">◀</button>
+  <strong id="card-name">—</strong>
+  <button id="next" title="Next card ( ] )">▶</button>
+  <span class="sep"></span>
+  <button id="side-front" aria-pressed="true">Front</button>
+  <button id="side-back" aria-pressed="false">Back</button>
+  <kbd>S</kbd>
+  <span class="sep"></span>
+  <span id="type-buttons"></span>
+  <span class="sep"></span>
+  <label>Zoom <input id="zoom" type="range" min="50" max="250" value="85"></label>
+  <span class="sep"></span>
+  <button id="undo" title="Ctrl+Z">Undo</button>
+  <button id="connect-folder" title="Pick the repo folder so Save writes cards/&lt;name&gt;/maze.json directly">Connect repo folder</button>
+  <button id="save" title="Ctrl+S">Save</button>
+  <span id="status-line">Loading…</span>
+</header>
+
+<aside id="list-panel">
+  <input id="filter" placeholder="Filter cards…" aria-label="Filter cards">
+  <ul id="card-list"></ul>
+</aside>
+
+<main><div id="stage"><img id="card-img" alt="Card side being edited"><svg id="overlay"></svg></div></main>
+
+<aside id="props-panel">
+  <section>
+    <h2>Selected</h2>
+    <div id="selection"><p class="help">Nothing selected.</p></div>
+  </section>
+  <section>
+    <h2>Card</h2>
+    <div class="field"><label for="card-status">Status</label><select id="card-status"><option>draft</option><option>reviewed</option><option>unplayable</option></select></div>
+    <label for="card-notes">Notes</label>
+    <textarea id="card-notes" rows="5"></textarea>
+    <label for="card-mechanics">Mechanics (JSON)</label>
+    <textarea id="card-mechanics" rows="5" spellcheck="false"></textarea>
+  </section>
+  <section>
+    <h2>Issues</h2>
+    <ul id="issues"></ul>
+  </section>
+  <section class="help">
+    <h2>Controls</h2>
+    <b>Click</b> node: select · <b>drag</b>: move · <b>arrows</b>: nudge<br>
+    <b>Double-click</b> empty: add node of the chosen type (<b>1–9</b>), connected to the selected node<br>
+    <b>Shift+click</b> node: connect / disconnect it from the selected node<br>
+    <b>Click</b> edge: select · <b>Del</b>: delete selection<br>
+    <b>R</b>: rotate door arrow / cycle flip edge · <b>Esc</b>: deselect<br>
+    Dashed pink circles: where the other side's flips land.
+  </section>
+</aside>
+
+<script src="maze-check.js"></script>
+<script>
+const { checkMaze, TYPES, ARROWS } = MazeCheck;
+const EDGES = ['top', 'right', 'bottom', 'left'];
+const CLOCKWISE = ['up', 'right', 'down', 'left'];
+const STYLE = {
+  start:    { fill: '#6bd18b', glyph: 'S' },
+  exit:     { fill: '#ff6b6b', glyph: 'E' },
+  room:     { fill: '#ffe066', glyph: '' },
+  junction: { fill: '#ffe066', glyph: '', small: true },
+  door:     { fill: '#ffffff', glyph: null },
+  spin:     { fill: '#5ec8ff', glyph: '⟳' },
+  flip:     { fill: '#ff3fd8', glyph: null },
+  item:     { fill: '#ffa94d', glyph: '★' },
+  special:  { fill: '#b197fc', glyph: '✦' },
+};
+const ARROW_GLYPH = { up: '↑', down: '↓', left: '←', right: '→' };
+const FLIP_GLYPH = { top: '▲', bottom: '▼', left: '◀', right: '▶' };
+const TYPE_KEYS = ['room', 'junction', 'door', 'spin', 'flip', 'start', 'exit', 'item', 'special'];
+
+const $ = id => document.getElementById(id);
+const svg = $('overlay');
+const state = {
+  cards: [], current: null, side: 'front', addType: 'junction',
+  mazes: {},     // name -> maze (loaded or edited)
+  dirty: new Set(),
+  undo: {},      // name -> [json snapshots]
+  sel: null,     // { kind: 'node', id } | { kind: 'edge', index }
+  dir: null,     // FileSystemDirectoryHandle of the repo root
+  W: 750, H: 1050,
+};
+
+const emptyMaze = () => ({ status: 'draft', notes: '', mechanics: [], sides: { front: { nodes: [], edges: [] }, back: { nodes: [], edges: [] } } });
+const maze = () => state.mazes[state.current];
+const side = () => {
+  const m = maze();
+  m.sides ??= { front: { nodes: [], edges: [] }, back: { nodes: [], edges: [] } };
+  return m.sides[state.side] ??= { nodes: [], edges: [] };
+};
+const nodeById = id => side().nodes.find(n => n.id === id);
+
+// ---------- loading ----------
+async function loadMaze(name) {
+  const res = await fetch(`../cards/${name}/maze.json`, { cache: 'no-store' });
+  return res.ok ? res.json() : null;
+}
+
+async function init() {
+  state.cards = await (await fetch('../cards/cards.json', { cache: 'no-store' })).json();
+  const loaded = await Promise.all(state.cards.map(c => loadMaze(c).catch(() => null)));
+  state.cards.forEach((c, i) => { if (loaded[i]) state.mazes[c] = loaded[i]; });
+  renderList();
+  const first = decodeURIComponent(location.hash.slice(1));
+  openCard(state.cards.includes(first) ? first : state.cards[0]);
+}
+
+// ---------- list ----------
+function statusOf(name) { return state.mazes[name]?.status ?? 'missing'; }
+
+function renderList() {
+  const q = $('filter').value.toLowerCase();
+  $('card-list').innerHTML = '';
+  for (const name of state.cards) {
+    if (q && !name.toLowerCase().includes(q) && !statusOf(name).includes(q)) continue;
+    const li = document.createElement('li');
+    li.className = (name === state.current ? 'current ' : '') + (state.dirty.has(name) ? 'dirty' : '');
+    li.innerHTML = `<span class="name"></span><span class="badge st-${statusOf(name)}">${statusOf(name)}</span>`;
+    li.querySelector('.name').textContent = name;
+    li.onclick = () => openCard(name);
+    $('card-list').append(li);
+  }
+}
+
+function openCard(name) {
+  state.current = name;
+  state.mazes[name] ??= emptyMaze();
+  state.undo[name] ??= [];
+  state.sel = null;
+  history.replaceState(null, '', '#' + encodeURIComponent(name));
+  $('card-name').textContent = name;
+  renderCardFields();
+  setSide('front');
+  renderList();
+  document.querySelector('#card-list .current')?.scrollIntoView({ block: 'nearest' });
+}
+
+function setSide(s) {
+  state.side = s;
+  state.sel = null;
+  $('side-front').setAttribute('aria-pressed', s === 'front');
+  $('side-back').setAttribute('aria-pressed', s === 'back');
+  const img = $('card-img');
+  img.onload = () => { state.W = img.naturalWidth; state.H = img.naturalHeight; render(); };
+  img.src = `../cards/${state.current}/${s}.png`;
+  render();
+}
+
+// ---------- editing ----------
+function snapshot() {
+  state.undo[state.current].push(JSON.stringify(maze()));
+  if (state.undo[state.current].length > 200) state.undo[state.current].shift();
+  markDirty();
+}
+function markDirty() { state.dirty.add(state.current); renderList(); updateStatusLine(); }
+
+function undo() {
+  const prev = state.undo[state.current].pop();
+  if (!prev) return;
+  state.mazes[state.current] = JSON.parse(prev);
+  state.sel = null;
+  markDirty();
+  renderCardFields();
+  render();
+}
+
+function uniqueId(base) {
+  const ids = new Set(side().nodes.map(n => n.id));
+  for (let i = 1; ; i++) if (!ids.has(base + i)) return base + i;
+}
+
+function nearestEdge(x, y) {
+  return Object.entries({ top: y, bottom: 1 - y, left: x, right: 1 - x }).sort((a, b) => a[1] - b[1])[0][0];
+}
+
+const round = v => Math.round(Math.min(1, Math.max(0, v)) * 1000) / 1000;
+
+function addNode(x, y, connectTo) {
+  snapshot();
+  const n = { id: uniqueId(state.addType), type: state.addType, x: round(x), y: round(y) };
+  if (n.type === 'door') n.arrow = 'up';
+  if (n.type === 'flip') n.edge = nearestEdge(x, y);
+  if (n.type === 'item' || n.type === 'special') n.label = '';
+  side().nodes.push(n);
+  if (connectTo && nodeById(connectTo)) side().edges.push([connectTo, n.id]);
+  state.sel = { kind: 'node', id: n.id };
+  render();
+}
+
+function edgeIndex(a, b) {
+  return side().edges.findIndex(([p, q]) => (p === a && q === b) || (p === b && q === a));
+}
+
+function toggleEdge(a, b) {
+  if (a === b) return;
+  snapshot();
+  const i = edgeIndex(a, b);
+  if (i >= 0) side().edges.splice(i, 1); else side().edges.push([a, b]);
+}
+
+function deleteSelection() {
+  if (!state.sel) return;
+  snapshot();
+  const s = side();
+  if (state.sel.kind === 'node') {
+    s.nodes = s.nodes.filter(n => n.id !== state.sel.id);
+    s.edges = s.edges.filter(e => !e.includes(state.sel.id));
+  } else {
+    s.edges.splice(state.sel.index, 1);
+  }
+  state.sel = null;
+  render();
+}
+
+function cycleSelected() {
+  const n = state.sel?.kind === 'node' && nodeById(state.sel.id);
+  if (!n || !['door', 'flip'].includes(n.type)) return;
+  snapshot();
+  if (n.type === 'door') n.arrow = CLOCKWISE[(CLOCKWISE.indexOf(n.arrow) + 1) % 4];
+  else n.edge = EDGES[(EDGES.indexOf(n.edge) + 1) % 4];
+  render();
+}
+
+function renameNode(n, newId) {
+  if (!newId || newId === n.id || nodeById(newId)) return false;
+  snapshot();
+  for (const e of side().edges) for (let i = 0; i < 2; i++) if (e[i] === n.id) e[i] = newId;
+  n.id = newId;
+  state.sel = { kind: 'node', id: newId };
+  return true;
+}
+
+// ---------- rendering ----------
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  parent?.append(e);
+  return e;
+}
+
+function render() {
+  const { W, H } = state;
+  const m = maze();
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = '';
+  if (!m) return;
+  const r = W * 0.024, sw = W * 0.009;
+  if (m.status !== 'unplayable' && m.sides) {
+    const s = side();
+    const other = m.sides[state.side === 'front' ? 'back' : 'front'];
+    for (const f of (other?.nodes || []).filter(n => n.type === 'flip')) {
+      el('circle', { class: 'ghost', cx: (1 - f.x) * W, cy: f.y * H, r: r * 1.5, 'stroke-width': W * 0.004 }, svg);
+      el('text', { class: 'ghost-label', x: (1 - f.x) * W, y: f.y * H - r * 1.8, 'font-size': r * 0.8 }, svg).textContent = f.id;
+    }
+    s.edges.forEach(([a, b], i) => {
+      const p = nodeById(a), q = nodeById(b);
+      if (!p || !q) return;
+      const line = { x1: p.x * W, y1: p.y * H, x2: q.x * W, y2: q.y * H };
+      const sel = state.sel?.kind === 'edge' && state.sel.index === i;
+      const hit = el('line', { ...line, class: 'edge' + (sel ? ' selected' : ''), 'stroke-width': sw * 1.8 }, svg);
+      el('line', { ...line, class: 'edge-in', 'stroke-width': sw }, svg);
+      hit.addEventListener('pointerdown', ev => { ev.stopPropagation(); handledPress = true; state.sel = { kind: 'edge', index: i }; render(); });
+    });
+    for (const n of s.nodes) {
+      const st = STYLE[n.type] || STYLE.special;
+      const g = el('g', { class: 'node' + (state.sel?.kind === 'node' && state.sel.id === n.id ? ' selected' : ''), transform: `translate(${n.x * W} ${n.y * H})` }, svg);
+      el('title', {}, g).textContent = `${n.id} (${n.type})${n.label ? ': ' + n.label : ''}`;
+      const rr = st.small ? r * 0.55 : r;
+      el('circle', { r: rr, fill: st.fill, 'stroke-width': W * 0.004 }, g);
+      const glyph = n.type === 'door' ? ARROW_GLYPH[n.arrow] ?? '?' : n.type === 'flip' ? FLIP_GLYPH[n.edge] ?? '?' : st.glyph;
+      if (glyph) el('text', { 'font-size': r * 1.2, fill: '#000' }, g).textContent = glyph;
+      g.addEventListener('pointerdown', ev => onNodeDown(ev, n));
+    }
+  }
+  renderProps();
+  renderIssues();
+  updateStatusLine();
+}
+
+function renderProps() {
+  const box = $('selection');
+  const n = state.sel?.kind === 'node' && nodeById(state.sel.id);
+  if (state.sel?.kind === 'edge') {
+    const e = side().edges[state.sel.index];
+    box.innerHTML = `<p>Edge <b></b></p><button id="del-edge">Delete edge</button>`;
+    box.querySelector('b').textContent = e ? `${e[0]} — ${e[1]}` : '';
+    $('del-edge').onclick = deleteSelection;
+    return;
+  }
+  if (!n) { box.innerHTML = '<p class="help">Nothing selected.</p>'; return; }
+  const opts = (list, v) => list.map(o => `<option${o === v ? ' selected' : ''}>${o}</option>`).join('');
+  box.innerHTML = `
+    <div class="field"><label for="p-id">id</label><input id="p-id"></div>
+    <div class="field"><label for="p-type">type</label><select id="p-type">${opts(TYPES, n.type)}</select></div>
+    ${n.type === 'door' ? `<div class="field"><label for="p-arrow">arrow</label><select id="p-arrow">${opts(ARROWS, n.arrow)}</select></div>` : ''}
+    ${n.type === 'flip' ? `<div class="field"><label for="p-edge">edge</label><select id="p-edge">${opts(EDGES, n.edge)}</select></div>` : ''}
+    ${['item', 'special'].includes(n.type) ? `<div class="field"><label for="p-label">label</label><input id="p-label"></div>` : ''}
+    <div class="field"><span>x, y</span><span>${n.x.toFixed(3)}, ${n.y.toFixed(3)}</span></div>
+    <button id="p-del">Delete node</button>`;
+  $('p-id').value = n.id;
+  $('p-id').onchange = e => { if (!renameNode(n, e.target.value.trim())) e.target.value = n.id; render(); };
+  $('p-type').onchange = e => {
+    snapshot(); n.type = e.target.value;
+    if (n.type === 'door') n.arrow ??= 'up'; else delete n.arrow;
+    if (n.type === 'flip') n.edge ??= nearestEdge(n.x, n.y); else delete n.edge;
+    if (!['item', 'special'].includes(n.type)) delete n.label; else n.label ??= '';
+    render();
+  };
+  if ($('p-arrow')) $('p-arrow').onchange = e => { snapshot(); n.arrow = e.target.value; render(); };
+  if ($('p-edge')) $('p-edge').onchange = e => { snapshot(); n.edge = e.target.value; render(); };
+  if ($('p-label')) { $('p-label').value = n.label ?? ''; $('p-label').onchange = e => { snapshot(); n.label = e.target.value; render(); }; }
+  $('p-del').onclick = deleteSelection;
+}
+
+function renderCardFields() {
+  const m = maze();
+  $('card-status').value = m.status;
+  $('card-notes').value = m.notes ?? '';
+  $('card-mechanics').value = JSON.stringify(m.mechanics ?? [], null, 2);
+  $('card-mechanics').style.borderColor = '';
+}
+
+function renderIssues() {
+  const m = maze();
+  const { errors, warnings } = checkMaze(m);
+  $('issues').innerHTML = '';
+  for (const [cls, list] of [['error', errors], ['warn', warnings]]) for (const t of list) {
+    const li = document.createElement('li'); li.className = cls; li.textContent = t; $('issues').append(li);
+  }
+  if (!errors.length && !warnings.length) $('issues').innerHTML = '<li class="help">No issues.</li>';
+}
+
+function updateStatusLine() {
+  const d = state.dirty.size;
+  $('status-line').textContent = (d ? `${d} unsaved card${d > 1 ? 's' : ''}` : 'All saved') + (state.dir ? ' · folder connected' : '');
+  $('status-line').className = d ? 'dirty' : '';
+}
+
+// ---------- pointer ----------
+function toCard(ev) {
+  const r = svg.getBoundingClientRect();
+  return { x: (ev.clientX - r.left) / r.width, y: (ev.clientY - r.top) / r.height };
+}
+
+// Set when a node/edge handles pointerdown: render() replaces that element, so the
+// browser's follow-up mousedown lands on the bare svg and must not deselect.
+let handledPress = false;
+
+function onNodeDown(ev, n) {
+  ev.stopPropagation();
+  handledPress = true;
+  if (ev.shiftKey && state.sel?.kind === 'node' && state.sel.id !== n.id) {
+    toggleEdge(state.sel.id, n.id);
+    state.sel = { kind: 'node', id: n.id };
+    render();
+    return;
+  }
+  state.sel = { kind: 'node', id: n.id };
+  render();
+  let moved = false;
+  svg.setPointerCapture(ev.pointerId);
+  const move = e => {
+    if (!moved) { snapshot(); moved = true; }
+    const p = toCard(e);
+    n.x = round(p.x); n.y = round(p.y);
+    render();
+  };
+  const up = () => { svg.removeEventListener('pointermove', move); svg.removeEventListener('pointerup', up); };
+  svg.addEventListener('pointermove', move);
+  svg.addEventListener('pointerup', up);
+}
+
+let lastSelectedNode = null;
+svg.addEventListener('mousedown', ev => {
+  if (handledPress) { handledPress = false; return; }
+  if (ev.target !== svg) return;
+  // The second press of a double-click must keep the node selected before the first press.
+  if (ev.detail < 2) lastSelectedNode = state.sel?.kind === 'node' ? state.sel.id : null;
+  state.sel = null;
+  render();
+});
+svg.addEventListener('dblclick', ev => {
+  if (ev.target !== svg) return;
+  const p = toCard(ev);
+  addNode(p.x, p.y, lastSelectedNode);
+});
+
+// ---------- saving ----------
+function formatMaze(m) {
+  // One node / edge per line keeps diffs readable.
+  const atoms = [];
+  const copy = JSON.parse(JSON.stringify(m));
+  for (const s of Object.values(copy.sides || {})) {
+    s.nodes = s.nodes.map(n => (atoms.push(n), `@@${atoms.length - 1}`));
+    s.edges = s.edges.map(e => (atoms.push(e), `@@${atoms.length - 1}`));
+  }
+  copy.mechanics = (copy.mechanics || []).map(x => (atoms.push(x), `@@${atoms.length - 1}`));
+  return JSON.stringify(copy, null, 2).replace(/"@@(\d+)"/g, (_, i) => JSON.stringify(atoms[i]).replace(/,"/g, ', "').replace(/":/g, '": ')) + '\n';
+}
+
+async function save() {
+  const name = state.current;
+  const text = formatMaze(maze());
+  if (state.dir) {
+    try {
+      const cards = await state.dir.getDirectoryHandle('cards');
+      const dir = await cards.getDirectoryHandle(name);
+      const file = await dir.getFileHandle('maze.json', { create: true });
+      const w = await file.createWritable();
+      await w.write(text);
+      await w.close();
+    } catch (e) {
+      alert(`Could not write cards/${name}/maze.json: ${e.message}`);
+      return;
+    }
+  } else {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+    a.download = `${name}.maze.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+  state.dirty.delete(name);
+  renderList();
+  updateStatusLine();
+}
+
+$('connect-folder').onclick = async () => {
+  if (!window.showDirectoryPicker) { alert('This browser cannot write to folders (use Chrome or Edge). Save will download files instead.'); return; }
+  try {
+    const dir = await window.showDirectoryPicker({ mode: 'readwrite' });
+    await dir.getDirectoryHandle('cards');
+    state.dir = dir;
+    $('connect-folder').textContent = `Folder: ${dir.name}`;
+    updateStatusLine();
+  } catch (e) {
+    if (e.name !== 'AbortError') alert('Pick the repo root folder (the one that contains cards/).');
+  }
+};
+
+// ---------- wiring ----------
+TYPE_KEYS.forEach((t, i) => {
+  const b = document.createElement('button');
+  b.textContent = `${i + 1} ${t}`;
+  b.dataset.type = t;
+  b.onclick = () => setAddType(t);
+  $('type-buttons').append(b, ' ');
+});
+function setAddType(t) {
+  state.addType = t;
+  for (const b of $('type-buttons').children) b.setAttribute('aria-pressed', b.dataset.type === t);
+}
+setAddType('junction');
+
+$('side-front').onclick = () => setSide('front');
+$('side-back').onclick = () => setSide('back');
+const step = d => openCard(state.cards[(state.cards.indexOf(state.current) + d + state.cards.length) % state.cards.length]);
+$('prev').onclick = () => step(-1);
+$('next').onclick = () => step(1);
+$('undo').onclick = undo;
+$('save').onclick = save;
+$('filter').oninput = renderList;
+$('zoom').oninput = e => $('stage').style.setProperty('--h', e.target.value + 'vh');
+
+$('card-status').onchange = e => { snapshot(); maze().status = e.target.value; if (e.target.value !== 'unplayable') { maze().sides ??= emptyMaze().sides; } render(); };
+$('card-notes').onchange = e => { snapshot(); maze().notes = e.target.value; };
+$('card-mechanics').onchange = e => {
+  try { const v = JSON.parse(e.target.value); snapshot(); maze().mechanics = v; e.target.style.borderColor = ''; }
+  catch { e.target.style.borderColor = 'var(--bad)'; }
+};
+
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input, textarea, select')) { if (e.key === 'Escape') e.target.blur(); return; }
+  const mod = e.ctrlKey || e.metaKey;
+  if (mod && e.key === 's') { e.preventDefault(); save(); return; }
+  if (mod && e.key === 'z') { e.preventDefault(); undo(); return; }
+  if (mod) return;
+  const n = state.sel?.kind === 'node' && nodeById(state.sel.id);
+  const nudge = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key];
+  if (nudge && n) {
+    e.preventDefault(); snapshot();
+    const d = e.shiftKey ? 0.02 : 0.005;
+    n.x = round(n.x + nudge[0] * d); n.y = round(n.y + nudge[1] * d);
+    render(); return;
+  }
+  if (e.key >= '1' && e.key <= '9') setAddType(TYPE_KEYS[e.key - 1]);
+  else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); deleteSelection(); }
+  else if (e.key === 'Escape') { state.sel = null; render(); }
+  else if (e.key === 'r') cycleSelected();
+  else if (e.key === 's') setSide(state.side === 'front' ? 'back' : 'front');
+  else if (e.key === '[') step(-1);
+  else if (e.key === ']') step(1);
+});
+
+window.addEventListener('beforeunload', e => { if (state.dirty.size) e.preventDefault(); });
+init().catch(e => { $('status-line').textContent = 'Failed to load: ' + e.message; });
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{
+  "status": "draft",
+  "notes": "Garden #21. Pale grey walkways are path; brown edging, beds and the back pond are wall. Route idea: start, door up (0.4,0.53), lanes to the bottom, door up (0.32,0.87) into the SW spin; orient the card so the exit door down (0.6,0.45) points up (180) while still being able to leave (or flip to the back, spin there, and flip back), then top region, lane down to door down (0.6,0.45), exit. Doubts: front - the inner U lane around start and the outer left lane are merged into one region (they appear to meet the left band at (0.2,0.6)); whether the right lane (0.7,0.2-0.6) joins the top region directly or only via door down (0.68,0.12) (mapped only via the door); door right (0.83,0.31) sides guessed (NE spin lane vs right lane). Back - which side of each pond-side lane reaches the bottom (both mapped to the bottom).",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        {"id": "start", "type": "start", "x": 0.38, "y": 0.35},
+        {"id": "doorS", "type": "door", "x": 0.4, "y": 0.53, "arrow": "up"},
+        {"id": "J", "type": "junction", "x": 0.39, "y": 0.61},
+        {"id": "leftLow", "type": "room", "x": 0.08, "y": 0.64},
+        {"id": "flipL2", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left"},
+        {"id": "outer", "type": "junction", "x": 0.15, "y": 0.35},
+        {"id": "top", "type": "room", "x": 0.5, "y": 0.06},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top"},
+        {"id": "elane", "type": "junction", "x": 0.59, "y": 0.3},
+        {"id": "doorEx", "type": "door", "x": 0.6, "y": 0.45, "arrow": "down"},
+        {"id": "exit", "type": "exit", "x": 0.6, "y": 0.64},
+        {"id": "blane", "type": "junction", "x": 0.46, "y": 0.78},
+        {"id": "bottom", "type": "room", "x": 0.5, "y": 0.92},
+        {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "doorSWr", "type": "door", "x": 0.18, "y": 0.77, "arrow": "right"},
+        {"id": "spinSW", "type": "spin", "x": 0.15, "y": 0.9},
+        {"id": "doorSWu", "type": "door", "x": 0.32, "y": 0.87, "arrow": "up"},
+        {"id": "doorNEd", "type": "door", "x": 0.68, "y": 0.12, "arrow": "down"},
+        {"id": "rlane", "type": "junction", "x": 0.72, "y": 0.45},
+        {"id": "spinNE", "type": "spin", "x": 0.85, "y": 0.1},
+        {"id": "nelane", "type": "junction", "x": 0.83, "y": 0.22},
+        {"id": "doorNEr", "type": "door", "x": 0.83, "y": 0.31, "arrow": "right"},
+        {"id": "rightLow", "type": "room", "x": 0.9, "y": 0.62},
+        {"id": "flipR2", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right"},
+        {"id": "doorSEd", "type": "door", "x": 0.82, "y": 0.77, "arrow": "down"},
+        {"id": "spinSE", "type": "spin", "x": 0.85, "y": 0.9},
+        {"id": "doorSEl", "type": "door", "x": 0.68, "y": 0.88, "arrow": "left"}
+      ],
+      "edges": [["start", "doorS"], ["doorS", "J"], ["J", "leftLow"], ["leftLow", "flipL2"], ["leftLow", "outer"], ["outer", "top"], ["top", "flipTop"], ["J", "blane"], ["blane", "bottom"], ["bottom", "flipBottom"], ["top", "elane"], ["elane", "doorEx"], ["doorEx", "exit"], ["leftLow", "doorSWr"], ["doorSWr", "spinSW"], ["spinSW", "doorSWu"], ["doorSWu", "bottom"], ["top", "doorNEd"], ["doorNEd", "rlane"], ["rlane", "rightLow"], ["rightLow", "flipR2"], ["spinNE", "nelane"], ["nelane", "doorNEr"], ["doorNEr", "rlane"], ["rightLow", "doorSEd"], ["doorSEd", "spinSE"], ["spinSE", "doorSEl"], ["doorSEl", "bottom"]]
+    },
+    "back": {
+      "nodes": [
+        {"id": "top", "type": "room", "x": 0.5, "y": 0.06},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top"},
+        {"id": "tl", "type": "junction", "x": 0.3, "y": 0.13},
+        {"id": "doorWl", "type": "door", "x": 0.3, "y": 0.22, "arrow": "left"},
+        {"id": "spinW", "type": "spin", "x": 0.27, "y": 0.38},
+        {"id": "doorWu", "type": "door", "x": 0.29, "y": 0.53, "arrow": "up"},
+        {"id": "leftBand", "type": "room", "x": 0.12, "y": 0.62},
+        {"id": "flipL2", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left"},
+        {"id": "plane", "type": "junction", "x": 0.37, "y": 0.75},
+        {"id": "doorSWd", "type": "door", "x": 0.32, "y": 0.87, "arrow": "down"},
+        {"id": "spinSW", "type": "spin", "x": 0.13, "y": 0.9},
+        {"id": "doorSWl", "type": "door", "x": 0.16, "y": 0.79, "arrow": "left"},
+        {"id": "bottom", "type": "room", "x": 0.5, "y": 0.93},
+        {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "col", "type": "junction", "x": 0.52, "y": 0.4},
+        {"id": "rband", "type": "junction", "x": 0.7, "y": 0.62},
+        {"id": "rightLow", "type": "room", "x": 0.9, "y": 0.62},
+        {"id": "flipR2", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right"},
+        {"id": "tr", "type": "junction", "x": 0.62, "y": 0.13},
+        {"id": "doorEr", "type": "door", "x": 0.69, "y": 0.22, "arrow": "right"},
+        {"id": "spinE", "type": "spin", "x": 0.69, "y": 0.38},
+        {"id": "doorEu", "type": "door", "x": 0.7, "y": 0.53, "arrow": "up"},
+        {"id": "prlane", "type": "junction", "x": 0.6, "y": 0.8},
+        {"id": "doorSEr", "type": "door", "x": 0.68, "y": 0.88, "arrow": "right"},
+        {"id": "spinSE", "type": "spin", "x": 0.83, "y": 0.9},
+        {"id": "doorSEu", "type": "door", "x": 0.83, "y": 0.77, "arrow": "up"}
+      ],
+      "edges": [["flipTop", "top"], ["top", "tl"], ["tl", "doorWl"], ["doorWl", "spinW"], ["spinW", "doorWu"], ["doorWu", "leftBand"], ["leftBand", "flipL2"], ["leftBand", "plane"], ["plane", "bottom"], ["bottom", "flipBottom"], ["plane", "doorSWd"], ["doorSWd", "spinSW"], ["spinSW", "doorSWl"], ["doorSWl", "leftBand"], ["top", "col"], ["col", "rband"], ["rband", "rightLow"], ["rightLow", "flipR2"], ["top", "tr"], ["tr", "doorEr"], ["doorEr", "spinE"], ["spinE", "doorEu"], ["doorEu", "rband"], ["rband", "prlane"], ["prlane", "bottom"], ["prlane", "doorSEr"], ["doorSEr", "spinSE"], ["spinSE", "doorSEu"], ["doorSEu", "rightLow"]]
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "status": "draft",
+  "notes": "Card #62 'Portals'. No printed exit: the goal is defeating the Portal BOSS by entering its lair (back, reached only through the portal at 0.64,0.67) in the orientation sequence right, up, left, down. Portals teleport to any other portal on the same side (front: start-room portal -> 'To here!' portal). Pipes, conveyors and buildings are walls. Doubts: (1) flip symbols: left/right triangles pair by position and symbol, but the top/bottom symbols are swapped (front top half-white = back bottom; front bottom circle = back top), so the designer may intend top<->bottom pairing; mapped positionally. (2) front keyhole pipe end (0.19,0.52) treated as wall between the two parallel doors. (3) front girder (0.1-0.22,0.65-0.7) treated as passable around its end, so spin-left area joins the ring around the start frame. (4) back robot head (0.8,0.48) treated as wall between door-up and door-right. (5) which back portal is the boss entry and whether portal travel can be chosen freely among 5 back portals.",
+  "mechanics": [
+    { "type": "portal", "text": "These are portals. Travel through them to other portals on the same side of the card." },
+    { "type": "boss", "text": "Enter with the correct orientation in this order to defeat the Portal BOSS! (right, up, left, down)" }
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.3, "y": 0.84 },
+        { "id": "portalStart", "type": "special", "x": 0.66, "y": 0.84, "label": "portal" },
+        { "id": "portalHere", "type": "special", "x": 0.4, "y": 0.31, "label": "portal ('To here!')" },
+        { "id": "topC", "type": "room", "x": 0.52, "y": 0.2 },
+        { "id": "flipTop", "type": "flip", "x": 0.48, "y": 0.07, "edge": "top" },
+        { "id": "strip", "type": "junction", "x": 0.75, "y": 0.29 },
+        { "id": "flipX", "type": "flip", "x": 0.9, "y": 0.33, "edge": "right" },
+        { "id": "doorLtop", "type": "door", "x": 0.65, "y": 0.12, "arrow": "left" },
+        { "id": "spinTR", "type": "spin", "x": 0.86, "y": 0.13 },
+        { "id": "doorUtop", "type": "door", "x": 0.8, "y": 0.21, "arrow": "up" },
+        { "id": "flipL1", "type": "flip", "x": 0.08, "y": 0.33, "edge": "left" },
+        { "id": "leftArea", "type": "room", "x": 0.12, "y": 0.38 },
+        { "id": "corridor", "type": "junction", "x": 0.45, "y": 0.42 },
+        { "id": "corrR", "type": "junction", "x": 0.8, "y": 0.43 },
+        { "id": "doorDl", "type": "door", "x": 0.13, "y": 0.5, "arrow": "down" },
+        { "id": "doorLl", "type": "door", "x": 0.24, "y": 0.48, "arrow": "left" },
+        { "id": "spinL", "type": "spin", "x": 0.19, "y": 0.6 },
+        { "id": "doorLr", "type": "door", "x": 0.84, "y": 0.5, "arrow": "left" },
+        { "id": "rightLow", "type": "junction", "x": 0.83, "y": 0.62 },
+        { "id": "rA", "type": "junction", "x": 0.74, "y": 0.6 },
+        { "id": "doorUm", "type": "door", "x": 0.66, "y": 0.52, "arrow": "up" },
+        { "id": "doorLm", "type": "door", "x": 0.66, "y": 0.63, "arrow": "left" },
+        { "id": "spinM", "type": "spin", "x": 0.56, "y": 0.58 },
+        { "id": "ringL", "type": "junction", "x": 0.15, "y": 0.8 },
+        { "id": "flipL2", "type": "flip", "x": 0.1, "y": 0.72, "edge": "left" },
+        { "id": "ringB", "type": "junction", "x": 0.5, "y": 0.91 },
+        { "id": "flipB", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "ringR", "type": "junction", "x": 0.85, "y": 0.8 },
+        { "id": "flipR2", "type": "flip", "x": 0.9, "y": 0.72, "edge": "right" }
+      ],
+      "edges": [
+        ["start", "portalStart"],
+        ["portalHere", "topC"], ["topC", "flipTop"], ["portalHere", "strip"], ["topC", "strip"], ["strip", "flipX"],
+        ["topC", "doorLtop"], ["doorLtop", "spinTR"], ["spinTR", "doorUtop"], ["doorUtop", "strip"],
+        ["flipL1", "leftArea"], ["leftArea", "corridor"], ["corridor", "corrR"], ["corridor", "doorDl"], ["doorDl", "spinL"], ["corridor", "doorLl"], ["doorLl", "spinL"],
+        ["corrR", "doorLr"], ["doorLr", "rightLow"], ["rightLow", "rA"], ["rA", "doorUm"], ["doorUm", "spinM"], ["rA", "doorLm"], ["doorLm", "spinM"],
+        ["spinL", "ringL"], ["ringL", "flipL2"], ["ringL", "ringB"], ["ringB", "flipB"], ["ringB", "ringR"], ["ringR", "flipR2"], ["ringR", "rightLow"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "portalTL", "type": "special", "x": 0.15, "y": 0.1, "label": "portal" },
+        { "id": "doorRtl", "type": "door", "x": 0.23, "y": 0.17, "arrow": "right" },
+        { "id": "main", "type": "room", "x": 0.35, "y": 0.22 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top" },
+        { "id": "flipXL", "type": "flip", "x": 0.07, "y": 0.33, "edge": "left" },
+        { "id": "doorLtop", "type": "door", "x": 0.67, "y": 0.08, "arrow": "left" },
+        { "id": "spinTR", "type": "spin", "x": 0.85, "y": 0.1 },
+        { "id": "doorUtop", "type": "door", "x": 0.77, "y": 0.17, "arrow": "up" },
+        { "id": "strip", "type": "junction", "x": 0.8, "y": 0.24 },
+        { "id": "doorLp", "type": "door", "x": 0.59, "y": 0.26, "arrow": "left" },
+        { "id": "portalR", "type": "special", "x": 0.66, "y": 0.32, "label": "portal" },
+        { "id": "rightCol", "type": "junction", "x": 0.88, "y": 0.5 },
+        { "id": "flipR1", "type": "flip", "x": 0.9, "y": 0.32, "edge": "right" },
+        { "id": "flipR2", "type": "flip", "x": 0.9, "y": 0.7, "edge": "right" },
+        { "id": "doorUr", "type": "door", "x": 0.81, "y": 0.43, "arrow": "up" },
+        { "id": "doorRr", "type": "door", "x": 0.81, "y": 0.56, "arrow": "right" },
+        { "id": "spinM", "type": "spin", "x": 0.65, "y": 0.5 },
+        { "id": "doorLb", "type": "door", "x": 0.77, "y": 0.77, "arrow": "left" },
+        { "id": "doorUbr", "type": "door", "x": 0.89, "y": 0.82, "arrow": "up" },
+        { "id": "spinBR", "type": "spin", "x": 0.85, "y": 0.91 },
+        { "id": "doorLbr", "type": "door", "x": 0.69, "y": 0.92, "arrow": "left" },
+        { "id": "bottom", "type": "room", "x": 0.45, "y": 0.82 },
+        { "id": "flipB", "type": "flip", "x": 0.47, "y": 0.96, "edge": "bottom" },
+        { "id": "leftLow", "type": "junction", "x": 0.15, "y": 0.7 },
+        { "id": "flipL2", "type": "flip", "x": 0.08, "y": 0.7, "edge": "left" },
+        { "id": "doorDl", "type": "door", "x": 0.12, "y": 0.53, "arrow": "down" },
+        { "id": "portalL", "type": "special", "x": 0.13, "y": 0.47, "label": "portal" },
+        { "id": "doorUbl", "type": "door", "x": 0.22, "y": 0.9, "arrow": "up" },
+        { "id": "portalBL", "type": "special", "x": 0.13, "y": 0.92, "label": "portal" },
+        { "id": "portalBoss", "type": "special", "x": 0.64, "y": 0.67, "label": "portal (into the boss lair)" },
+        { "id": "boss", "type": "special", "x": 0.42, "y": 0.45, "label": "BOSS lair (goal)" }
+      ],
+      "edges": [
+        ["portalTL", "doorRtl"], ["doorRtl", "main"], ["main", "flipTop"], ["main", "flipXL"],
+        ["main", "doorLtop"], ["doorLtop", "spinTR"], ["spinTR", "doorUtop"], ["doorUtop", "strip"], ["main", "strip"],
+        ["main", "doorLp"], ["doorLp", "portalR"],
+        ["strip", "flipR1"], ["strip", "rightCol"], ["rightCol", "flipR1"], ["rightCol", "flipR2"],
+        ["rightCol", "doorUr"], ["doorUr", "spinM"], ["rightCol", "doorRr"], ["doorRr", "spinM"],
+        ["rightCol", "doorLb"], ["doorLb", "bottom"], ["rightCol", "doorUbr"], ["doorUbr", "spinBR"], ["spinBR", "doorLbr"], ["doorLbr", "bottom"],
+        ["bottom", "flipB"], ["bottom", "leftLow"], ["leftLow", "flipL2"], ["leftLow", "doorDl"], ["doorDl", "portalL"],
+        ["bottom", "doorUbl"], ["doorUbl", "portalBL"],
+        ["portalBoss", "boss"]
+      ]
+    }
+  }
+}

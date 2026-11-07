@@ -1,0 +1,694 @@
+{
+ "status": "draft",
+ "notes": "Madness #50. No exit printed; the goal is taken to be the red circle under Cthulhu (front centre), modelled as a special node plus an exit node. Four numbered arrows in it (1 up, 2 right, 3 down, 4 left) read as the orientation sequence; the card does not say how it is performed. Paths are the red tentacles; region connectivity from a red-colour component pass, door sides assigned by eye. Unsure: back door right (0.7,0.7) touches the pink spin path, the green loop and the bottom region (linked pink to green here); front door right (0.65,0.82) taken as linking the lair tail to the bottom region.",
+ "mechanics": [
+  {
+   "type": "boss",
+   "text": "Cthulhu with a 4-step arrow sequence: 1 up, 2 right, 3 down, 4 left"
+  }
+ ],
+ "sides": {
+  "front": {
+   "nodes": [
+    {
+     "id": "top",
+     "type": "room",
+     "x": 0.49,
+     "y": 0.07
+    },
+    {
+     "id": "loop",
+     "type": "room",
+     "x": 0.72,
+     "y": 0.45
+    },
+    {
+     "id": "lair",
+     "type": "room",
+     "x": 0.48,
+     "y": 0.6
+    },
+    {
+     "id": "west",
+     "type": "room",
+     "x": 0.09,
+     "y": 0.72
+    },
+    {
+     "id": "bottom",
+     "type": "room",
+     "x": 0.45,
+     "y": 0.9
+    },
+    {
+     "id": "start",
+     "type": "start",
+     "x": 0.83,
+     "y": 0.6
+    },
+    {
+     "id": "flipTop",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.06,
+     "edge": "top"
+    },
+    {
+     "id": "a1",
+     "type": "door",
+     "x": 0.4,
+     "y": 0.14,
+     "arrow": "left"
+    },
+    {
+     "id": "a2",
+     "type": "door",
+     "x": 0.53,
+     "y": 0.14,
+     "arrow": "down"
+    },
+    {
+     "id": "a5",
+     "type": "door",
+     "x": 0.85,
+     "y": 0.69,
+     "arrow": "up"
+    },
+    {
+     "id": "flipRight",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.78,
+     "edge": "right"
+    },
+    {
+     "id": "cthulhu",
+     "type": "special",
+     "x": 0.5,
+     "y": 0.4,
+     "label": "Cthulhu (sequence up, right, down, left)"
+    },
+    {
+     "id": "exit",
+     "type": "exit",
+     "x": 0.5,
+     "y": 0.65
+    },
+    {
+     "id": "a3",
+     "type": "door",
+     "x": 0.13,
+     "y": 0.55,
+     "arrow": "down"
+    },
+    {
+     "id": "a4",
+     "type": "door",
+     "x": 0.24,
+     "y": 0.61,
+     "arrow": "left"
+    },
+    {
+     "id": "flipLeft",
+     "type": "flip",
+     "x": 0.07,
+     "y": 0.79,
+     "edge": "left"
+    },
+    {
+     "id": "a8",
+     "type": "door",
+     "x": 0.23,
+     "y": 0.8,
+     "arrow": "down"
+    },
+    {
+     "id": "a9",
+     "type": "door",
+     "x": 0.22,
+     "y": 0.89,
+     "arrow": "left"
+    },
+    {
+     "id": "a6",
+     "type": "door",
+     "x": 0.54,
+     "y": 0.75,
+     "arrow": "up"
+    },
+    {
+     "id": "a7",
+     "type": "door",
+     "x": 0.65,
+     "y": 0.82,
+     "arrow": "right"
+    },
+    {
+     "id": "flipBottom",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.94,
+     "edge": "bottom"
+    }
+   ],
+   "edges": [
+    [
+     "top",
+     "flipTop"
+    ],
+    [
+     "top",
+     "a1"
+    ],
+    [
+     "loop",
+     "a1"
+    ],
+    [
+     "top",
+     "a2"
+    ],
+    [
+     "loop",
+     "a2"
+    ],
+    [
+     "start",
+     "a5"
+    ],
+    [
+     "loop",
+     "a5"
+    ],
+    [
+     "loop",
+     "flipRight"
+    ],
+    [
+     "lair",
+     "cthulhu"
+    ],
+    [
+     "lair",
+     "exit"
+    ],
+    [
+     "lair",
+     "a3"
+    ],
+    [
+     "west",
+     "a3"
+    ],
+    [
+     "lair",
+     "a4"
+    ],
+    [
+     "west",
+     "a4"
+    ],
+    [
+     "west",
+     "flipLeft"
+    ],
+    [
+     "west",
+     "a8"
+    ],
+    [
+     "bottom",
+     "a8"
+    ],
+    [
+     "west",
+     "a9"
+    ],
+    [
+     "bottom",
+     "a9"
+    ],
+    [
+     "lair",
+     "a6"
+    ],
+    [
+     "bottom",
+     "a6"
+    ],
+    [
+     "lair",
+     "a7"
+    ],
+    [
+     "bottom",
+     "a7"
+    ],
+    [
+     "bottom",
+     "flipBottom"
+    ]
+   ]
+  },
+  "back": {
+   "nodes": [
+    {
+     "id": "R1",
+     "type": "room",
+     "x": 0.2,
+     "y": 0.3
+    },
+    {
+     "id": "R3",
+     "type": "room",
+     "x": 0.72,
+     "y": 0.15
+    },
+    {
+     "id": "R4",
+     "type": "room",
+     "x": 0.12,
+     "y": 0.45
+    },
+    {
+     "id": "X",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.47
+    },
+    {
+     "id": "R6",
+     "type": "room",
+     "x": 0.85,
+     "y": 0.75
+    },
+    {
+     "id": "R7",
+     "type": "room",
+     "x": 0.72,
+     "y": 0.55
+    },
+    {
+     "id": "R8",
+     "type": "room",
+     "x": 0.8,
+     "y": 0.68
+    },
+    {
+     "id": "R9",
+     "type": "room",
+     "x": 0.3,
+     "y": 0.7
+    },
+    {
+     "id": "R10",
+     "type": "room",
+     "x": 0.55,
+     "y": 0.67
+    },
+    {
+     "id": "R11",
+     "type": "room",
+     "x": 0.42,
+     "y": 0.66
+    },
+    {
+     "id": "bottom",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.88
+    },
+    {
+     "id": "flipTop",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.06,
+     "edge": "top"
+    },
+    {
+     "id": "flipLeft",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.78,
+     "edge": "left"
+    },
+    {
+     "id": "flipRight",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.79,
+     "edge": "right"
+    },
+    {
+     "id": "flipBottom",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.94,
+     "edge": "bottom"
+    },
+    {
+     "id": "c1",
+     "type": "door",
+     "x": 0.12,
+     "y": 0.24,
+     "arrow": "right"
+    },
+    {
+     "id": "c2",
+     "type": "door",
+     "x": 0.88,
+     "y": 0.3,
+     "arrow": "left"
+    },
+    {
+     "id": "c3",
+     "type": "door",
+     "x": 0.44,
+     "y": 0.33,
+     "arrow": "down"
+    },
+    {
+     "id": "c4",
+     "type": "door",
+     "x": 0.65,
+     "y": 0.33,
+     "arrow": "right"
+    },
+    {
+     "id": "c5",
+     "type": "door",
+     "x": 0.35,
+     "y": 0.4,
+     "arrow": "left"
+    },
+    {
+     "id": "c6",
+     "type": "door",
+     "x": 0.63,
+     "y": 0.5,
+     "arrow": "down"
+    },
+    {
+     "id": "c7",
+     "type": "door",
+     "x": 0.35,
+     "y": 0.58,
+     "arrow": "up"
+    },
+    {
+     "id": "c8",
+     "type": "door",
+     "x": 0.44,
+     "y": 0.61,
+     "arrow": "left"
+    },
+    {
+     "id": "c9",
+     "type": "door",
+     "x": 0.53,
+     "y": 0.6,
+     "arrow": "right"
+    },
+    {
+     "id": "c10",
+     "type": "door",
+     "x": 0.64,
+     "y": 0.6,
+     "arrow": "up"
+    },
+    {
+     "id": "c11",
+     "type": "door",
+     "x": 0.84,
+     "y": 0.6,
+     "arrow": "right"
+    },
+    {
+     "id": "c12",
+     "type": "door",
+     "x": 0.1,
+     "y": 0.66,
+     "arrow": "up"
+    },
+    {
+     "id": "c13",
+     "type": "door",
+     "x": 0.7,
+     "y": 0.7,
+     "arrow": "right"
+    },
+    {
+     "id": "c14",
+     "type": "door",
+     "x": 0.5,
+     "y": 0.79,
+     "arrow": "down"
+    },
+    {
+     "id": "c15",
+     "type": "door",
+     "x": 0.4,
+     "y": 0.81,
+     "arrow": "up"
+    },
+    {
+     "id": "c16",
+     "type": "door",
+     "x": 0.33,
+     "y": 0.86,
+     "arrow": "down"
+    },
+    {
+     "id": "s1",
+     "type": "spin",
+     "x": 0.8,
+     "y": 0.22
+    },
+    {
+     "id": "s2",
+     "type": "spin",
+     "x": 0.2,
+     "y": 0.57
+    },
+    {
+     "id": "s3",
+     "type": "spin",
+     "x": 0.75,
+     "y": 0.5
+    },
+    {
+     "id": "s4",
+     "type": "spin",
+     "x": 0.4,
+     "y": 0.7
+    },
+    {
+     "id": "s5",
+     "type": "spin",
+     "x": 0.6,
+     "y": 0.7
+    },
+    {
+     "id": "s6",
+     "type": "spin",
+     "x": 0.28,
+     "y": 0.76
+    },
+    {
+     "id": "s7",
+     "type": "spin",
+     "x": 0.77,
+     "y": 0.76
+    },
+    {
+     "id": "jR6",
+     "type": "junction",
+     "x": 0.7,
+     "y": 0.85
+    }
+   ],
+   "edges": [
+    [
+     "R1",
+     "flipTop"
+    ],
+    [
+     "R1",
+     "flipLeft"
+    ],
+    [
+     "R6",
+     "flipRight"
+    ],
+    [
+     "bottom",
+     "flipBottom"
+    ],
+    [
+     "R1",
+     "c1"
+    ],
+    [
+     "R4",
+     "c1"
+    ],
+    [
+     "R3",
+     "c2"
+    ],
+    [
+     "R6",
+     "c2"
+    ],
+    [
+     "R1",
+     "c3"
+    ],
+    [
+     "X",
+     "c3"
+    ],
+    [
+     "R3",
+     "c4"
+    ],
+    [
+     "X",
+     "c4"
+    ],
+    [
+     "R1",
+     "c5"
+    ],
+    [
+     "X",
+     "c5"
+    ],
+    [
+     "X",
+     "c6"
+    ],
+    [
+     "R7",
+     "c6"
+    ],
+    [
+     "X",
+     "c7"
+    ],
+    [
+     "R9",
+     "c7"
+    ],
+    [
+     "X",
+     "c8"
+    ],
+    [
+     "R11",
+     "c8"
+    ],
+    [
+     "X",
+     "c9"
+    ],
+    [
+     "R10",
+     "c9"
+    ],
+    [
+     "X",
+     "c10"
+    ],
+    [
+     "R8",
+     "c10"
+    ],
+    [
+     "R7",
+     "c11"
+    ],
+    [
+     "R6",
+     "c11"
+    ],
+    [
+     "R4",
+     "c12"
+    ],
+    [
+     "R1",
+     "c12"
+    ],
+    [
+     "R10",
+     "c13"
+    ],
+    [
+     "R8",
+     "c13"
+    ],
+    [
+     "R10",
+     "c14"
+    ],
+    [
+     "bottom",
+     "c14"
+    ],
+    [
+     "s4",
+     "c15"
+    ],
+    [
+     "bottom",
+     "c15"
+    ],
+    [
+     "R9",
+     "c16"
+    ],
+    [
+     "bottom",
+     "c16"
+    ],
+    [
+     "R3",
+     "s1"
+    ],
+    [
+     "R4",
+     "s2"
+    ],
+    [
+     "R7",
+     "s3"
+    ],
+    [
+     "R11",
+     "s4"
+    ],
+    [
+     "R10",
+     "s5"
+    ],
+    [
+     "R9",
+     "s6"
+    ],
+    [
+     "R8",
+     "s7"
+    ],
+    [
+     "R6",
+     "jR6"
+    ],
+    [
+     "bottom",
+     "jR6"
+    ]
+   ]
+  }
+ }
+}

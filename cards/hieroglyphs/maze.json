@@ -1,0 +1,60 @@
+{
+  "status": "draft",
+  "notes": "Walls are the red painted lines (connected-component pass on non-red pixels). Unsure: front bottom flip (0.72,0.93) sits on the bottom wall line; assumed open to the orange column like the back bottom flip. Front door left (0.42,0.27) touches three areas (top column, END area, big teal area); connected to all three. Back door up (0.64,0.33) mapped as joining the orange area to the right upper area (red area wall runs just above it). Route (screen-vertical flip t -> -t, screen-horizontal flip t -> 180-t): start, door up (0.78,0.81), bottom flip; back at 180: door down (0.58,0.67), right lower flip; front at 180: teal area, door down (0.14,0.73), spin, set CW90, door left (0.57,0.62), door left (0.42,0.27), END.",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.85, "y": 0.83 },
+        { "id": "doorStart", "type": "door", "x": 0.78, "y": 0.81, "arrow": "up" },
+        { "id": "orange", "type": "room", "x": 0.71, "y": 0.65 },
+        { "id": "flipBottom", "type": "flip", "x": 0.72, "y": 0.93, "edge": "bottom" },
+        { "id": "doorE", "type": "door", "x": 0.78, "y": 0.49, "arrow": "right" },
+        { "id": "eastRoom", "type": "room", "x": 0.85, "y": 0.55 },
+        { "id": "flipR2", "type": "flip", "x": 0.93, "y": 0.5, "edge": "right" },
+        { "id": "teal", "type": "room", "x": 0.55, "y": 0.45 },
+        { "id": "flipR1", "type": "flip", "x": 0.93, "y": 0.2, "edge": "right" },
+        { "id": "flipL2", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left" },
+        { "id": "doorEnd", "type": "door", "x": 0.42, "y": 0.27, "arrow": "left" },
+        { "id": "exit", "type": "exit", "x": 0.27, "y": 0.24 },
+        { "id": "endArea", "type": "room", "x": 0.15, "y": 0.4 },
+        { "id": "flipL1", "type": "flip", "x": 0.07, "y": 0.26, "edge": "left" },
+        { "id": "topCol", "type": "room", "x": 0.42, "y": 0.17 },
+        { "id": "flipTop", "type": "flip", "x": 0.43, "y": 0.08, "edge": "top" },
+        { "id": "doorMid", "type": "door", "x": 0.57, "y": 0.62, "arrow": "left" },
+        { "id": "doorSW", "type": "door", "x": 0.14, "y": 0.73, "arrow": "down" },
+        { "id": "pink", "type": "room", "x": 0.4, "y": 0.75 },
+        { "id": "spin", "type": "spin", "x": 0.43, "y": 0.86 }
+      ],
+      "edges": [
+        ["start", "doorStart"], ["doorStart", "orange"], ["orange", "flipBottom"], ["orange", "doorE"], ["doorE", "eastRoom"], ["eastRoom", "flipR2"],
+        ["teal", "flipR1"], ["teal", "flipL2"], ["teal", "doorEnd"], ["doorEnd", "exit"], ["doorEnd", "topCol"], ["topCol", "flipTop"],
+        ["exit", "endArea"], ["endArea", "flipL1"], ["endArea", "doorEnd"],
+        ["teal", "doorMid"], ["doorMid", "pink"], ["teal", "doorSW"], ["doorSW", "pink"], ["pink", "spin"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.57, "y": 0.08, "edge": "top" },
+        { "id": "red", "type": "room", "x": 0.3, "y": 0.2 },
+        { "id": "flipL1", "type": "flip", "x": 0.08, "y": 0.2, "edge": "left" },
+        { "id": "orange", "type": "room", "x": 0.3, "y": 0.6 },
+        { "id": "flipL2", "type": "flip", "x": 0.08, "y": 0.49, "edge": "left" },
+        { "id": "flipBottom", "type": "flip", "x": 0.28, "y": 0.92, "edge": "bottom" },
+        { "id": "doorN", "type": "door", "x": 0.64, "y": 0.33, "arrow": "up" },
+        { "id": "greenGrey", "type": "room", "x": 0.75, "y": 0.27 },
+        { "id": "flipR1", "type": "flip", "x": 0.92, "y": 0.25, "edge": "right" },
+        { "id": "doorM", "type": "door", "x": 0.64, "y": 0.49, "arrow": "left" },
+        { "id": "doorS1", "type": "door", "x": 0.58, "y": 0.67, "arrow": "down" },
+        { "id": "doorS2", "type": "door", "x": 0.64, "y": 0.83, "arrow": "right" },
+        { "id": "khaki", "type": "room", "x": 0.8, "y": 0.6 },
+        { "id": "flipR2", "type": "flip", "x": 0.92, "y": 0.64, "edge": "right" }
+      ],
+      "edges": [
+        ["flipTop", "red"], ["red", "flipL1"],
+        ["orange", "flipL2"], ["orange", "flipBottom"], ["orange", "doorN"], ["doorN", "greenGrey"], ["greenGrey", "flipR1"],
+        ["orange", "doorM"], ["doorM", "khaki"], ["orange", "doorS1"], ["doorS1", "khaki"], ["orange", "doorS2"], ["doorS2", "khaki"], ["khaki", "flipR2"]
+      ]
+    }
+  }
+}

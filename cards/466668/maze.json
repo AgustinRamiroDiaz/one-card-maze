@@ -1,0 +1,81 @@
+{
+  "status": "draft",
+  "notes": "Harpoon #46. No exit printed; the goal is taken to be the shark's mouth lair (front centre), modelled as a special node plus an exit node. Lair shows three numbered arrows (1 up, 2 down, 3 left), read as the orientation sequence; the card does not say how it is performed (no spin in the lair). The lair is reached only from the two left flips on the front. Front door down (0.73,0.62) opens upward to the spin and sideways to the lower right flip area (bent door).",
+  "mechanics": [
+    { "type": "boss", "text": "Shark lair with a 3-step arrow sequence: 1 up, 2 down, 3 left" }
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.2, "y": 0.84 },
+        { "id": "f8", "type": "door", "x": 0.36, "y": 0.82, "arrow": "up" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.88 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "f5", "type": "door", "x": 0.51, "y": 0.73, "arrow": "up" },
+        { "id": "f7", "type": "door", "x": 0.61, "y": 0.8, "arrow": "right" },
+        { "id": "s3", "type": "spin", "x": 0.72, "y": 0.73 },
+        { "id": "f9", "type": "door", "x": 0.68, "y": 0.89, "arrow": "left" },
+        { "id": "s4", "type": "spin", "x": 0.84, "y": 0.88 },
+        { "id": "f6", "type": "door", "x": 0.84, "y": 0.78, "arrow": "up" },
+        { "id": "eastLow", "type": "room", "x": 0.88, "y": 0.63 },
+        { "id": "flipRightLow", "type": "flip", "x": 0.93, "y": 0.62, "edge": "right" },
+        { "id": "f4", "type": "door", "x": 0.73, "y": 0.62, "arrow": "down" },
+        { "id": "s2", "type": "spin", "x": 0.74, "y": 0.48 },
+        { "id": "f3", "type": "door", "x": 0.73, "y": 0.37, "arrow": "up" },
+        { "id": "eastTop", "type": "room", "x": 0.88, "y": 0.35 },
+        { "id": "flipRightTop", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "f2", "type": "door", "x": 0.73, "y": 0.27, "arrow": "down" },
+        { "id": "s1", "type": "spin", "x": 0.75, "y": 0.16 },
+        { "id": "f1", "type": "door", "x": 0.6, "y": 0.16, "arrow": "right" },
+        { "id": "topCh", "type": "room", "x": 0.5, "y": 0.1 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "lair", "type": "room", "x": 0.5, "y": 0.47 },
+        { "id": "shark", "type": "special", "x": 0.5, "y": 0.55, "label": "shark lair (sequence up, down, left)" },
+        { "id": "exit", "type": "exit", "x": 0.42, "y": 0.52 },
+        { "id": "westTop", "type": "room", "x": 0.1, "y": 0.37 },
+        { "id": "flipLeftTop", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "westLow", "type": "room", "x": 0.1, "y": 0.62 },
+        { "id": "flipLeftLow", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left" }
+      ],
+      "edges": [
+        ["start", "f8"], ["f8", "bottom"], ["bottom", "flipBottom"], ["bottom", "f5"], ["f5", "s3"], ["bottom", "f7"],
+        ["f7", "s3"], ["bottom", "f9"], ["f9", "s4"], ["s4", "f6"], ["f6", "eastLow"], ["eastLow", "flipRightLow"],
+        ["eastLow", "f4"], ["f4", "s2"], ["s2", "f3"], ["f3", "eastTop"], ["eastTop", "flipRightTop"], ["eastTop", "f2"],
+        ["f2", "s1"], ["s1", "f1"], ["f1", "topCh"], ["topCh", "flipTop"], ["topCh", "eastTop"],
+        ["lair", "shark"], ["lair", "exit"], ["lair", "westTop"], ["westTop", "flipLeftTop"], ["lair", "westLow"],
+        ["westLow", "flipLeftLow"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top" },
+        { "id": "topCh", "type": "room", "x": 0.5, "y": 0.2 },
+        { "id": "westTop", "type": "room", "x": 0.1, "y": 0.37 },
+        { "id": "flipLeftTop", "type": "flip", "x": 0.08, "y": 0.36, "edge": "left" },
+        { "id": "b1", "type": "door", "x": 0.26, "y": 0.36, "arrow": "right" },
+        { "id": "sL", "type": "spin", "x": 0.26, "y": 0.5 },
+        { "id": "b2", "type": "door", "x": 0.26, "y": 0.62, "arrow": "left" },
+        { "id": "westLow", "type": "room", "x": 0.1, "y": 0.63 },
+        { "id": "flipLeftLow", "type": "flip", "x": 0.08, "y": 0.62, "edge": "left" },
+        { "id": "eastTop", "type": "room", "x": 0.9, "y": 0.37 },
+        { "id": "flipRightTop", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "b3", "type": "door", "x": 0.74, "y": 0.36, "arrow": "left" },
+        { "id": "sR", "type": "spin", "x": 0.74, "y": 0.5 },
+        { "id": "b4", "type": "door", "x": 0.74, "y": 0.62, "arrow": "up" },
+        { "id": "eastLow", "type": "room", "x": 0.9, "y": 0.63 },
+        { "id": "flipRightLow", "type": "flip", "x": 0.93, "y": 0.62, "edge": "right" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.92 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "b5", "type": "door", "x": 0.71, "y": 0.9, "arrow": "right" },
+        { "id": "sSE", "type": "spin", "x": 0.86, "y": 0.9 },
+        { "id": "b6", "type": "door", "x": 0.87, "y": 0.79, "arrow": "down" }
+      ],
+      "edges": [
+        ["flipTop", "topCh"], ["topCh", "westTop"], ["topCh", "eastTop"], ["westTop", "flipLeftTop"], ["westTop", "b1"],
+        ["b1", "sL"], ["sL", "b2"], ["b2", "westLow"], ["westLow", "flipLeftLow"], ["eastTop", "flipRightTop"],
+        ["eastTop", "b3"], ["b3", "sR"], ["sR", "b4"], ["b4", "eastLow"], ["eastLow", "flipRightLow"],
+        ["westLow", "bottom"], ["bottom", "flipBottom"], ["bottom", "b5"], ["b5", "sSE"], ["sSE", "b6"], ["b6", "eastLow"]
+      ]
+    }
+  }
+}

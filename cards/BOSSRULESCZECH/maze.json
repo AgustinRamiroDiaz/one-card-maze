@@ -1,0 +1,256 @@
+{
+  "status": "draft",
+  "notes": "Boss tutorial. Route: start, door1 (up) into Lair = 1st attack (up sword). Leave via gap at bottom, room3, left door (up), corridor, room4, flip bottom. Back (printed upside down, so after the bottom flip doorDown reads up): end room, doorDown, spin room; spin so doorRight points up (card turned 90 CCW), corridor to west room, flip left; front: east room, door3 (right, now up), room3, re-enter Lair in the 'right' orientation = 2nd sword, boss defeated. No explicit exit; win = defeating the boss. Same layout as the other black-board BOSSRULES translations; door1 at (0.26,0.205), unlike the English green BOSSRULES (0.19,0.25). Unsure: thick double chalk strips (e.g. y 0.26-0.28 under the start box) read as walls, not corridors; the region right of the start box/lair (x>0.94) treated as off-maze.",
+  "mechanics": [
+    {
+      "type": "boss",
+      "text": "Defeat the BOSS: enter the Lair in all of the correct orientations in sequence. The swords show the correct orientation and sequence (1: up, 2: right). Leave the Lair by any path and return with the next orientation. If you ever return into the Lair in the incorrect orientation, the BOSS ATTACKS you; if the BOSS has more ATTACKS on you than you have on it, you lose."
+    }
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        {
+          "id": "start",
+          "type": "start",
+          "x": 0.75,
+          "y": 0.13
+        },
+        {
+          "id": "startRoom",
+          "type": "room",
+          "x": 0.6,
+          "y": 0.2
+        },
+        {
+          "id": "door1",
+          "type": "door",
+          "x": 0.26,
+          "y": 0.205,
+          "arrow": "up"
+        },
+        {
+          "id": "toLair",
+          "type": "junction",
+          "x": 0.135,
+          "y": 0.25
+        },
+        {
+          "id": "lair",
+          "type": "special",
+          "x": 0.4,
+          "y": 0.5,
+          "label": "Lair (swords: 1 dot = up, 2 dots = right)"
+        },
+        {
+          "id": "lairGap",
+          "type": "junction",
+          "x": 0.57,
+          "y": 0.73
+        },
+        {
+          "id": "room3",
+          "type": "room",
+          "x": 0.45,
+          "y": 0.79
+        },
+        {
+          "id": "doorLeft",
+          "type": "door",
+          "x": 0.15,
+          "y": 0.79,
+          "arrow": "up"
+        },
+        {
+          "id": "westBend",
+          "type": "junction",
+          "x": 0.065,
+          "y": 0.79
+        },
+        {
+          "id": "room4",
+          "type": "room",
+          "x": 0.3,
+          "y": 0.91
+        },
+        {
+          "id": "flipBottom",
+          "type": "flip",
+          "x": 0.51,
+          "y": 0.95,
+          "edge": "bottom"
+        },
+        {
+          "id": "door3",
+          "type": "door",
+          "x": 0.75,
+          "y": 0.8,
+          "arrow": "right"
+        },
+        {
+          "id": "eastRoom",
+          "type": "room",
+          "x": 0.85,
+          "y": 0.8
+        },
+        {
+          "id": "flipRight",
+          "type": "flip",
+          "x": 0.9,
+          "y": 0.82,
+          "edge": "right"
+        }
+      ],
+      "edges": [
+        [
+          "start",
+          "startRoom"
+        ],
+        [
+          "startRoom",
+          "door1"
+        ],
+        [
+          "door1",
+          "toLair"
+        ],
+        [
+          "toLair",
+          "lair"
+        ],
+        [
+          "lair",
+          "lairGap"
+        ],
+        [
+          "lairGap",
+          "room3"
+        ],
+        [
+          "room3",
+          "doorLeft"
+        ],
+        [
+          "doorLeft",
+          "westBend"
+        ],
+        [
+          "westBend",
+          "room4"
+        ],
+        [
+          "room4",
+          "flipBottom"
+        ],
+        [
+          "room3",
+          "door3"
+        ],
+        [
+          "door3",
+          "eastRoom"
+        ],
+        [
+          "eastRoom",
+          "flipRight"
+        ]
+      ]
+    },
+    "back": {
+      "nodes": [
+        {
+          "id": "flipBottom",
+          "type": "flip",
+          "x": 0.51,
+          "y": 0.95,
+          "edge": "bottom"
+        },
+        {
+          "id": "endRoom",
+          "type": "room",
+          "x": 0.55,
+          "y": 0.8
+        },
+        {
+          "id": "doorDown",
+          "type": "door",
+          "x": 0.5,
+          "y": 0.63,
+          "arrow": "down"
+        },
+        {
+          "id": "spinRoom",
+          "type": "room",
+          "x": 0.5,
+          "y": 0.3
+        },
+        {
+          "id": "spin",
+          "type": "spin",
+          "x": 0.52,
+          "y": 0.45
+        },
+        {
+          "id": "doorRight",
+          "type": "door",
+          "x": 0.33,
+          "y": 0.66,
+          "arrow": "right"
+        },
+        {
+          "id": "bend",
+          "type": "junction",
+          "x": 0.325,
+          "y": 0.79
+        },
+        {
+          "id": "westRoom",
+          "type": "room",
+          "x": 0.1,
+          "y": 0.8
+        },
+        {
+          "id": "flipLeft",
+          "type": "flip",
+          "x": 0.1,
+          "y": 0.82,
+          "edge": "left"
+        }
+      ],
+      "edges": [
+        [
+          "flipBottom",
+          "endRoom"
+        ],
+        [
+          "endRoom",
+          "doorDown"
+        ],
+        [
+          "doorDown",
+          "spinRoom"
+        ],
+        [
+          "spinRoom",
+          "spin"
+        ],
+        [
+          "spinRoom",
+          "doorRight"
+        ],
+        [
+          "doorRight",
+          "bend"
+        ],
+        [
+          "bend",
+          "westRoom"
+        ],
+        [
+          "westRoom",
+          "flipLeft"
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,648 @@
+{
+ "status": "draft",
+ "notes": "Goal #52. No exit printed; the goal is taken to be the goalkeeper's box (front centre), modelled as a special node plus an exit node. Four numbered arrows below him (1 up, 2 down, 3 left, 4 right) read as the orientation sequence; the card does not say how it is performed. Back chalk drawings ignored. Region connectivity from a white-path component pass with door sides checked on the overlay; clean card.",
+ "mechanics": [
+  {
+   "type": "boss",
+   "text": "Goalkeeper with a 4-step arrow sequence: 1 up, 2 down, 3 left, 4 right"
+  }
+ ],
+ "sides": {
+  "front": {
+   "nodes": [
+    {
+     "id": "top",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.1
+    },
+    {
+     "id": "frame",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.21
+    },
+    {
+     "id": "box",
+     "type": "room",
+     "x": 0.5,
+     "y": 0.45
+    },
+    {
+     "id": "fll",
+     "type": "room",
+     "x": 0.12,
+     "y": 0.68
+    },
+    {
+     "id": "corr",
+     "type": "room",
+     "x": 0.6,
+     "y": 0.76
+    },
+    {
+     "id": "bottom",
+     "type": "room",
+     "x": 0.55,
+     "y": 0.9
+    },
+    {
+     "id": "start",
+     "type": "start",
+     "x": 0.84,
+     "y": 0.11
+    },
+    {
+     "id": "h1",
+     "type": "door",
+     "x": 0.67,
+     "y": 0.12,
+     "arrow": "up"
+    },
+    {
+     "id": "flipTop",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.07,
+     "edge": "top"
+    },
+    {
+     "id": "flipLeftTop",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.37,
+     "edge": "left"
+    },
+    {
+     "id": "flipRightTop",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.37,
+     "edge": "right"
+    },
+    {
+     "id": "h2",
+     "type": "door",
+     "x": 0.34,
+     "y": 0.27,
+     "arrow": "up"
+    },
+    {
+     "id": "h3",
+     "type": "door",
+     "x": 0.74,
+     "y": 0.31,
+     "arrow": "left"
+    },
+    {
+     "id": "h4",
+     "type": "door",
+     "x": 0.26,
+     "y": 0.4,
+     "arrow": "right"
+    },
+    {
+     "id": "keeper",
+     "type": "special",
+     "x": 0.5,
+     "y": 0.4,
+     "label": "goalkeeper (sequence up, down, left, right)"
+    },
+    {
+     "id": "exit",
+     "type": "exit",
+     "x": 0.5,
+     "y": 0.52
+    },
+    {
+     "id": "h5",
+     "type": "door",
+     "x": 0.22,
+     "y": 0.49,
+     "arrow": "down"
+    },
+    {
+     "id": "flipLeftLow",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.63,
+     "edge": "left"
+    },
+    {
+     "id": "sp1",
+     "type": "spin",
+     "x": 0.74,
+     "y": 0.5
+    },
+    {
+     "id": "h6",
+     "type": "door",
+     "x": 0.88,
+     "y": 0.5,
+     "arrow": "right"
+    },
+    {
+     "id": "h7",
+     "type": "door",
+     "x": 0.76,
+     "y": 0.59,
+     "arrow": "up"
+    },
+    {
+     "id": "h8",
+     "type": "door",
+     "x": 0.29,
+     "y": 0.72,
+     "arrow": "left"
+    },
+    {
+     "id": "h9",
+     "type": "door",
+     "x": 0.38,
+     "y": 0.72,
+     "arrow": "down"
+    },
+    {
+     "id": "h10",
+     "type": "door",
+     "x": 0.5,
+     "y": 0.72,
+     "arrow": "right"
+    },
+    {
+     "id": "h11",
+     "type": "door",
+     "x": 0.62,
+     "y": 0.72,
+     "arrow": "left"
+    },
+    {
+     "id": "flipRightLow",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.63,
+     "edge": "right"
+    },
+    {
+     "id": "h14",
+     "type": "door",
+     "x": 0.69,
+     "y": 0.85,
+     "arrow": "down"
+    },
+    {
+     "id": "h15",
+     "type": "door",
+     "x": 0.87,
+     "y": 0.92,
+     "arrow": "right"
+    },
+    {
+     "id": "sp2",
+     "type": "spin",
+     "x": 0.31,
+     "y": 0.92
+    },
+    {
+     "id": "h12",
+     "type": "door",
+     "x": 0.12,
+     "y": 0.84,
+     "arrow": "left"
+    },
+    {
+     "id": "h13",
+     "type": "door",
+     "x": 0.39,
+     "y": 0.84,
+     "arrow": "up"
+    },
+    {
+     "id": "flipBottom",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.94,
+     "edge": "bottom"
+    }
+   ],
+   "edges": [
+    [
+     "start",
+     "h1"
+    ],
+    [
+     "top",
+     "h1"
+    ],
+    [
+     "top",
+     "flipTop"
+    ],
+    [
+     "frame",
+     "flipLeftTop"
+    ],
+    [
+     "frame",
+     "flipRightTop"
+    ],
+    [
+     "frame",
+     "h2"
+    ],
+    [
+     "box",
+     "h2"
+    ],
+    [
+     "frame",
+     "h3"
+    ],
+    [
+     "box",
+     "h3"
+    ],
+    [
+     "frame",
+     "h4"
+    ],
+    [
+     "box",
+     "h4"
+    ],
+    [
+     "box",
+     "keeper"
+    ],
+    [
+     "box",
+     "exit"
+    ],
+    [
+     "box",
+     "h5"
+    ],
+    [
+     "fll",
+     "h5"
+    ],
+    [
+     "fll",
+     "flipLeftLow"
+    ],
+    [
+     "sp1",
+     "h6"
+    ],
+    [
+     "frame",
+     "h6"
+    ],
+    [
+     "sp1",
+     "h7"
+    ],
+    [
+     "box",
+     "h7"
+    ],
+    [
+     "box",
+     "h8"
+    ],
+    [
+     "corr",
+     "h8"
+    ],
+    [
+     "box",
+     "h9"
+    ],
+    [
+     "corr",
+     "h9"
+    ],
+    [
+     "box",
+     "h10"
+    ],
+    [
+     "corr",
+     "h10"
+    ],
+    [
+     "box",
+     "h11"
+    ],
+    [
+     "corr",
+     "h11"
+    ],
+    [
+     "corr",
+     "flipRightLow"
+    ],
+    [
+     "corr",
+     "h14"
+    ],
+    [
+     "bottom",
+     "h14"
+    ],
+    [
+     "corr",
+     "h15"
+    ],
+    [
+     "bottom",
+     "h15"
+    ],
+    [
+     "fll",
+     "h12"
+    ],
+    [
+     "sp2",
+     "h12"
+    ],
+    [
+     "sp2",
+     "h13"
+    ],
+    [
+     "bottom",
+     "h13"
+    ],
+    [
+     "bottom",
+     "flipBottom"
+    ]
+   ]
+  },
+  "back": {
+   "nodes": [
+    {
+     "id": "top",
+     "type": "room",
+     "x": 0.49,
+     "y": 0.07
+    },
+    {
+     "id": "west",
+     "type": "room",
+     "x": 0.15,
+     "y": 0.37
+    },
+    {
+     "id": "east",
+     "type": "room",
+     "x": 0.85,
+     "y": 0.37
+    },
+    {
+     "id": "se",
+     "type": "room",
+     "x": 0.8,
+     "y": 0.66
+    },
+    {
+     "id": "sw",
+     "type": "room",
+     "x": 0.2,
+     "y": 0.75
+    },
+    {
+     "id": "flipTop",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.07,
+     "edge": "top"
+    },
+    {
+     "id": "sp1",
+     "type": "spin",
+     "x": 0.15,
+     "y": 0.09
+    },
+    {
+     "id": "k1",
+     "type": "door",
+     "x": 0.31,
+     "y": 0.09,
+     "arrow": "down"
+    },
+    {
+     "id": "k2",
+     "type": "door",
+     "x": 0.13,
+     "y": 0.22,
+     "arrow": "left"
+    },
+    {
+     "id": "k3",
+     "type": "door",
+     "x": 0.45,
+     "y": 0.22,
+     "arrow": "down"
+    },
+    {
+     "id": "flipLeftTop",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.37,
+     "edge": "left"
+    },
+    {
+     "id": "k4",
+     "type": "door",
+     "x": 0.55,
+     "y": 0.36,
+     "arrow": "right"
+    },
+    {
+     "id": "flipRightTop",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.37,
+     "edge": "right"
+    },
+    {
+     "id": "k5",
+     "type": "door",
+     "x": 0.63,
+     "y": 0.49,
+     "arrow": "left"
+    },
+    {
+     "id": "k6",
+     "type": "door",
+     "x": 0.77,
+     "y": 0.49,
+     "arrow": "up"
+    },
+    {
+     "id": "flipRightLow",
+     "type": "flip",
+     "x": 0.92,
+     "y": 0.63,
+     "edge": "right"
+    },
+    {
+     "id": "k7",
+     "type": "door",
+     "x": 0.46,
+     "y": 0.63,
+     "arrow": "left"
+    },
+    {
+     "id": "flipLeftLow",
+     "type": "flip",
+     "x": 0.08,
+     "y": 0.63,
+     "edge": "left"
+    },
+    {
+     "id": "flipBottom",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.94,
+     "edge": "bottom"
+    },
+    {
+     "id": "sp2",
+     "type": "spin",
+     "x": 0.5,
+     "y": 0.77
+    },
+    {
+     "id": "k8",
+     "type": "door",
+     "x": 0.28,
+     "y": 0.77,
+     "arrow": "right"
+    },
+    {
+     "id": "k9",
+     "type": "door",
+     "x": 0.71,
+     "y": 0.77,
+     "arrow": "down"
+    },
+    {
+     "id": "k10",
+     "type": "door",
+     "x": 0.78,
+     "y": 0.91,
+     "arrow": "up"
+    }
+   ],
+   "edges": [
+    [
+     "top",
+     "flipTop"
+    ],
+    [
+     "top",
+     "k1"
+    ],
+    [
+     "sp1",
+     "k1"
+    ],
+    [
+     "sp1",
+     "k2"
+    ],
+    [
+     "west",
+     "k2"
+    ],
+    [
+     "top",
+     "k3"
+    ],
+    [
+     "west",
+     "k3"
+    ],
+    [
+     "west",
+     "flipLeftTop"
+    ],
+    [
+     "west",
+     "k4"
+    ],
+    [
+     "east",
+     "k4"
+    ],
+    [
+     "east",
+     "flipRightTop"
+    ],
+    [
+     "east",
+     "k5"
+    ],
+    [
+     "se",
+     "k5"
+    ],
+    [
+     "east",
+     "k6"
+    ],
+    [
+     "se",
+     "k6"
+    ],
+    [
+     "se",
+     "flipRightLow"
+    ],
+    [
+     "se",
+     "k7"
+    ],
+    [
+     "sw",
+     "k7"
+    ],
+    [
+     "sw",
+     "flipLeftLow"
+    ],
+    [
+     "sw",
+     "flipBottom"
+    ],
+    [
+     "sw",
+     "k8"
+    ],
+    [
+     "sp2",
+     "k8"
+    ],
+    [
+     "sp2",
+     "k9"
+    ],
+    [
+     "se",
+     "k9"
+    ],
+    [
+     "sw",
+     "k10"
+    ],
+    [
+     "se",
+     "k10"
+    ]
+   ]
+  }
+ }
+}

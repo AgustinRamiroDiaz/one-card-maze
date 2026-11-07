@@ -1,0 +1,77 @@
+{
+  "status": "draft",
+  "notes": "Find Nibaa! bookmark tutorial (tall card). Painted water paths; regions from a blurred brightness flood fill plus the tutorial text, so connections are approximate. Intended route per the card text: start, door up (1), flip top (3), back: spin (4) and rotate, flip back to the front, door down (2) now open, red band y~0.5, flip left to the back right/orange area, door up (0.59,0.45) into Nibaa. Doubts: which side of back door right (0.60,0.29) is the Nibaa room (mapped green corridor -> Nibaa); back lower half (doors at 0.27-0.45 y 0.49-0.72, BL spin, bottom spins/doors) mapped coarsely and not verified; front blue region assumed to reach the top of door down (0.38,0.42).",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.2, "y": 0.17 },
+        { "id": "door1", "type": "door", "x": 0.52, "y": 0.18, "arrow": "up" },
+        { "id": "falls", "type": "room", "x": 0.6, "y": 0.25 },
+        { "id": "flipTop", "type": "flip", "x": 0.65, "y": 0.03, "edge": "top" },
+        { "id": "doorTR", "type": "door", "x": 0.87, "y": 0.17, "arrow": "left" },
+        { "id": "flipR1", "type": "flip", "x": 0.92, "y": 0.25, "edge": "right" },
+        { "id": "door2", "type": "door", "x": 0.38, "y": 0.42, "arrow": "down" },
+        { "id": "band", "type": "room", "x": 0.5, "y": 0.5 },
+        { "id": "flipL2", "type": "flip", "x": 0.08, "y": 0.5, "edge": "left" },
+        { "id": "flipR2", "type": "flip", "x": 0.92, "y": 0.5, "edge": "right" },
+        { "id": "doorS1", "type": "door", "x": 0.64, "y": 0.55, "arrow": "right" },
+        { "id": "spin", "type": "spin", "x": 0.62, "y": 0.63 },
+        { "id": "doorS2", "type": "door", "x": 0.65, "y": 0.69, "arrow": "left" },
+        { "id": "lower", "type": "room", "x": 0.5, "y": 0.8 },
+        { "id": "flipR3", "type": "flip", "x": 0.92, "y": 0.74, "edge": "right" },
+        { "id": "flipBottom", "type": "flip", "x": 0.35, "y": 0.98, "edge": "bottom" },
+        { "id": "doorL3", "type": "door", "x": 0.28, "y": 0.74, "arrow": "down" },
+        { "id": "L3", "type": "room", "x": 0.15, "y": 0.74 },
+        { "id": "flipL3", "type": "flip", "x": 0.08, "y": 0.74, "edge": "left" }
+      ],
+      "edges": [
+        ["start", "door1"], ["door1", "falls"], ["falls", "flipTop"], ["falls", "doorTR"], ["doorTR", "flipR1"],
+        ["falls", "door2"], ["door2", "band"], ["band", "flipL2"], ["band", "flipR2"], ["band", "doorS1"],
+        ["doorS1", "spin"], ["spin", "doorS2"], ["doorS2", "lower"], ["lower", "flipR3"], ["lower", "flipBottom"],
+        ["lower", "doorL3"], ["doorL3", "L3"], ["L3", "flipL3"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.35, "y": 0.03, "edge": "top" },
+        { "id": "top", "type": "room", "x": 0.35, "y": 0.15 },
+        { "id": "spinTR", "type": "spin", "x": 0.9, "y": 0.24 },
+        { "id": "green", "type": "room", "x": 0.25, "y": 0.28 },
+        { "id": "flipL1", "type": "flip", "x": 0.08, "y": 0.25, "edge": "left" },
+        { "id": "doorN1", "type": "door", "x": 0.6, "y": 0.29, "arrow": "right" },
+        { "id": "exit", "type": "exit", "x": 0.6, "y": 0.38 },
+        { "id": "doorN2", "type": "door", "x": 0.59, "y": 0.45, "arrow": "up" },
+        { "id": "orange", "type": "room", "x": 0.75, "y": 0.55 },
+        { "id": "flipR2", "type": "flip", "x": 0.92, "y": 0.5, "edge": "right" },
+        { "id": "flipR3", "type": "flip", "x": 0.92, "y": 0.74, "edge": "right" },
+        { "id": "flipL2", "type": "flip", "x": 0.08, "y": 0.5, "edge": "left" },
+        { "id": "doorM1", "type": "door", "x": 0.37, "y": 0.49, "arrow": "down" },
+        { "id": "doorM2", "type": "door", "x": 0.27, "y": 0.55, "arrow": "down" },
+        { "id": "spinMid", "type": "spin", "x": 0.41, "y": 0.6 },
+        { "id": "doorM3", "type": "door", "x": 0.29, "y": 0.72, "arrow": "up" },
+        { "id": "doorM4", "type": "door", "x": 0.45, "y": 0.72, "arrow": "up" },
+        { "id": "lowCols", "type": "room", "x": 0.37, "y": 0.82 },
+        { "id": "L3", "type": "room", "x": 0.15, "y": 0.76 },
+        { "id": "flipL3", "type": "flip", "x": 0.08, "y": 0.74, "edge": "left" },
+        { "id": "doorBL1", "type": "door", "x": 0.16, "y": 0.84, "arrow": "left" },
+        { "id": "spinBL", "type": "spin", "x": 0.12, "y": 0.9 },
+        { "id": "doorBL2", "type": "door", "x": 0.41, "y": 0.94, "arrow": "right" },
+        { "id": "doorBR1", "type": "door", "x": 0.63, "y": 0.78, "arrow": "left" },
+        { "id": "spinBR", "type": "spin", "x": 0.65, "y": 0.84 },
+        { "id": "doorBR2", "type": "door", "x": 0.67, "y": 0.9, "arrow": "right" },
+        { "id": "bottom", "type": "room", "x": 0.6, "y": 0.95 },
+        { "id": "flipBottom", "type": "flip", "x": 0.65, "y": 0.98, "edge": "bottom" }
+      ],
+      "edges": [
+        ["flipTop", "top"], ["top", "spinTR"], ["flipL1", "green"], ["green", "flipL2"], ["green", "doorN1"],
+        ["doorN1", "exit"], ["exit", "doorN2"], ["doorN2", "orange"], ["orange", "flipR2"], ["orange", "flipR3"],
+        ["green", "doorM1"], ["doorM1", "spinMid"], ["green", "doorM2"], ["doorM2", "spinMid"],
+        ["spinMid", "doorM3"], ["doorM3", "lowCols"], ["spinMid", "doorM4"], ["doorM4", "lowCols"],
+        ["lowCols", "L3"], ["L3", "flipL3"], ["L3", "doorBL1"], ["doorBL1", "spinBL"], ["spinBL", "doorBL2"],
+        ["doorBL2", "bottom"], ["orange", "doorBR1"], ["doorBR1", "spinBR"], ["spinBR", "doorBR2"],
+        ["doorBR2", "bottom"], ["bottom", "flipBottom"]
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "status": "draft",
+  "notes": "2CM PART 1 (#63). Three exits A, B, C on the front, each continuing as a start on card #64; only one is the right one, which can't be told from this card alone. Exit C: start, tunnel, spin room, door right, corridor, door down. Exits A/B: from the front top area (reached from the back top flip), door left to A or door up to B. Front left column joins both left flip areas and the right column joins both right flip areas (assumed from merged outlines). Back right-side ring around a dirt island holds the spin and opens to the top-right flip area through three doors (up, right, down).",
+  "mechanics": [
+    { "type": "other", "text": "There are three EXITS on this card which correspond to three STARTS on Card #64 but only one path is correct!" }
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.5, "y": 0.47 },
+        { "id": "jS", "type": "junction", "x": 0.7, "y": 0.73 },
+        { "id": "spinF", "type": "spin", "x": 0.75, "y": 0.83 },
+        { "id": "doorF3", "type": "door", "x": 0.6, "y": 0.82, "arrow": "right" },
+        { "id": "corr", "type": "junction", "x": 0.5, "y": 0.83 },
+        { "id": "doorF4", "type": "door", "x": 0.4, "y": 0.82, "arrow": "down" },
+        { "id": "exitC", "type": "exit", "x": 0.21, "y": 0.86 },
+        { "id": "bottomArea", "type": "room", "x": 0.5, "y": 0.92 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "topArea", "type": "room", "x": 0.5, "y": 0.09 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "doorF1", "type": "door", "x": 0.41, "y": 0.19, "arrow": "up" },
+        { "id": "tunnelB", "type": "junction", "x": 0.45, "y": 0.28 },
+        { "id": "exitB", "type": "exit", "x": 0.66, "y": 0.31 },
+        { "id": "doorF2", "type": "door", "x": 0.61, "y": 0.15, "arrow": "left" },
+        { "id": "exitA", "type": "exit", "x": 0.79, "y": 0.16 },
+        { "id": "leftA", "type": "room", "x": 0.09, "y": 0.38 },
+        { "id": "flipLeftA", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "leftCol", "type": "junction", "x": 0.19, "y": 0.5 },
+        { "id": "leftB", "type": "room", "x": 0.1, "y": 0.64 },
+        { "id": "flipLeftB", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left" },
+        { "id": "rightA", "type": "room", "x": 0.9, "y": 0.38 },
+        { "id": "flipRightA", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "rightCol", "type": "junction", "x": 0.82, "y": 0.5 },
+        { "id": "rightB", "type": "room", "x": 0.9, "y": 0.64 },
+        { "id": "flipRightB", "type": "flip", "x": 0.93, "y": 0.63, "edge": "right" }
+      ],
+      "edges": [
+        ["start", "jS"], ["jS", "spinF"], ["spinF", "doorF3"], ["doorF3", "corr"], ["corr", "doorF4"],
+        ["doorF4", "exitC"], ["corr", "bottomArea"], ["bottomArea", "flipBottom"],
+        ["topArea", "flipTop"], ["topArea", "doorF1"], ["doorF1", "tunnelB"], ["tunnelB", "exitB"],
+        ["topArea", "doorF2"], ["doorF2", "exitA"],
+        ["leftA", "flipLeftA"], ["leftA", "leftCol"], ["leftCol", "leftB"], ["leftB", "flipLeftB"],
+        ["rightA", "flipRightA"], ["rightA", "rightCol"], ["rightCol", "rightB"], ["rightB", "flipRightB"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "topArea", "type": "room", "x": 0.5, "y": 0.09 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "jT", "type": "junction", "x": 0.44, "y": 0.25 },
+        { "id": "leftA", "type": "room", "x": 0.1, "y": 0.37 },
+        { "id": "flipLeftA", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "doorD1", "type": "door", "x": 0.47, "y": 0.42, "arrow": "down" },
+        { "id": "jMid", "type": "junction", "x": 0.6, "y": 0.62 },
+        { "id": "rightB", "type": "room", "x": 0.88, "y": 0.64 },
+        { "id": "flipRightB", "type": "flip", "x": 0.92, "y": 0.63, "edge": "right" },
+        { "id": "spin1", "type": "spin", "x": 0.65, "y": 0.36 },
+        { "id": "doorU1", "type": "door", "x": 0.75, "y": 0.21, "arrow": "up" },
+        { "id": "doorR1", "type": "door", "x": 0.79, "y": 0.35, "arrow": "right" },
+        { "id": "doorD2", "type": "door", "x": 0.76, "y": 0.5, "arrow": "down" },
+        { "id": "rightA", "type": "room", "x": 0.92, "y": 0.4 },
+        { "id": "flipRightA", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "leftB", "type": "room", "x": 0.08, "y": 0.66 },
+        { "id": "flipLeftB", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left" },
+        { "id": "doorR2", "type": "door", "x": 0.46, "y": 0.64, "arrow": "right" },
+        { "id": "doorD3", "type": "door", "x": 0.38, "y": 0.74, "arrow": "down" },
+        { "id": "jLow", "type": "junction", "x": 0.5, "y": 0.82 },
+        { "id": "bottomArea", "type": "room", "x": 0.5, "y": 0.93 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "doorL1", "type": "door", "x": 0.66, "y": 0.8, "arrow": "left" },
+        { "id": "spin2", "type": "spin", "x": 0.8, "y": 0.84 },
+        { "id": "doorU2", "type": "door", "x": 0.8, "y": 0.72, "arrow": "up" }
+      ],
+      "edges": [
+        ["topArea", "flipTop"], ["topArea", "jT"], ["jT", "leftA"], ["leftA", "flipLeftA"],
+        ["jT", "doorD1"], ["doorD1", "jMid"], ["jMid", "rightB"], ["rightB", "flipRightB"],
+        ["spin1", "doorU1"], ["doorU1", "rightA"], ["spin1", "doorR1"], ["doorR1", "rightA"],
+        ["spin1", "doorD2"], ["doorD2", "rightA"], ["rightA", "flipRightA"],
+        ["leftB", "flipLeftB"], ["leftB", "doorR2"], ["doorR2", "jMid"], ["leftB", "doorD3"],
+        ["doorD3", "jLow"], ["jMid", "jLow"], ["jLow", "bottomArea"], ["bottomArea", "flipBottom"],
+        ["jLow", "doorL1"], ["doorL1", "spin2"], ["spin2", "doorU2"], ["doorU2", "jMid"]
+      ]
+    }
+  }
+}

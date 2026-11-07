@@ -1,0 +1,81 @@
+{
+  "status": "draft",
+  "notes": "Front paths are the pale corridors; back paths are the pale pink bands. Start on the front, exit on the back (centre circle). Doubts: (1) front bottom-left: unsure how the door-up (0.22,0.75) chamber joins the left band; mapped as left band -> door up -> spin, plus left band -> door down (0.37,0.77) -> spin. (2) front inner loop (0.52-0.75,0.15-0.33) only opens to the right area via its bottom bar. (3) back: the band from the door-left (0.16,0.22) and the curve from the door-down (0.3,0.31) are both mapped as joining the left-flip band. (4) back: bottom-right spin is not connected to the right flip area.",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.56, "y": 0.67 },
+        { "id": "doorUs", "type": "door", "x": 0.71, "y": 0.67, "arrow": "up" },
+        { "id": "rightCol", "type": "junction", "x": 0.84, "y": 0.7 },
+        { "id": "doorUr", "type": "door", "x": 0.84, "y": 0.55, "arrow": "up" },
+        { "id": "rightArea", "type": "room", "x": 0.9, "y": 0.42 },
+        { "id": "flipR", "type": "flip", "x": 0.86, "y": 0.37, "edge": "right" },
+        { "id": "doorUb", "type": "door", "x": 0.73, "y": 0.89, "arrow": "up" },
+        { "id": "bottomArea", "type": "room", "x": 0.5, "y": 0.95 },
+        { "id": "flipB", "type": "flip", "x": 0.5, "y": 0.9, "edge": "bottom" },
+        { "id": "bottomBar", "type": "junction", "x": 0.65, "y": 0.32 },
+        { "id": "spinTR", "type": "spin", "x": 0.81, "y": 0.21 },
+        { "id": "doorDin", "type": "door", "x": 0.57, "y": 0.24, "arrow": "down" },
+        { "id": "topBar", "type": "junction", "x": 0.6, "y": 0.17 },
+        { "id": "doorUin", "type": "door", "x": 0.73, "y": 0.13, "arrow": "up" },
+        { "id": "doorL", "type": "door", "x": 0.62, "y": 0.4, "arrow": "left" },
+        { "id": "column", "type": "junction", "x": 0.47, "y": 0.35 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.11, "edge": "top" },
+        { "id": "diag", "type": "junction", "x": 0.38, "y": 0.57 },
+        { "id": "doorR", "type": "door", "x": 0.29, "y": 0.58, "arrow": "right" },
+        { "id": "leftBand", "type": "room", "x": 0.08, "y": 0.62 },
+        { "id": "flipL", "type": "flip", "x": 0.15, "y": 0.62, "edge": "left" },
+        { "id": "doorUbl", "type": "door", "x": 0.22, "y": 0.75, "arrow": "up" },
+        { "id": "doorDbl", "type": "door", "x": 0.37, "y": 0.77, "arrow": "down" },
+        { "id": "spinBL", "type": "spin", "x": 0.26, "y": 0.84 }
+      ],
+      "edges": [
+        ["start", "doorUs"], ["doorUs", "rightCol"], ["rightCol", "doorUr"], ["doorUr", "rightArea"], ["rightArea", "flipR"],
+        ["rightCol", "doorUb"], ["doorUb", "bottomArea"], ["bottomArea", "flipB"],
+        ["rightArea", "bottomBar"], ["bottomBar", "spinTR"], ["bottomBar", "doorDin"], ["doorDin", "topBar"], ["topBar", "doorUin"], ["doorUin", "spinTR"],
+        ["rightArea", "doorL"], ["doorL", "column"], ["column", "flipTop"], ["column", "diag"], ["diag", "doorR"], ["doorR", "leftBand"], ["leftBand", "flipL"],
+        ["leftBand", "doorUbl"], ["doorUbl", "spinBL"], ["leftBand", "doorDbl"], ["doorDbl", "spinBL"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.11, "edge": "top" },
+        { "id": "topArea", "type": "room", "x": 0.5, "y": 0.05 },
+        { "id": "J", "type": "junction", "x": 0.62, "y": 0.29 },
+        { "id": "doorRtr", "type": "door", "x": 0.66, "y": 0.19, "arrow": "right" },
+        { "id": "spinTR", "type": "spin", "x": 0.81, "y": 0.13 },
+        { "id": "doorUtr", "type": "door", "x": 0.78, "y": 0.27, "arrow": "up" },
+        { "id": "rightCurve", "type": "junction", "x": 0.78, "y": 0.45 },
+        { "id": "rightArea", "type": "room", "x": 0.92, "y": 0.6 },
+        { "id": "flipR", "type": "flip", "x": 0.86, "y": 0.61, "edge": "right" },
+        { "id": "doorLexit", "type": "door", "x": 0.62, "y": 0.43, "arrow": "left" },
+        { "id": "exit", "type": "exit", "x": 0.46, "y": 0.51 },
+        { "id": "spinTL", "type": "spin", "x": 0.31, "y": 0.15 },
+        { "id": "doorLtl", "type": "door", "x": 0.16, "y": 0.22, "arrow": "left" },
+        { "id": "doorDtl", "type": "door", "x": 0.3, "y": 0.31, "arrow": "down" },
+        { "id": "leftArea", "type": "room", "x": 0.06, "y": 0.38 },
+        { "id": "flipL", "type": "flip", "x": 0.14, "y": 0.38, "edge": "left" },
+        { "id": "leftCurve", "type": "junction", "x": 0.19, "y": 0.45 },
+        { "id": "J2", "type": "junction", "x": 0.26, "y": 0.56 },
+        { "id": "doorUbl", "type": "door", "x": 0.17, "y": 0.68, "arrow": "up" },
+        { "id": "spinBL", "type": "spin", "x": 0.18, "y": 0.83 },
+        { "id": "doorRbl", "type": "door", "x": 0.32, "y": 0.81, "arrow": "right" },
+        { "id": "J3", "type": "junction", "x": 0.35, "y": 0.73 },
+        { "id": "doorDb", "type": "door", "x": 0.53, "y": 0.77, "arrow": "down" },
+        { "id": "spinBR", "type": "spin", "x": 0.78, "y": 0.84 },
+        { "id": "midCurve", "type": "junction", "x": 0.58, "y": 0.63 },
+        { "id": "doorUbr", "type": "door", "x": 0.63, "y": 0.66, "arrow": "up" },
+        { "id": "bottomArea", "type": "room", "x": 0.48, "y": 0.95 },
+        { "id": "flipB", "type": "flip", "x": 0.5, "y": 0.9, "edge": "bottom" }
+      ],
+      "edges": [
+        ["topArea", "flipTop"], ["topArea", "J"], ["J", "doorRtr"], ["doorRtr", "spinTR"], ["spinTR", "doorUtr"], ["doorUtr", "J"],
+        ["J", "rightCurve"], ["rightCurve", "rightArea"], ["rightArea", "flipR"], ["J", "doorLexit"], ["doorLexit", "exit"],
+        ["spinTL", "doorLtl"], ["doorLtl", "leftArea"], ["leftArea", "flipL"], ["spinTL", "doorDtl"], ["doorDtl", "leftCurve"], ["leftArea", "leftCurve"], ["leftCurve", "J2"],
+        ["J2", "doorUbl"], ["doorUbl", "spinBL"], ["spinBL", "doorRbl"], ["doorRbl", "J3"], ["J2", "J3"], ["J3", "doorDb"], ["doorDb", "spinBR"], ["J3", "bottomArea"], ["bottomArea", "flipB"],
+        ["J2", "midCurve"], ["midCurve", "doorUbr"], ["doorUbr", "spinBR"]
+      ]
+    }
+  }
+}

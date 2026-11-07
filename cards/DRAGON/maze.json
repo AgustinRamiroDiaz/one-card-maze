@@ -1,0 +1,79 @@
+{
+  "status": "draft",
+  "notes": "Boss card: no exit; the castle on the front is the Lair. Win by entering the Lair in the four sword orientations in order; entering in a wrong orientation gives the boss an attack. Castle wall gaps (lair entrances) at top (0.5,0.21), left (0.29,0.54), right (0.72,0.43) and (0.72,0.6), bottom (0.48,0.77). Front lower-right flip region looks walled off (dead end reachable only by flipping). Connections checked with a connected-component pass. The front has no spins, so orientation changes all happen on the back; full sequence not traced.",
+  "mechanics": [ { "type": "boss", "text": "Enter the Lair in the correct orientations in sequence: 1 up, 2 down, 3 right, 4 up. Entering the Lair in the incorrect orientation lets the BOSS ATTACK you; if the BOSS has more ATTACKS on you than you have on it, you lose." } ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.45, "y": 0.9 },
+        { "id": "doorStart", "type": "door", "x": 0.71, "y": 0.89, "arrow": "up" },
+        { "id": "stream", "type": "junction", "x": 0.85, "y": 0.85 },
+        { "id": "streamUp", "type": "junction", "x": 0.76, "y": 0.62 },
+        { "id": "lair", "type": "special", "x": 0.5, "y": 0.5, "label": "Lair" },
+        { "id": "topStem", "type": "room", "x": 0.5, "y": 0.15 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "neRoom", "type": "room", "x": 0.85, "y": 0.4 },
+        { "id": "flipR1", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "seRoom", "type": "room", "x": 0.88, "y": 0.64 },
+        { "id": "flipR2", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right" },
+        { "id": "nwRoom", "type": "room", "x": 0.12, "y": 0.36 },
+        { "id": "flipL1", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "doorW", "type": "door", "x": 0.23, "y": 0.48, "arrow": "up" },
+        { "id": "swRoom", "type": "room", "x": 0.12, "y": 0.64 },
+        { "id": "flipL2", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left" },
+        { "id": "swCurl", "type": "junction", "x": 0.15, "y": 0.86 },
+        { "id": "doorSW", "type": "door", "x": 0.27, "y": 0.84, "arrow": "up" },
+        { "id": "southCorr", "type": "junction", "x": 0.38, "y": 0.8 }
+      ],
+      "edges": [
+        ["start", "doorStart"], ["doorStart", "stream"], ["stream", "streamUp"], ["streamUp", "lair"], ["streamUp", "neRoom"],
+        ["flipTop", "topStem"], ["topStem", "lair"], ["neRoom", "flipR1"], ["neRoom", "lair"],
+        ["seRoom", "flipR2"],
+        ["nwRoom", "flipL1"], ["nwRoom", "doorW"], ["doorW", "lair"],
+        ["swRoom", "flipL2"], ["swRoom", "swCurl"], ["swCurl", "doorSW"], ["doorSW", "southCorr"], ["southCorr", "lair"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
+        { "id": "topRoom", "type": "room", "x": 0.5, "y": 0.12 },
+        { "id": "doorNW1", "type": "door", "x": 0.325, "y": 0.15, "arrow": "left" },
+        { "id": "spinNWroom", "type": "room", "x": 0.18, "y": 0.16 },
+        { "id": "spinNW", "type": "spin", "x": 0.17, "y": 0.155 },
+        { "id": "doorNW2", "type": "door", "x": 0.32, "y": 0.255, "arrow": "up" },
+        { "id": "doorN", "type": "door", "x": 0.555, "y": 0.205, "arrow": "down" },
+        { "id": "spinNroom", "type": "room", "x": 0.58, "y": 0.32 },
+        { "id": "spinN", "type": "spin", "x": 0.57, "y": 0.315 },
+        { "id": "doorNE", "type": "door", "x": 0.715, "y": 0.385, "arrow": "right" },
+        { "id": "winding", "type": "junction", "x": 0.8, "y": 0.2 },
+        { "id": "neRoom", "type": "room", "x": 0.88, "y": 0.38 },
+        { "id": "flipR1", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "bigRoom", "type": "room", "x": 0.6, "y": 0.55 },
+        { "id": "spinBig", "type": "spin", "x": 0.62, "y": 0.55 },
+        { "id": "doorW1", "type": "door", "x": 0.34, "y": 0.36, "arrow": "right" },
+        { "id": "nwRoom", "type": "room", "x": 0.15, "y": 0.36 },
+        { "id": "flipL1", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "doorW2", "type": "door", "x": 0.355, "y": 0.455, "arrow": "down" },
+        { "id": "doorW3", "type": "door", "x": 0.265, "y": 0.515, "arrow": "right" },
+        { "id": "spinWroom", "type": "room", "x": 0.37, "y": 0.56 },
+        { "id": "spinW", "type": "spin", "x": 0.365, "y": 0.58 },
+        { "id": "doorW4", "type": "door", "x": 0.375, "y": 0.715, "arrow": "right" },
+        { "id": "swRoom", "type": "room", "x": 0.15, "y": 0.64 },
+        { "id": "flipL2", "type": "flip", "x": 0.07, "y": 0.64, "edge": "left" },
+        { "id": "doorSW", "type": "door", "x": 0.33, "y": 0.805, "arrow": "right" },
+        { "id": "southRoom", "type": "room", "x": 0.55, "y": 0.88 },
+        { "id": "spinS", "type": "spin", "x": 0.515, "y": 0.9 },
+        { "id": "seRoom", "type": "room", "x": 0.88, "y": 0.64 },
+        { "id": "flipR2", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right" }
+      ],
+      "edges": [
+        ["flipTop", "topRoom"], ["topRoom", "doorNW1"], ["doorNW1", "spinNWroom"], ["spinNWroom", "spinNW"], ["spinNWroom", "doorNW2"], ["doorNW2", "bigRoom"],
+        ["topRoom", "doorN"], ["doorN", "spinNroom"], ["spinNroom", "spinN"], ["spinNroom", "doorNE"], ["doorNE", "neRoom"],
+        ["topRoom", "winding"], ["winding", "neRoom"], ["neRoom", "flipR1"],
+        ["bigRoom", "spinBig"], ["bigRoom", "doorW1"], ["doorW1", "nwRoom"], ["nwRoom", "flipL1"], ["nwRoom", "doorW2"], ["nwRoom", "doorW3"],
+        ["doorW2", "spinWroom"], ["doorW3", "spinWroom"], ["spinWroom", "spinW"],
+        ["bigRoom", "doorW4"], ["doorW4", "swRoom"], ["swRoom", "flipL2"], ["swRoom", "doorSW"], ["doorSW", "southRoom"], ["southRoom", "spinS"], ["southRoom", "seRoom"], ["seRoom", "flipR2"]
+      ]
+    }
+  }
+}

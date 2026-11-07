@@ -1,0 +1,82 @@
+{
+  "status": "draft",
+  "notes": "Playtest card C5. Two starts (A, B) on the front and two exits (A, B) on the back; presumably start A goes to exit A and start B to exit B (two players or two puzzles). Both starts are 'start' nodes, so the validator warns about 2 starts. Back: door-right at (0.31,0.21) sits where the top-circle-to-left-flip diagonal meets the spin branch; mapped as a door on all three branches.",
+  "mechanics": [ { "type": "other", "text": "START A / START B and EXIT A / EXIT B: two separate routes on one card." } ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top" },
+        { "id": "doorRtop", "type": "door", "x": 0.68, "y": 0.07, "arrow": "right" },
+        { "id": "spinTR", "type": "spin", "x": 0.83, "y": 0.1 },
+        { "id": "doorDtr", "type": "door", "x": 0.88, "y": 0.24, "arrow": "down" },
+        { "id": "flipR1", "type": "flip", "x": 0.92, "y": 0.36, "edge": "right" },
+        { "id": "flipL1", "type": "flip", "x": 0.08, "y": 0.36, "edge": "left" },
+        { "id": "jTR", "type": "junction", "x": 0.69, "y": 0.22 },
+        { "id": "doorLc", "type": "door", "x": 0.6, "y": 0.26, "arrow": "left" },
+        { "id": "spinC", "type": "spin", "x": 0.44, "y": 0.33 },
+        { "id": "doorUl", "type": "door", "x": 0.26, "y": 0.35, "arrow": "up" },
+        { "id": "startA", "type": "start", "x": 0.43, "y": 0.52 },
+        { "id": "doorUa", "type": "door", "x": 0.62, "y": 0.39, "arrow": "up" },
+        { "id": "startB", "type": "start", "x": 0.44, "y": 0.67 },
+        { "id": "doorUb", "type": "door", "x": 0.63, "y": 0.75, "arrow": "up" },
+        { "id": "jBR", "type": "junction", "x": 0.7, "y": 0.78 },
+        { "id": "flipR2", "type": "flip", "x": 0.92, "y": 0.64, "edge": "right" },
+        { "id": "flipL2", "type": "flip", "x": 0.08, "y": 0.64, "edge": "left" },
+        { "id": "doorLl", "type": "door", "x": 0.27, "y": 0.7, "arrow": "left" },
+        { "id": "doorDbl", "type": "door", "x": 0.12, "y": 0.81, "arrow": "down" },
+        { "id": "spinBL", "type": "spin", "x": 0.18, "y": 0.89 },
+        { "id": "doorRbl", "type": "door", "x": 0.31, "y": 0.94, "arrow": "right" },
+        { "id": "flipB", "type": "flip", "x": 0.5, "y": 0.94, "edge": "bottom" }
+      ],
+      "edges": [
+        ["flipTop", "doorRtop"], ["doorRtop", "spinTR"], ["spinTR", "doorDtr"], ["doorDtr", "flipR1"],
+        ["flipTop", "flipL1"], ["flipTop", "jTR"], ["jTR", "flipR1"], ["jTR", "doorLc"], ["doorLc", "spinC"], ["spinC", "doorUl"], ["doorUl", "flipL1"],
+        ["startA", "doorUa"], ["doorUa", "flipR1"],
+        ["startB", "doorUb"], ["doorUb", "jBR"], ["jBR", "flipR2"], ["jBR", "flipB"],
+        ["flipL2", "doorLl"], ["doorLl", "flipB"], ["flipL2", "doorDbl"], ["doorDbl", "spinBL"], ["spinBL", "doorRbl"], ["doorRbl", "flipB"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top" },
+        { "id": "doorDtl", "type": "door", "x": 0.3, "y": 0.1, "arrow": "down" },
+        { "id": "spinTL", "type": "spin", "x": 0.14, "y": 0.1 },
+        { "id": "doorUtl", "type": "door", "x": 0.1, "y": 0.21, "arrow": "up" },
+        { "id": "doorRfork", "type": "door", "x": 0.31, "y": 0.21, "arrow": "right" },
+        { "id": "flipL1", "type": "flip", "x": 0.08, "y": 0.36, "edge": "left" },
+        { "id": "doorDtr", "type": "door", "x": 0.62, "y": 0.13, "arrow": "down" },
+        { "id": "spinTR", "type": "spin", "x": 0.75, "y": 0.18 },
+        { "id": "doorLtr", "type": "door", "x": 0.79, "y": 0.29, "arrow": "left" },
+        { "id": "flipR1", "type": "flip", "x": 0.92, "y": 0.36, "edge": "right" },
+        { "id": "doorLtop", "type": "door", "x": 0.58, "y": 0.23, "arrow": "left" },
+        { "id": "hub", "type": "junction", "x": 0.62, "y": 0.35 },
+        { "id": "doorUmid", "type": "door", "x": 0.39, "y": 0.36, "arrow": "up" },
+        { "id": "jL", "type": "junction", "x": 0.26, "y": 0.37 },
+        { "id": "doorRmid", "type": "door", "x": 0.57, "y": 0.43, "arrow": "right" },
+        { "id": "spinM", "type": "spin", "x": 0.5, "y": 0.55 },
+        { "id": "doorDr", "type": "door", "x": 0.75, "y": 0.5, "arrow": "down" },
+        { "id": "jR", "type": "junction", "x": 0.75, "y": 0.59 },
+        { "id": "flipR2", "type": "flip", "x": 0.92, "y": 0.64, "edge": "right" },
+        { "id": "doorLr", "type": "door", "x": 0.75, "y": 0.66, "arrow": "left" },
+        { "id": "exitB", "type": "exit", "x": 0.75, "y": 0.79 },
+        { "id": "doorDl", "type": "door", "x": 0.26, "y": 0.5, "arrow": "down" },
+        { "id": "jLL", "type": "junction", "x": 0.26, "y": 0.59 },
+        { "id": "doorUll", "type": "door", "x": 0.34, "y": 0.58, "arrow": "up" },
+        { "id": "flipL2", "type": "flip", "x": 0.08, "y": 0.64, "edge": "left" },
+        { "id": "doorRbl", "type": "door", "x": 0.33, "y": 0.79, "arrow": "right" },
+        { "id": "flipB", "type": "flip", "x": 0.5, "y": 0.94, "edge": "bottom" },
+        { "id": "doorUa", "type": "door", "x": 0.5, "y": 0.82, "arrow": "up" },
+        { "id": "exitA", "type": "exit", "x": 0.5, "y": 0.71 }
+      ],
+      "edges": [
+        ["flipTop", "doorDtl"], ["doorDtl", "spinTL"], ["spinTL", "doorUtl"], ["doorUtl", "flipL1"],
+        ["spinTL", "doorRfork"], ["doorRfork", "flipTop"], ["doorRfork", "flipL1"],
+        ["flipTop", "doorDtr"], ["doorDtr", "spinTR"], ["spinTR", "doorLtr"], ["doorLtr", "flipR1"],
+        ["flipTop", "doorLtop"], ["doorLtop", "hub"], ["hub", "flipR1"], ["hub", "doorUmid"], ["doorUmid", "jL"], ["jL", "flipL1"],
+        ["hub", "doorRmid"], ["doorRmid", "spinM"], ["hub", "doorDr"], ["doorDr", "jR"], ["jR", "flipR2"], ["jR", "doorLr"], ["doorLr", "exitB"],
+        ["jL", "doorDl"], ["doorDl", "jLL"], ["jLL", "flipL2"], ["jLL", "doorUll"], ["doorUll", "spinM"],
+        ["flipL2", "doorRbl"], ["doorRbl", "flipB"], ["flipB", "doorUa"], ["doorUa", "exitA"]
+      ]
+    }
+  }
+}

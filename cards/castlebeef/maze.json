@@ -1,0 +1,454 @@
+{
+ "status": "draft",
+ "notes": "CASTLEBEEF #112. Glowing lines are the paths. Start in the barrel (front top right), exit on the back (stone ring, centre). Front has no spin; back spins at (0.20,0.07) and (0.43,0.48). Doubts: the back image looks horizontally mirrored (EXIT and CASTLE BEEF text read reversed), and the side flip triangles do not line up in y with the front (front left 0.36/0.74, right 0.33/0.75; back left 0.26/0.67, right 0.25/0.63), so flip-pair warnings are expected; pairing intended is probably upper with upper and lower with lower. Front top: two branches from the top flip each through a door (0.46,0.27 right / 0.57,0.27 up) to the castle cross; assumed both reach the y 0.37 horizontal. Route not fully verified: with no front spin, rotation is only possible on the back; reaching exit door (0.48,0.31, arrow down) needs the card upside down, presumably via the back top-left spin loop or lower loop spin.",
+ "mechanics": [],
+ "sides": {
+  "front": {
+   "nodes": [
+    {
+     "id": "flipT",
+     "type": "flip",
+     "x": 0.5,
+     "y": 0.04,
+     "edge": "top"
+    },
+    {
+     "id": "jTop",
+     "type": "junction",
+     "x": 0.5,
+     "y": 0.11
+    },
+    {
+     "id": "doorL",
+     "type": "door",
+     "x": 0.46,
+     "y": 0.27,
+     "arrow": "right"
+    },
+    {
+     "id": "doorR",
+     "type": "door",
+     "x": 0.57,
+     "y": 0.27,
+     "arrow": "up"
+    },
+    {
+     "id": "crossC",
+     "type": "junction",
+     "x": 0.53,
+     "y": 0.37
+    },
+    {
+     "id": "start",
+     "type": "start",
+     "x": 0.83,
+     "y": 0.1
+    },
+    {
+     "id": "doorS",
+     "type": "door",
+     "x": 0.83,
+     "y": 0.23,
+     "arrow": "up"
+    },
+    {
+     "id": "jE",
+     "type": "junction",
+     "x": 0.85,
+     "y": 0.36
+    },
+    {
+     "id": "flipRU",
+     "type": "flip",
+     "x": 0.96,
+     "y": 0.33,
+     "edge": "right"
+    },
+    {
+     "id": "doorE",
+     "type": "door",
+     "x": 0.72,
+     "y": 0.37,
+     "arrow": "right"
+    },
+    {
+     "id": "doorW",
+     "type": "door",
+     "x": 0.31,
+     "y": 0.36,
+     "arrow": "left"
+    },
+    {
+     "id": "flipLU",
+     "type": "flip",
+     "x": 0.04,
+     "y": 0.36,
+     "edge": "left"
+    },
+    {
+     "id": "crossL",
+     "type": "junction",
+     "x": 0.52,
+     "y": 0.74
+    },
+    {
+     "id": "doorWL",
+     "type": "door",
+     "x": 0.3,
+     "y": 0.73,
+     "arrow": "left"
+    },
+    {
+     "id": "flipLL",
+     "type": "flip",
+     "x": 0.04,
+     "y": 0.74,
+     "edge": "left"
+    },
+    {
+     "id": "doorEL",
+     "type": "door",
+     "x": 0.73,
+     "y": 0.75,
+     "arrow": "right"
+    },
+    {
+     "id": "flipRL",
+     "type": "flip",
+     "x": 0.96,
+     "y": 0.74,
+     "edge": "right"
+    },
+    {
+     "id": "doorB",
+     "type": "door",
+     "x": 0.51,
+     "y": 0.83,
+     "arrow": "up"
+    },
+    {
+     "id": "flipB",
+     "type": "flip",
+     "x": 0.51,
+     "y": 0.96,
+     "edge": "bottom"
+    }
+   ],
+   "edges": [
+    [
+     "flipT",
+     "jTop"
+    ],
+    [
+     "jTop",
+     "doorL"
+    ],
+    [
+     "doorL",
+     "crossC"
+    ],
+    [
+     "jTop",
+     "doorR"
+    ],
+    [
+     "doorR",
+     "crossC"
+    ],
+    [
+     "start",
+     "doorS"
+    ],
+    [
+     "doorS",
+     "jE"
+    ],
+    [
+     "jE",
+     "flipRU"
+    ],
+    [
+     "crossC",
+     "doorE"
+    ],
+    [
+     "doorE",
+     "jE"
+    ],
+    [
+     "crossC",
+     "doorW"
+    ],
+    [
+     "doorW",
+     "flipLU"
+    ],
+    [
+     "crossC",
+     "crossL"
+    ],
+    [
+     "crossL",
+     "doorWL"
+    ],
+    [
+     "doorWL",
+     "flipLL"
+    ],
+    [
+     "crossL",
+     "doorEL"
+    ],
+    [
+     "doorEL",
+     "flipRL"
+    ],
+    [
+     "crossL",
+     "doorB"
+    ],
+    [
+     "doorB",
+     "flipB"
+    ]
+   ]
+  },
+  "back": {
+   "nodes": [
+    {
+     "id": "flipT",
+     "type": "flip",
+     "x": 0.49,
+     "y": 0.04,
+     "edge": "top"
+    },
+    {
+     "id": "jTop",
+     "type": "junction",
+     "x": 0.48,
+     "y": 0.26
+    },
+    {
+     "id": "jL",
+     "type": "junction",
+     "x": 0.12,
+     "y": 0.26
+    },
+    {
+     "id": "flipLU",
+     "type": "flip",
+     "x": 0.04,
+     "y": 0.26,
+     "edge": "left"
+    },
+    {
+     "id": "doorUL",
+     "type": "door",
+     "x": 0.13,
+     "y": 0.16,
+     "arrow": "up"
+    },
+    {
+     "id": "spinNW",
+     "type": "spin",
+     "x": 0.2,
+     "y": 0.07
+    },
+    {
+     "id": "doorUR",
+     "type": "door",
+     "x": 0.27,
+     "y": 0.16,
+     "arrow": "right"
+    },
+    {
+     "id": "jL2",
+     "type": "junction",
+     "x": 0.27,
+     "y": 0.26
+    },
+    {
+     "id": "flipRU",
+     "type": "flip",
+     "x": 0.96,
+     "y": 0.25,
+     "edge": "right"
+    },
+    {
+     "id": "doorX",
+     "type": "door",
+     "x": 0.48,
+     "y": 0.31,
+     "arrow": "down"
+    },
+    {
+     "id": "exit",
+     "type": "exit",
+     "x": 0.45,
+     "y": 0.39
+    },
+    {
+     "id": "loopTL",
+     "type": "junction",
+     "x": 0.15,
+     "y": 0.5
+    },
+    {
+     "id": "doorLL",
+     "type": "door",
+     "x": 0.16,
+     "y": 0.56,
+     "arrow": "left"
+    },
+    {
+     "id": "spinM",
+     "type": "spin",
+     "x": 0.43,
+     "y": 0.48
+    },
+    {
+     "id": "loopTR",
+     "type": "junction",
+     "x": 0.85,
+     "y": 0.51
+    },
+    {
+     "id": "doorRR",
+     "type": "door",
+     "x": 0.85,
+     "y": 0.57,
+     "arrow": "down"
+    },
+    {
+     "id": "jLL",
+     "type": "junction",
+     "x": 0.15,
+     "y": 0.63
+    },
+    {
+     "id": "jC",
+     "type": "junction",
+     "x": 0.52,
+     "y": 0.63
+    },
+    {
+     "id": "jRR",
+     "type": "junction",
+     "x": 0.85,
+     "y": 0.63
+    },
+    {
+     "id": "flipLL",
+     "type": "flip",
+     "x": 0.04,
+     "y": 0.67,
+     "edge": "left"
+    },
+    {
+     "id": "flipRL",
+     "type": "flip",
+     "x": 0.96,
+     "y": 0.63,
+     "edge": "right"
+    },
+    {
+     "id": "flipB",
+     "type": "flip",
+     "x": 0.48,
+     "y": 0.97,
+     "edge": "bottom"
+    }
+   ],
+   "edges": [
+    [
+     "flipT",
+     "jTop"
+    ],
+    [
+     "jTop",
+     "doorX"
+    ],
+    [
+     "doorX",
+     "exit"
+    ],
+    [
+     "flipLU",
+     "jL"
+    ],
+    [
+     "jL",
+     "jL2"
+    ],
+    [
+     "jL2",
+     "jTop"
+    ],
+    [
+     "jTop",
+     "flipRU"
+    ],
+    [
+     "jL",
+     "doorUL"
+    ],
+    [
+     "doorUL",
+     "spinNW"
+    ],
+    [
+     "spinNW",
+     "doorUR"
+    ],
+    [
+     "doorUR",
+     "jL2"
+    ],
+    [
+     "flipLL",
+     "jLL"
+    ],
+    [
+     "jLL",
+     "jC"
+    ],
+    [
+     "jC",
+     "jRR"
+    ],
+    [
+     "jRR",
+     "flipRL"
+    ],
+    [
+     "jLL",
+     "doorLL"
+    ],
+    [
+     "doorLL",
+     "loopTL"
+    ],
+    [
+     "loopTL",
+     "spinM"
+    ],
+    [
+     "spinM",
+     "loopTR"
+    ],
+    [
+     "loopTR",
+     "doorRR"
+    ],
+    [
+     "doorRR",
+     "jRR"
+    ],
+    [
+     "jC",
+     "flipB"
+    ]
+   ]
+  }
+ }
+}

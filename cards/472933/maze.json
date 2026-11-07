@@ -1,0 +1,99 @@
+{
+  "status": "draft",
+  "notes": "Extinction #47. No exit printed; the goal is taken to be the T-rex (front right), modelled as a special node plus an exit node. Four numbered arrows on its chest (1 up, 2 right, 3 left, 4 down) are read as the orientation sequence; the card does not say how it is performed. Unsure how the T-rex is entered: the path from the upper right flip runs down into its head at (0.77,0.5) and the lower right flip area touches its neck at (0.83,0.6); both are linked to the lair here. Connectivity from a path-colour component pass, checked by zooming the SW corners.",
+  "mechanics": [
+    { "type": "boss", "text": "T-rex with a 4-step arrow sequence: 1 up, 2 right, 3 left, 4 down" }
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.33, "y": 0.35 },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "topCh", "type": "room", "x": 0.5, "y": 0.15 },
+        { "id": "d1", "type": "door", "x": 0.87, "y": 0.09, "arrow": "right" },
+        { "id": "d2", "type": "door", "x": 0.55, "y": 0.17, "arrow": "up" },
+        { "id": "spinN", "type": "spin", "x": 0.74, "y": 0.18 },
+        { "id": "d3", "type": "door", "x": 0.6, "y": 0.29, "arrow": "left" },
+        { "id": "d4", "type": "door", "x": 0.33, "y": 0.21, "arrow": "left" },
+        { "id": "westTop", "type": "room", "x": 0.12, "y": 0.36 },
+        { "id": "flipLeftTop", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left" },
+        { "id": "d5", "type": "door", "x": 0.24, "y": 0.42, "arrow": "up" },
+        { "id": "d6", "type": "door", "x": 0.25, "y": 0.54, "arrow": "up" },
+        { "id": "westLow", "type": "room", "x": 0.12, "y": 0.63 },
+        { "id": "flipLeftLow", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left" },
+        { "id": "d7", "type": "door", "x": 0.3, "y": 0.7, "arrow": "left" },
+        { "id": "spinC", "type": "spin", "x": 0.3, "y": 0.8 },
+        { "id": "d8", "type": "door", "x": 0.13, "y": 0.77, "arrow": "right" },
+        { "id": "spinSW", "type": "spin", "x": 0.14, "y": 0.9 },
+        { "id": "d9", "type": "door", "x": 0.43, "y": 0.8, "arrow": "right" },
+        { "id": "d10", "type": "door", "x": 0.3, "y": 0.9, "arrow": "down" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.9 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "d11", "type": "door", "x": 0.73, "y": 0.91, "arrow": "up" },
+        { "id": "spinSE", "type": "spin", "x": 0.86, "y": 0.9 },
+        { "id": "d12", "type": "door", "x": 0.89, "y": 0.78, "arrow": "right" },
+        { "id": "eastLow", "type": "room", "x": 0.9, "y": 0.63 },
+        { "id": "flipRightLow", "type": "flip", "x": 0.93, "y": 0.62, "edge": "right" },
+        { "id": "eastTop", "type": "room", "x": 0.88, "y": 0.36 },
+        { "id": "flipRightTop", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right" },
+        { "id": "rex", "type": "special", "x": 0.7, "y": 0.76, "label": "T-rex (sequence up, right, left, down)" },
+        { "id": "exit", "type": "exit", "x": 0.75, "y": 0.58 }
+      ],
+      "edges": [
+        ["flipTop", "topCh"], ["topCh", "d1"], ["d1", "eastTop"], ["topCh", "d2"], ["d2", "spinN"], ["spinN", "d3"],
+        ["d3", "topCh"], ["topCh", "d4"], ["d4", "westTop"], ["westTop", "flipLeftTop"], ["westTop", "d5"], ["d5", "start"],
+        ["start", "d6"], ["d6", "westLow"], ["westLow", "flipLeftLow"], ["westLow", "d7"], ["d7", "spinC"],
+        ["westLow", "d8"], ["d8", "spinSW"], ["spinC", "d9"], ["d9", "bottom"], ["spinSW", "d10"], ["d10", "bottom"],
+        ["bottom", "flipBottom"], ["bottom", "d11"], ["d11", "spinSE"], ["spinSE", "d12"], ["d12", "eastLow"],
+        ["eastLow", "flipRightLow"], ["eastTop", "flipRightTop"], ["eastTop", "exit"], ["eastLow", "exit"], ["exit", "rex"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "topCh", "type": "room", "x": 0.45, "y": 0.12 },
+        { "id": "b1", "type": "door", "x": 0.22, "y": 0.09, "arrow": "down" },
+        { "id": "westCol", "type": "room", "x": 0.1, "y": 0.3 },
+        { "id": "flipLeftTop", "type": "flip", "x": 0.08, "y": 0.37, "edge": "left" },
+        { "id": "b2", "type": "door", "x": 0.33, "y": 0.22, "arrow": "right" },
+        { "id": "b3", "type": "door", "x": 0.69, "y": 0.09, "arrow": "left" },
+        { "id": "spinNE", "type": "spin", "x": 0.85, "y": 0.1 },
+        { "id": "b4", "type": "door", "x": 0.86, "y": 0.22, "arrow": "up" },
+        { "id": "eastTop", "type": "room", "x": 0.88, "y": 0.35 },
+        { "id": "flipRightTop", "type": "flip", "x": 0.92, "y": 0.37, "edge": "right" },
+        { "id": "b5", "type": "door", "x": 0.58, "y": 0.28, "arrow": "left" },
+        { "id": "b6", "type": "door", "x": 0.76, "y": 0.39, "arrow": "up" },
+        { "id": "spinC", "type": "spin", "x": 0.62, "y": 0.4 },
+        { "id": "b7", "type": "door", "x": 0.64, "y": 0.52, "arrow": "down" },
+        { "id": "green", "type": "room", "x": 0.45, "y": 0.5 },
+        { "id": "b8", "type": "door", "x": 0.33, "y": 0.4, "arrow": "right" },
+        { "id": "b9", "type": "door", "x": 0.22, "y": 0.5, "arrow": "up" },
+        { "id": "eastLow", "type": "room", "x": 0.88, "y": 0.63 },
+        { "id": "flipRightLow", "type": "flip", "x": 0.92, "y": 0.63, "edge": "right" },
+        { "id": "b10", "type": "door", "x": 0.5, "y": 0.6, "arrow": "left" },
+        { "id": "spinMid", "type": "spin", "x": 0.47, "y": 0.71 },
+        { "id": "b11", "type": "door", "x": 0.3, "y": 0.62, "arrow": "left" },
+        { "id": "b12", "type": "door", "x": 0.26, "y": 0.72, "arrow": "up" },
+        { "id": "westLow", "type": "room", "x": 0.1, "y": 0.68 },
+        { "id": "flipLeftLow", "type": "flip", "x": 0.08, "y": 0.63, "edge": "left" },
+        { "id": "b13", "type": "door", "x": 0.23, "y": 0.81, "arrow": "right" },
+        { "id": "spinSW", "type": "spin", "x": 0.37, "y": 0.81 },
+        { "id": "b14", "type": "door", "x": 0.49, "y": 0.81, "arrow": "up" },
+        { "id": "bottom", "type": "room", "x": 0.5, "y": 0.92 },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "b15", "type": "door", "x": 0.23, "y": 0.9, "arrow": "left" },
+        { "id": "b16", "type": "door", "x": 0.75, "y": 0.79, "arrow": "down" }
+      ],
+      "edges": [
+        ["flipTop", "topCh"], ["topCh", "b1"], ["b1", "westCol"], ["westCol", "flipLeftTop"], ["topCh", "b2"], ["b2", "westCol"],
+        ["topCh", "b3"], ["b3", "spinNE"], ["spinNE", "b4"], ["b4", "eastTop"], ["eastTop", "flipRightTop"],
+        ["eastTop", "b5"], ["b5", "green"], ["eastTop", "b6"], ["b6", "spinC"], ["spinC", "b7"], ["b7", "green"],
+        ["westCol", "b8"], ["b8", "green"], ["westCol", "b9"], ["b9", "green"], ["green", "eastLow"],
+        ["eastLow", "flipRightLow"], ["green", "b10"], ["b10", "spinMid"], ["spinMid", "b12"], ["b12", "westLow"],
+        ["green", "b11"], ["b11", "westLow"], ["westLow", "flipLeftLow"], ["westLow", "b13"], ["b13", "spinSW"],
+        ["spinSW", "b14"], ["b14", "bottom"], ["bottom", "flipBottom"], ["bottom", "b15"], ["b15", "westLow"],
+        ["bottom", "b16"], ["b16", "green"]
+      ]
+    }
+  }
+}

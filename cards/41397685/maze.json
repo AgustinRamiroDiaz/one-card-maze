@@ -1,0 +1,75 @@
+{
+  "status": "draft",
+  "notes": "Circuit #41. Paths are the wide trace buses and big diamonds; thin single traces to pads/dots treated as decoration; purple tubes are obstacles. Connectivity taken from a colour-component pass over the bus mask, so check junction edges visually. Route (assuming a 180 rotation survives a flip and 90/270 swap): start, door up, spin SW2, rotate CW 90, door left, flip bottom; back big network, flip right; front at 90: door left SW1, spin SW1, rotate 180, door down SW2, flip left; back big network at 180: door down into the exit diamond. Unsure whether the front start diamond's top tip (0.47,0.34) touches the bus from door right (0.26,0.36).",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        { "id": "start", "type": "start", "x": 0.5, "y": 0.45 },
+        { "id": "doorS1", "type": "door", "x": 0.5, "y": 0.6, "arrow": "up" },
+        { "id": "jD", "type": "junction", "x": 0.49, "y": 0.71 },
+        { "id": "spinSW2", "type": "spin", "x": 0.25, "y": 0.9 },
+        { "id": "doorS2", "type": "door", "x": 0.5, "y": 0.82, "arrow": "left" },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "jTop", "type": "junction", "x": 0.5, "y": 0.22 },
+        { "id": "rightCol", "type": "junction", "x": 0.7, "y": 0.45 },
+        { "id": "flipRight", "type": "flip", "x": 0.94, "y": 0.63, "edge": "right" },
+        { "id": "doorNW", "type": "door", "x": 0.37, "y": 0.23, "arrow": "up" },
+        { "id": "doorW", "type": "door", "x": 0.26, "y": 0.36, "arrow": "right" },
+        { "id": "doorNE", "type": "door", "x": 0.75, "y": 0.29, "arrow": "left" },
+        { "id": "doorE", "type": "door", "x": 0.92, "y": 0.31, "arrow": "down" },
+        { "id": "spinNE", "type": "spin", "x": 0.77, "y": 0.13 },
+        { "id": "doorSE1", "type": "door", "x": 0.65, "y": 0.72, "arrow": "down" },
+        { "id": "doorSE2", "type": "door", "x": 0.86, "y": 0.8, "arrow": "right" },
+        { "id": "spinSE", "type": "spin", "x": 0.76, "y": 0.9 },
+        { "id": "flipLeft", "type": "flip", "x": 0.05, "y": 0.36, "edge": "left" },
+        { "id": "leftArea", "type": "junction", "x": 0.15, "y": 0.47 },
+        { "id": "doorSW1", "type": "door", "x": 0.08, "y": 0.63, "arrow": "left" },
+        { "id": "doorSW2", "type": "door", "x": 0.23, "y": 0.63, "arrow": "down" },
+        { "id": "spinSW1", "type": "spin", "x": 0.13, "y": 0.79 }
+      ],
+      "edges": [
+        ["start", "doorS1"], ["doorS1", "jD"], ["jD", "spinSW2"], ["jD", "doorS2"], ["doorS2", "flipBottom"],
+        ["flipTop", "jTop"], ["jTop", "doorNW"], ["jTop", "doorW"], ["jTop", "rightCol"], ["jTop", "doorNE"],
+        ["rightCol", "doorE"], ["rightCol", "flipRight"], ["rightCol", "doorSE1"], ["rightCol", "doorSE2"],
+        ["doorNE", "spinNE"], ["doorE", "spinNE"], ["doorSE1", "spinSE"], ["doorSE2", "spinSE"],
+        ["doorNW", "leftArea"], ["doorW", "leftArea"], ["leftArea", "flipLeft"], ["leftArea", "doorSW1"],
+        ["leftArea", "doorSW2"], ["doorSW1", "spinSW1"], ["doorSW2", "spinSW1"]
+      ]
+    },
+    "back": {
+      "nodes": [
+        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top" },
+        { "id": "spinNW", "type": "spin", "x": 0.17, "y": 0.12 },
+        { "id": "doorRA", "type": "door", "x": 0.41, "y": 0.47, "arrow": "right" },
+        { "id": "exit", "type": "exit", "x": 0.18, "y": 0.35 },
+        { "id": "doorExit", "type": "door", "x": 0.28, "y": 0.47, "arrow": "down" },
+        { "id": "hub", "type": "junction", "x": 0.4, "y": 0.6 },
+        { "id": "hubNE", "type": "junction", "x": 0.7, "y": 0.35 },
+        { "id": "hubS", "type": "junction", "x": 0.5, "y": 0.85 },
+        { "id": "flipRight", "type": "flip", "x": 0.94, "y": 0.35, "edge": "right" },
+        { "id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom" },
+        { "id": "doorNEl", "type": "door", "x": 0.65, "y": 0.17, "arrow": "left" },
+        { "id": "doorNEu", "type": "door", "x": 0.75, "y": 0.25, "arrow": "up" },
+        { "id": "spinNE", "type": "spin", "x": 0.77, "y": 0.1 },
+        { "id": "doorEl", "type": "door", "x": 0.65, "y": 0.77, "arrow": "left" },
+        { "id": "doorEu", "type": "door", "x": 0.9, "y": 0.65, "arrow": "up" },
+        { "id": "spinE", "type": "spin", "x": 0.75, "y": 0.6 },
+        { "id": "doorW", "type": "door", "x": 0.27, "y": 0.69, "arrow": "right" },
+        { "id": "flipLeft", "type": "flip", "x": 0.06, "y": 0.62, "edge": "left" },
+        { "id": "doorSWl", "type": "door", "x": 0.15, "y": 0.77, "arrow": "left" },
+        { "id": "spinSW", "type": "spin", "x": 0.16, "y": 0.88 },
+        { "id": "doorSW", "type": "door", "x": 0.3, "y": 0.87, "arrow": "right" }
+      ],
+      "edges": [
+        ["flipTop", "spinNW"], ["spinNW", "doorRA"], ["doorRA", "hub"], ["exit", "doorExit"], ["doorExit", "hub"],
+        ["hub", "hubNE"], ["hub", "hubS"], ["hubNE", "flipRight"], ["hubS", "flipBottom"],
+        ["hubNE", "doorNEl"], ["hubNE", "doorNEu"], ["doorNEl", "spinNE"], ["doorNEu", "spinNE"],
+        ["hubS", "doorEl"], ["hubNE", "doorEu"], ["doorEl", "spinE"], ["doorEu", "spinE"],
+        ["hub", "doorW"], ["doorW", "flipLeft"], ["flipLeft", "doorSWl"], ["doorSWl", "spinSW"],
+        ["spinSW", "doorSW"], ["doorSW", "hubS"]
+      ]
+    }
+  }
+}
