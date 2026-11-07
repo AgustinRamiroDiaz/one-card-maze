@@ -11,9 +11,26 @@
 		a { display: flex; flex-direction: column; gap: .4rem; color: #fff; text-decoration: none; text-align: center; font-weight: 700; text-shadow: 0 1px 2px #000; word-break: break-word; }
 		a img { width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: .75rem; background: #fff; box-shadow: 0 0 .25rem .25rem rgba(0,0,0,.1); }
 		a:hover img, a:focus-visible img { outline: 3px solid #000; }
+		#mode { display: flex; justify-content: center; margin: 0 auto 1rem; }
+		#mode fieldset { display: inline-flex; border: 0; padding: 4px; margin: 0; background: #000; border-radius: 999px; }
+		#mode legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+		#mode label { padding: .5rem 1rem; border-radius: 999px; color: #fff; font-weight: 700; cursor: pointer; }
+		#mode input { position: absolute; opacity: 0; }
+		#mode label:has(input:checked) { background: #fff; color: #000; }
+		#mode label:has(input:focus-visible) { outline: 3px solid #ffcf3f; }
+		#mode-hint { text-align: center; color: #fff; text-shadow: 0 1px 2px #000; margin: 0 0 1rem; font-weight: 700; }
+		a.free-only { opacity: .45; }
 	</style>
 </head>
 <body>
+	<form id="mode">
+		<fieldset>
+			<legend>Play mode</legend>
+			<label><input type="radio" name="mode" value="free" checked><span>Free play</span></label>
+			<label><input type="radio" name="mode" value="guided"><span>Guided (rules)</span></label>
+		</fieldset>
+	</form>
+	<p id="mode-hint">Swipe to flip, use the arrows to rotate. Nothing stops you cheating.</p>
 	<main>
 		<a href="play.html?card=25502893"><img src="cards/25502893/front.png" alt="" loading="lazy"><span>25502893</span></a>
 		<a href="play.html?card=260923"><img src="cards/260923/front.png" alt="" loading="lazy"><span>260923</span></a>
@@ -139,5 +156,41 @@
 		<a href="play.html?card=steelgrim"><img src="cards/steelgrim/front.png" alt="" loading="lazy"><span>steelgrim</span></a>
 		<a href="play.html?card=tracer"><img src="cards/tracer/front.png" alt="" loading="lazy"><span>tracer</span></a>
 	</main>
+	<script src="scripts/rules.js"></script>
+	<script>
+		const HINTS = {
+			free: 'Swipe to flip, use the arrows to rotate. Nothing stops you cheating.',
+			guided: 'Click where you want to walk. Spin and flip only where the card allows it. Faded cards only have free play.',
+		};
+		const links = [...document.querySelectorAll('main a')];
+		let statuses = null;
+
+		async function markGuidedCards() {
+			statuses ??= Promise.all(links.map(a => {
+				const card = new URL(a.href).searchParams.get('card');
+				return fetch(`cards/${encodeURIComponent(card)}/maze.json`).then(r => r.ok ? r.json() : null).catch(() => null)
+					.then(m => MazeRules.playable(m));
+			}));
+			(await statuses).forEach((ok, i) => links[i].classList.toggle('free-only', !ok));
+		}
+
+		function setMode(mode) {
+			for (const a of links) {
+				const url = new URL(a.href);
+				if (mode === 'guided') url.searchParams.set('mode', 'guided'); else url.searchParams.delete('mode');
+				a.href = url.pathname.split('/').pop() + url.search;
+			}
+			document.getElementById('mode-hint').textContent = HINTS[mode];
+			if (mode === 'guided') markGuidedCards(); else links.forEach(a => a.classList.remove('free-only'));
+			try { localStorage.setItem('mode', mode); } catch {}
+		}
+
+		const form = document.getElementById('mode');
+		form.addEventListener('change', e => setMode(e.target.value));
+		let saved = 'free';
+		try { saved = localStorage.getItem('mode') === 'guided' ? 'guided' : 'free'; } catch {}
+		form.elements.mode.value = saved;
+		setMode(saved);
+	</script>
 </body>
 </html>

@@ -22,18 +22,20 @@ Tasks:
 - [ ] Support flips that pair by symbol rather than by position (`party`): add an optional `pair` field on flip nodes.
 - [ ] Decide how boss cards are won: 31 cards have no exit; some drafts add an `exit` node in the lair, others only a `special` node.
 - [ ] Two-card co-op (`PAD` + `PRESSURE`): gates on one card are opened by buttons on the other.
-- [ ] Write the rules engine: given the state (side, rotation, position, items, boss progress), list the legal moves.
+- [x] Write the rules engine (`scripts/rules.js`; `node tools/solve.js` solves every card, `--self-test` checks the engine): given the state (side, rotation, position, items, boss progress), list the legal moves.
   Rotation after a flip: flipping over an edge that is left/right on screen turns rotation `t` into `-t`; over an edge that is top/bottom on screen, into `180 - t`. This solves `MAZERULES`; `MAZE3` and `MAZE823023` only solve if every flip gives `-t`, which probably means a misread connection there.
 - [ ] Add per-card mechanics as small plugins: items/keys, boss sequence, and others found while annotating.
-- [ ] Show a win/lose state.
-- [ ] Decide what happens on cards with no `maze.json` yet. Default: free play, as now.
+- [x] Show a win state. (Lose states arrive with boss rules.)
+- [x] Cards without a playable map (no start or exit, e.g. boss cards) fall back to free play; the index fades them in guided mode.
+- [ ] Fix the maps of the 11 cards the solver can't finish: 2CMP2, 3017342, MAZE1123087, MAZE2, MAZE2404984, MAZE3, MAZE823023, MAZEKS106457, buffet, catspotting, cupcake.
+- [ ] Items: guided mode requires every `item` on the card before the exit opens; check that this matches each card's text.
 
 ## 2. Play by clicking the icons
 
-- [ ] Put clickable hotspots over spin icons (rotate) and flip triangles (flip), positioned from `maze.json`.
-- [ ] Spin icons offer clockwise and counterclockwise.
-- [ ] With rules on, a hotspot only works when the player stands on it.
-- [ ] Keep swipe and the side buttons as a fallback for cards without data.
+- [x] Put clickable hotspots over every map node: click to walk there, click a spin to turn, click a flip to go over the edge (`?mode=guided`).
+- [x] Spin: clicking the icon turns clockwise; the side buttons turn either way and are only active on a spin.
+- [x] Moves are only allowed along open paths; spins and flips only where the player stands.
+- [x] Free play (the original swipe UI) stays available from the index switch.
 
 Depends on: the `maze.json` positions from §1.
 
