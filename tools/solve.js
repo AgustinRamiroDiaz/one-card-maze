@@ -1,4 +1,5 @@
-// Usage: node tools/solve.js [card ...]   Finds the shortest solution of each card under scripts/rules.js.
+// Usage: node tools/solve.js [card ...]   Finds the shortest solution from every start of each card under scripts/rules.js;
+//                                          exits 1 if any start of a playable card has no solution.
 //        node tools/solve.js --self-test  Checks the engine against the hand-solved MAZERULES card.
 const fs = require('fs');
 const path = require('path');
@@ -8,8 +9,7 @@ const cardsDir = path.join(__dirname, '..', 'cards');
 
 const key = s => `${s.side}|${s.rot}|${s.at}|${[...s.items].sort()}`;
 
-function solve(maze) {
-  const first = R.start(maze);
+function solve(maze, first = R.start(maze)) {
   const seen = new Map([[key(first), null]]);
   const queue = [first];
   const visit = (from, to, move) => {
@@ -61,8 +61,11 @@ for (const name of names) {
   const maze = JSON.parse(fs.readFileSync(path.join(cardsDir, name, 'maze.json'), 'utf8'));
   if (!R.playable(maze)) { console.log(`skip ${name} (no start/exit or unplayable)`); continue; }
   total++;
-  const moves = solve(maze);
-  if (moves) solved++;
-  console.log(moves ? `ok   ${name}: ${moves.length} moves` : `FAIL ${name}: no solution`);
+  const results = R.starts(maze).map(s => [s.at, solve(maze, s)]);
+  const ok = results.every(([, moves]) => moves);
+  if (ok) solved++;
+  const detail = results.map(([at, moves]) => `${at} ${moves ? moves.length + ' moves' : 'no solution'}`).join(', ');
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}: ${detail}`);
 }
-console.log(`${solved}/${total} playable cards solvable`);
+console.log(`${solved}/${total} playable cards solvable from every start`);
+process.exit(solved === total ? 0 : 1);

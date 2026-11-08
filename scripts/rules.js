@@ -75,13 +75,10 @@
 
   const itemIds = maze => ['front', 'back'].flatMap(s => nodes(maze, s).filter(n => n.type === 'item').map(n => `${s}.${n.id}`));
 
-  function start(maze) {
-    for (const side of ['front', 'back']) {
-      const s = nodes(maze, side).find(n => n.type === 'start');
-      if (s) return { side, rot: 0, at: s.id, items: [] };
-    }
-    return null;
-  }
+  // One initial state per start node; a card may offer several and the player picks one.
+  const starts = maze => ['front', 'back'].flatMap(side =>
+    nodes(maze, side).filter(n => n.type === 'start').map(n => ({ side, rot: 0, at: n.id, items: [] })));
+  const start = maze => starts(maze)[0] ?? null;
 
   // Moves. Each returns { state, path?, error? } and never mutates its input.
   function walk(maze, state, target) {
@@ -118,6 +115,6 @@
     ['front', 'back'].some(s => nodes(maze, s).some(n => n.type === 'exit'));
 
   const api = { EDGES_CW, ARROWS_CW, doorOpen, screenEdge, rotAfterFlip, node, nodes, reachable, flipLanding,
-    start, walk, spin, flip, missingItems, won, playable, other, mod, cssFlip, cssView };
+    start, starts, walk, spin, flip, missingItems, won, playable, other, mod, cssFlip, cssView };
   if (typeof module !== 'undefined') module.exports = api; else root.MazeRules = api;
 })(this);

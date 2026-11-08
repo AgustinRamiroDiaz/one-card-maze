@@ -20,7 +20,7 @@ Node fields: `id` (unique per side), `type`, `x`, `y`, plus:
 
 | type | meaning | extra fields |
 |---|---|---|
-| `start` | where the player begins | |
+| `start` | where the player begins; with several, the player picks one (all must be on the same side) | |
 | `exit` | goal | |
 | `room` | open area | |
 | `door` | passable only while its arrow points up on screen | `arrow`: `up` `down` `left` `right`, as printed |
@@ -35,7 +35,7 @@ Flipping over an edge lands on the other side at the mirrored point: `(x, y)` on
 
 `mechanics[].type` is one of `collect`, `boss`, `portal`, `counter`, `other`; `text` describes the rule as the card states it.
 
-Check files with `node tools/validate.js [card ...]`.
+Check files with `make validate` (or `node tools/validate.js [card ...]`). `make winnable` solves every playable card from each of its starts and fails if any start has no solution. `make hooks` installs the pre-commit hooks (validate + rules self-test); run the winnable check through pre-commit with `pre-commit run winnable --hook-stage manual --all-files`.
 
 ## Editor
 

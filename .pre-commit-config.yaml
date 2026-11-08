@@ -1,0 +1,22 @@
+repos:
+  - repo: local
+    hooks:
+      - id: validate-mazes
+        name: validate maze.json files
+        entry: make validate
+        language: system
+        files: ^(cards/.*/maze\.json|tools/(maze-check|validate)\.js)$
+        pass_filenames: false
+      - id: rules-self-test
+        name: rules engine self-test
+        entry: make test
+        language: system
+        files: ^(scripts/rules\.js|tools/solve\.js|cards/MAZERULES/maze\.json)$
+        pass_filenames: false
+      - id: winnable
+        name: every level winnable from every start
+        entry: make winnable
+        language: system
+        files: ^(cards/.*/maze\.json|scripts/rules\.js|tools/solve\.js)$
+        pass_filenames: false
+        stages: [manual]

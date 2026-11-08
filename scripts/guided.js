@@ -1,4 +1,4 @@
-// Guided mode: the reachable spin and flip spots light up; click one to use it. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
+// Guided mode: the reachable spin and flip spots light up; click one to use it. Cards with several starts let the player pick one first. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -31,12 +31,14 @@ function render() {
   for (const side of ['front', 'back']) faces[side].querySelector('.layer').classList.toggle('active', side === state.side);
   const reach = R.reachable(maze, state);
   for (const b of document.querySelectorAll('.spot')) {
-    const n = R.node(maze, state.side, b.dataset.id);
-    const can = !state.won && faces[state.side].contains(b) && reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n)));
+    const n = faces[state.side].contains(b) && R.node(maze, state.side, b.dataset.id);
+    const usable = n && (state.choosing ? n.type === 'start'
+      : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n))));
+    const can = !state.won && usable;
     b.classList.toggle('can', !!can);
     b.disabled = !can;
   }
-  const onSpin = !state.won && R.node(maze, state.side, state.at).type === 'spin';
+  const onSpin = !state.won && !state.choosing && R.node(maze, state.side, state.at).type === 'spin';
   document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !onSpin));
 }
 
@@ -67,6 +69,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
 async function onSpot(side, n) {
   if (busy || side !== state.side || state.won) return;
+  if (state.choosing) { state = { ...state, at: n.id, choosing: false }; settle(); return; }
   const res = R.walk(maze, state, n.id);
   if (res.error) return;
   busy = true;
@@ -119,14 +122,17 @@ function buildSpots() {
 }
 
 function restart() {
-  state = R.start(maze);
+  const starts = R.starts(maze);
+  state = { ...starts[0], choosing: starts.length > 1 }; // maze-check keeps every start on one side
   css = { R: 0, X: 0, Y: state.side === 'back' ? 180 : 0 };
   document.body.classList.remove('won');
-  settle();
+  if (!state.choosing) { settle(); return; }
+  message('Pick where to start.');
+  render();
 }
 
-document.querySelector('#rotate-clockwise').addEventListener('click', () => !busy && !state.won && doSpin('cw'));
-document.querySelector('#rotate-counterclockwise').addEventListener('click', () => !busy && !state.won && doSpin('ccw'));
+document.querySelector('#rotate-clockwise').addEventListener('click', () => !busy && !state.won && !state.choosing && doSpin('cw'));
+document.querySelector('#rotate-counterclockwise').addEventListener('click', () => !busy && !state.won && !state.choosing && doSpin('ccw'));
 document.querySelector('#hud-restart').addEventListener('click', () => !busy && restart());
 
 fetch(`cards/${encodeURIComponent(cardName)}/maze.json`, { cache: 'no-store' })

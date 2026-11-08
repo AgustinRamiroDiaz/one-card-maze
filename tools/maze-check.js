@@ -32,7 +32,9 @@
       }
       for (const n of s.nodes) if (!linked.has(n.id)) warnings.push(`${side}.${n.id}: no edges`);
     }
-    if (counts.start !== 1) warnings.push(`${counts.start || 0} start nodes`);
+    if (!counts.start) warnings.push('no start node');
+    const startSides = ['front', 'back'].filter(sd => (maze.sides?.[sd]?.nodes || []).some(n => n.type === 'start'));
+    if (startSides.length > 1) errors.push('start nodes on both sides: the game only offers starts on one side');
     if (!counts.exit) warnings.push('no exit node');
     for (const [a, b] of [['front', 'back'], ['back', 'front']]) {
       for (const f of (maze.sides?.[a]?.nodes || []).filter(n => n.type === 'flip')) {
