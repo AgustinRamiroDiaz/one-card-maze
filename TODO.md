@@ -61,3 +61,7 @@ Depends on: the graph and engine from §1.
 show a preview of the other sides of the card like "Patrick Parabox" does
 
 # Add ctrl z
+
+# Add Boss fights
+
+# Add mobile rotation handling with gyroscope
