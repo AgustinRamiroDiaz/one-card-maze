@@ -192,5 +192,6 @@
 		form.elements.mode.value = saved;
 		setMode(saved);
 	</script>
+	<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});</script>
 </body>
 </html>

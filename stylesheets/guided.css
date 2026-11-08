@@ -19,9 +19,13 @@ body.guided .spot.can {
 	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95), 0 0 12px 6px rgba(255, 214, 0, 0.9);
 	animation: glow 900ms ease-in-out infinite alternate;
 }
-body.guided .spot.can:hover,
 body.guided .spot.can:focus-visible {
 	box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px rgba(0, 0, 0, 0.6), 0 0 16px 8px rgba(255, 214, 0, 1);
+}
+@media (hover: hover) {
+	body.guided .spot.can:hover {
+		box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px rgba(0, 0, 0, 0.6), 0 0 16px 8px rgba(255, 214, 0, 1);
+	}
 }
 body.guided .spot.can.here { box-shadow: 0 0 0 4px #FFFFFF, 0 0 0 7px #2B8A3E, 0 0 14px 8px rgba(255, 214, 0, 0.9); }
 @keyframes glow { to { transform: translate(-50%, -50%) scale(1.15); } }
@@ -60,3 +64,23 @@ body.guided .rotate-button.disabled { opacity: 0.3; cursor: default; }
 	text-shadow: 0 1px 3px #000000;
 }
 body.won #hud-message { font-size: 1.5rem; }
+
+/* Touch screens: a finger needs ~44px, so the hit area reaches past the drawn spot. */
+body.guided .spot, body.guided .rotate-button, .hud-button { touch-action: manipulation; }
+@media (pointer: coarse) {
+	body.guided .spot::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; }
+}
+
+/* Phones in portrait: the turn buttons go under the card instead of beside it. */
+@media only screen and (max-width: 600px) {
+	body.guided #card-wrapper { flex-wrap: wrap; align-content: center; gap: 1.25rem 3rem; padding-top: 3.5rem; }
+	body.guided #card { flex-basis: 100%; order: -1; }
+	body.guided .rotate-button {
+		display: flex !important;
+		margin: 0 !important;
+		width: 56px; min-width: 56px; height: 56px; min-height: 56px;
+	}
+	#hud { top: max(8px, env(safe-area-inset-top)); left: 8px; right: 8px; gap: 8px; }
+	.hud-button { padding: .45rem .8rem; font-size: .9rem; }
+	#hud-message { font-size: .9rem; }
+}

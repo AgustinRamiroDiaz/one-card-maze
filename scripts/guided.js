@@ -13,7 +13,7 @@ for (const side of ['front', 'back']) {
 
 function fitCard() { cardEl.style.height = cardEl.offsetWidth * 1.4 + 'px'; }
 fitCard();
-window.addEventListener('resize', fitCard);
+window.addEventListener('resize', () => { fitCard(); if (state) render(); });
 
 const hud = document.createElement('div');
 hud.id = 'hud';
@@ -27,7 +27,10 @@ const message = text => { document.querySelector('#hud-message').textContent = t
 let maze, state, css, busy = false;
 
 function render() {
-  cardEl.style.transform = `rotate(${css.R}deg) rotateX(${css.X}deg) rotateY(${css.Y}deg)`;
+  // A sideways card is as wide as the card is tall; on narrow screens shrink it until it fits.
+  const sideways = R.mod(css.R, 180) !== 0;
+  const scale = sideways ? Math.min(1, (window.innerWidth - 32) / cardEl.offsetHeight) : 1;
+  cardEl.style.transform = `scale(${scale}) rotate(${css.R}deg) rotateX(${css.X}deg) rotateY(${css.Y}deg)`;
   for (const side of ['front', 'back']) faces[side].querySelector('.layer').classList.toggle('active', side === state.side);
   const reach = R.reachable(maze, state);
   for (const b of document.querySelectorAll('.spot')) {

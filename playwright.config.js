@@ -9,13 +9,14 @@ module.exports = defineConfig({
   reporter: 'list',
   use: {
     baseURL: `http://localhost:${PORT}`,
-    viewport: { width: 1280, height: 720 },
     // The highlight pulse never settles, and Playwright only clicks elements that hold still.
     reducedMotion: 'reduce',
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 720 } } },
     { name: 'firefox', use: { ...devices['Desktop Firefox'], viewport: { width: 1280, height: 720 } } },
+    { name: 'mobile-chrome', use: { ...devices['Pixel 7'] } },
+    { name: 'mobile-safari', use: { ...devices['iPhone 13'] } },
   ],
   webServer: {
     command: `python3 -m http.server ${PORT}`,

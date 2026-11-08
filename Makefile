@@ -14,7 +14,7 @@ test:
 winnable:
 	node tools/solve.js
 
-# Browser tests of guided play in Chromium and Firefox (first run: npm install && npx playwright install chromium firefox).
+# Browser tests of guided play: desktop Chromium and Firefox, Pixel 7 and iPhone 13 emulation (first run: npm install && npx playwright install chromium firefox webkit).
 e2e:
 	npx playwright test
 
