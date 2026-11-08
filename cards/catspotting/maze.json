@@ -1,12 +1,12 @@
 {
-  "status": "draft",
+  "status": "reviewed",
   "notes": "CATS #67 (Cat Spotting). Two exits: exit A (cat food) and exit B (bowl of milk); reaching either wins. Paths are the smooth white lanes; white cat drawings are background. Plausible route: start, door up, spin, rotate, through a side door to the side lanes; exits need their up-doors (0.21,0.63 / 0.83,0.63) upright, so likely a detour over the back (three spins there) to come back upright. Doubts (front): left door lane assumed to branch both to the left flip lane and down to the bottom room; lane from the spin bottom through door (0.53,0.66) assumed to reach the bottom room; right door lane assumed not to reach the bottom. Back: right area (0.85,0.47) assumed to join both upper-right lanes and the right flip.",
   "mechanics": [],
   "sides": {
     "front": {
       "nodes": [
         {"id": "start", "type": "start", "x": 0.55, "y": 0.22},
-        {"id": "doorS", "type": "door", "x": 0.49, "y": 0.32, "arrow": "up"},
+        {"id": "doorS", "type": "door", "x": 0.488, "y": 0.339, "arrow": "up"},
         {"id": "spin", "type": "spin", "x": 0.53, "y": 0.49},
         {"id": "doorL", "type": "door", "x": 0.37, "y": 0.52, "arrow": "left"},
         {"id": "flipL", "type": "flip", "x": 0.05, "y": 0.5, "edge": "left"},
@@ -18,7 +18,9 @@
         {"id": "exitB", "type": "exit", "x": 0.8, "y": 0.8},
         {"id": "doorD", "type": "door", "x": 0.53, "y": 0.66, "arrow": "down"},
         {"id": "bottomRoom", "type": "room", "x": 0.5, "y": 0.92},
-        {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.96, "edge": "bottom"}
+        {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.96, "edge": "bottom"},
+        {"id": "room1", "type": "room", "x": 0.249, "y": 0.536},
+        {"id": "room2", "type": "room", "x": 0.836, "y": 0.516}
       ],
       "edges": [
         ["start", "doorS"],
@@ -29,34 +31,34 @@
         ["spin", "doorR"],
         ["doorB", "exitB"],
         ["spin", "doorD"],
-        ["doorL", "flipL"],
-        ["doorL", "doorA"],
-        ["flipL", "doorA"],
-        ["doorL", "bottomRoom"],
-        ["doorR", "flipR"],
-        ["doorR", "doorB"],
-        ["flipR", "doorB"],
-        ["doorD", "bottomRoom"]
+        ["doorD", "bottomRoom"],
+        ["room1", "doorL"],
+        ["room1", "bottomRoom"],
+        ["room1", "doorA"],
+        ["room1", "flipL"],
+        ["room2", "doorR"],
+        ["room2", "doorB"],
+        ["room2", "flipR"]
       ]
     },
     "back": {
       "nodes": [
-        {"id": "spinT", "type": "spin", "x": 0.6, "y": 0.12},
-        {"id": "doorT", "type": "door", "x": 0.39, "y": 0.16, "arrow": "up"},
+        {"id": "spinT", "type": "spin", "x": 0.62, "y": 0.137},
+        {"id": "doorT", "type": "door", "x": 0.401, "y": 0.18, "arrow": "up"},
         {"id": "flipL", "type": "flip", "x": 0.05, "y": 0.5, "edge": "left"},
         {"id": "doorW", "type": "door", "x": 0.2, "y": 0.33, "arrow": "right"},
-        {"id": "spinW", "type": "spin", "x": 0.32, "y": 0.33},
+        {"id": "spinW", "type": "spin", "x": 0.352, "y": 0.319},
         {"id": "doorM", "type": "door", "x": 0.56, "y": 0.33, "arrow": "left"},
-        {"id": "doorTR", "type": "door", "x": 0.78, "y": 0.28, "arrow": "right"},
+        {"id": "doorTR", "type": "door", "x": 0.791, "y": 0.296, "arrow": "right"},
         {"id": "rightArea", "type": "room", "x": 0.86, "y": 0.5},
         {"id": "flipR", "type": "flip", "x": 0.95, "y": 0.5, "edge": "right"},
         {"id": "doorV", "type": "door", "x": 0.36, "y": 0.6, "arrow": "up"},
-        {"id": "bottomRoom", "type": "room", "x": 0.5, "y": 0.95},
+        {"id": "bottomRoom", "type": "room", "x": 0.51, "y": 0.909},
         {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.96, "edge": "bottom"},
-        {"id": "doorRD", "type": "door", "x": 0.67, "y": 0.5, "arrow": "down"},
+        {"id": "doorRD", "type": "door", "x": 0.699, "y": 0.519, "arrow": "down"},
         {"id": "spinS", "type": "spin", "x": 0.6, "y": 0.68},
-        {"id": "doorSL", "type": "door", "x": 0.52, "y": 0.82, "arrow": "left"},
-        {"id": "doorRR", "type": "door", "x": 0.8, "y": 0.79, "arrow": "down"}
+        {"id": "doorSL", "type": "door", "x": 0.543, "y": 0.806, "arrow": "left"},
+        {"id": "doorRR", "type": "door", "x": 0.827, "y": 0.775, "arrow": "down"}
       ],
       "edges": [
         ["spinT", "doorT"],
