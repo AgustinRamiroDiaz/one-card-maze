@@ -85,14 +85,20 @@ async function onSpot(side, n) {
   }
   const res = R.walk(maze, state, n.id);
   if (res.error) return;
+  state = res.state;
+  if (n.type === 'spin') await doSpin('cw');
+  else if (n.type === 'flip') await doFlip();
+}
+
+// body.busy while the card animates; input is ignored until it clears (the e2e tests wait on it).
+async function animate() {
   busy = true;
-  try {
-    state = res.state;
-    if (n.type === 'spin') await doSpin('cw');
-    else if (n.type === 'flip') await doFlip();
-  } finally {
-    busy = false;
-  }
+  document.body.classList.add('busy');
+  render();
+  await wait(FLIP_MS);
+  busy = false;
+  document.body.classList.remove('busy');
+  settle();
 }
 
 async function doSpin(dir) {
@@ -100,9 +106,7 @@ async function doSpin(dir) {
   if (res.error) return;
   state = res.state;
   css = { ...css, R: css.R + (dir === 'ccw' ? -90 : 90) };
-  render();
-  await wait(FLIP_MS);
-  settle();
+  await animate();
 }
 
 async function doFlip() {
@@ -111,9 +115,7 @@ async function doFlip() {
   state = res.state;
   css = R.cssFlip(css, res.edge);
   console.assert(JSON.stringify(R.cssView(css)) === JSON.stringify({ side: state.side, rot: state.rot }), 'card view out of sync with rules');
-  render();
-  await wait(FLIP_MS);
-  settle();
+  await animate();
 }
 
 function buildSpots() {

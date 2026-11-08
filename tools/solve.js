@@ -61,19 +61,24 @@ function selfTest() {
   console.log('self-test ok');
 }
 
-if (process.argv[2] === '--self-test') { selfTest(); process.exit(0); }
-const names = process.argv.slice(2).length ? process.argv.slice(2)
-  : fs.readdirSync(cardsDir).filter(c => fs.existsSync(path.join(cardsDir, c, 'maze.json')));
-let solved = 0, total = 0;
-for (const name of names) {
-  const maze = JSON.parse(fs.readFileSync(path.join(cardsDir, name, 'maze.json'), 'utf8'));
-  if (!R.playable(maze)) { console.log(`skip ${name} (no start/exit or unplayable)`); continue; }
-  total++;
-  const results = R.starts(maze).map(s => [s.at, solve(maze, s)]);
-  const ok = results.every(([, moves]) => moves);
-  if (ok) solved++;
-  const detail = results.map(([at, moves]) => `${at} ${moves ? moves.length + ' moves' : 'no solution'}`).join(', ');
-  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}: ${detail}`);
+function main() {
+  if (process.argv[2] === '--self-test') { selfTest(); return; }
+  const names = process.argv.slice(2).length ? process.argv.slice(2)
+    : fs.readdirSync(cardsDir).filter(c => fs.existsSync(path.join(cardsDir, c, 'maze.json')));
+  let solved = 0, total = 0;
+  for (const name of names) {
+    const maze = JSON.parse(fs.readFileSync(path.join(cardsDir, name, 'maze.json'), 'utf8'));
+    if (!R.playable(maze)) { console.log(`skip ${name} (no start/exit or unplayable)`); continue; }
+    total++;
+    const results = R.starts(maze).map(s => [s.at, solve(maze, s)]);
+    const ok = results.every(([, moves]) => moves);
+    if (ok) solved++;
+    const detail = results.map(([at, moves]) => `${at} ${moves ? moves.length + ' moves' : 'no solution'}`).join(', ');
+    console.log(`${ok ? 'ok  ' : 'FAIL'} ${name}: ${detail}`);
+  }
+  console.log(`${solved}/${total} playable cards solvable from every start`);
+  process.exit(solved === total ? 0 : 1);
 }
-console.log(`${solved}/${total} playable cards solvable from every start`);
-process.exit(solved === total ? 0 : 1);
+
+module.exports = { solve };
+if (require.main === module) main();

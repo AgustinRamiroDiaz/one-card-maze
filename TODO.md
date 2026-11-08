@@ -59,3 +59,5 @@ Depends on: the graph and engine from §1.
 # Infinite view
 
 show a preview of the other sides of the card like "Patrick Parabox" does
+
+# Add ctrl z

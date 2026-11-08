@@ -41,3 +41,7 @@ Check files with `make validate` (or `node tools/validate.js [card ...]`). `make
 ## Editor
 
 `tools/editor.html` shows a card with its graph drawn over it and lets you fix it. Serve the repo root (`python3 -m http.server 8000`) and open http://localhost:8000/tools/editor.html.
+
+## Browser tests
+
+`e2e/guided.spec.js` checks guided play in Chromium and Firefox: on a card with several starts only the starts light up (and the glow is painted), and three cards (MAZERULES, the portal card MAZE2404984, and 2CMP2 from a picked start) are played to the exit by replaying the solver's solution through the UI. Set up once with `npm install && npx playwright install chromium firefox`, then run `make e2e`. Playwright starts its own server on port 4173.
