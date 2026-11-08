@@ -43,7 +43,7 @@
         {"id": "doorDown", "type": "door", "x": 0.32, "y": 0.13, "arrow": "down"},
         {"id": "top", "type": "room", "x": 0.47, "y": 0.12},
         {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top"},
-        {"id": "exit", "type": "exit", "x": 0.6, "y": 0.27}
+        {"id": "exit", "type": "exit", "x": 0.618, "y": 0.272}
       ],
       "edges": [
         ["flipBottom", "landing"],
@@ -55,8 +55,8 @@
         ["spinNW", "doorDown"],
         ["doorDown", "top"],
         ["top", "flipTop"],
-        ["top", "exit"],
-        ["leftArm", "doorUpSE"]
+        ["leftArm", "doorUpSE"],
+        ["exit", "doorUpNW"]
       ]
     }
   }

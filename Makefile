@@ -6,9 +6,10 @@ check: validate test
 validate:
 	node tools/validate.js
 
-# Rules-engine self-test against the hand-solved MAZERULES card.
+# Rules-engine self-test against the hand-solved MAZERULES card, and the motion-control maths.
 test:
 	node tools/solve.js --self-test
+	node tools/motion-test.js
 
 # Every playable card must be winnable from each of its start positions.
 winnable:

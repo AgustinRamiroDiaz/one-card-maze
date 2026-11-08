@@ -56,6 +56,8 @@ body.guided .rotate-button.disabled { opacity: 0.3; cursor: default; }
 	white-space: nowrap;
 }
 .hud-button:hover { background: #222222; }
+.hud-button[aria-pressed="true"] { background: #2B8A3E; }
+.hud-button[hidden] { display: none; }
 #hud-message {
 	flex: 1;
 	text-align: center;

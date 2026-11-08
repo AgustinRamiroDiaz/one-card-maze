@@ -55,8 +55,8 @@
         ["spinNW", "doorDown"],
         ["doorDown", "top"],
         ["top", "flipTop"],
-        ["top", "exit"],
-        ["leftArm", "doorUpSE"]
+        ["leftArm", "doorUpSE"],
+        ["exit", "doorUpNW"]
       ]
     }
   }

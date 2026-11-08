@@ -132,3 +132,44 @@ test('a card played once still opens offline', async ({ page, context, browserNa
   await expect(page.locator('.front.card img')).toHaveJSProperty('complete', true);
   expect(await page.locator('.front.card img').evaluate(img => img.naturalWidth)).toBeGreaterThan(0);
 });
+
+test('with Motion on, turning the phone on a spin turns the card without moving the picture', async ({ page, context, isMobile, browserName }) => {
+  test.skip(!isMobile || browserName !== 'chromium', 'needs a touch device that lets the test fire orientation events');
+  await context.grantPermissions(['accelerometer', 'gyroscope', 'magnetometer']);
+  const { pose } = require('../tools/motion-test.js');
+  const turn = t => page.evaluate(p => window.dispatchEvent(new DeviceOrientationEvent('deviceorientation', p)), pose(t));
+  const msg = page.locator('#hud-message');
+  await open(page, 'MAZERULES');
+  const toggle = page.locator('#hud-motion');
+  await toggle.tap();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await turn(0);
+  const picture = await page.locator('#card').getAttribute('style');
+
+  // Off a spin the game waits until the phone is upright again.
+  await turn(90);
+  await expect(msg).toHaveText('You can only turn the card on a spin. Turn the phone back.');
+  expect(await highlighted(page)).toEqual([]);
+  await turn(0);
+  expect(await highlighted(page)).toEqual(['front.spin3']);
+
+  // On the spin, a quarter turn of the phone opens door 2 (as the cw spin does) and the flip lights up.
+  await spot(page, 'front', 'spin3').tap();
+  await expect(msg).toHaveText('Turn the phone to turn the card.');
+  await turn(90);
+  expect(await highlighted(page)).toEqual(['front.flipBottom', 'front.spin3']);
+  expect(await page.locator('#card').getAttribute('style'), 'the picture stays still').toBe(picture);
+
+  // Flip while the phone is still turned: the rules and the picture must agree (guided.js asserts it).
+  const failures = [];
+  page.on('console', m => m.type() === 'assert' && failures.push(m.text()));
+  await spot(page, 'front', 'flipBottom').tap();
+  await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
+  expect(await highlighted(page)).toEqual(['back.flipBottom', 'back.spinSE']);
+  expect(failures).toEqual([]);
+
+  // Switching Motion off hands the phone's turn to the picture, so the game state is unchanged.
+  await toggle.tap();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  expect(await highlighted(page)).toEqual(['back.flipBottom', 'back.spinSE']);
+});
