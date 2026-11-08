@@ -119,11 +119,12 @@ const STYLE = {
   spin:     { fill: '#5ec8ff', glyph: '⟳' },
   flip:     { fill: '#ff3fd8', glyph: null },
   item:     { fill: '#ffa94d', glyph: '★' },
+  portal:   { fill: '#63e6be', glyph: '◎' },
   special:  { fill: '#b197fc', glyph: '✦' },
 };
 const ARROW_GLYPH = { up: '↑', down: '↓', left: '←', right: '→' };
 const FLIP_GLYPH = { top: '▲', bottom: '▼', left: '◀', right: '▶' };
-const TYPE_KEYS = ['room', 'door', 'spin', 'flip', 'start', 'exit', 'item', 'special'];
+const TYPE_KEYS = ['room', 'door', 'spin', 'flip', 'start', 'exit', 'item', 'portal', 'special'];
 
 const $ = id => document.getElementById(id);
 const svg = $('overlay');

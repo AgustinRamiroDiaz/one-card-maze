@@ -28,6 +28,7 @@ function solve(maze, first = R.start(maze)) {
     for (const [id] of R.reachable(maze, s)) if (id !== s.at) visit(s, R.walk(maze, s, id).state, `walk ${s.side}.${id}`);
     for (const dir of ['cw', 'ccw']) { const r = R.spin(maze, s, dir); if (!r.error) visit(s, r.state, `spin ${dir}`); }
     const f = R.flip(maze, s); if (!f.error) visit(s, f.state, `flip ${f.edge}`);
+    for (const id of R.portalExits(maze, s)) visit(s, R.teleport(maze, s, id).state, `teleport ${s.side}.${id}`);
   }
   return null;
 }
@@ -50,6 +51,13 @@ function selfTest() {
   assert.deepStrictEqual([f.state.side, f.state.at, f.state.rot], ['back', 'flipBottom', 270]);
   assert.ok(!R.walk(maze, f.state, 'spinSE').error, 'door right is open after the flip');
   assert.ok(solve(maze), 'MAZERULES solvable');
+  const portals = JSON.parse(fs.readFileSync(path.join(cardsDir, 'MAZE2404984', 'maze.json'), 'utf8'));
+  let p = R.start(portals);
+  assert.ok(R.walk(portals, p, 'portalTop').error, 'portals are not walkable shortcuts');
+  assert.ok(R.teleport(portals, p, 'portalTop').error, 'teleport needs the player on a portal');
+  p = R.teleport(portals, R.walk(portals, p, 'portalStart').state, 'portalTop').state;
+  assert.strictEqual(p.at, 'portalTop');
+  assert.ok(solve(portals), 'MAZE2404984 solvable through portals');
   console.log('self-test ok');
 }
 

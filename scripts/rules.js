@@ -103,6 +103,18 @@
     return { state: { ...state, side: other(state.side), rot: rotAfterFlip(state.rot, edge), at: landing.id }, edge };
   }
 
+  // A portal sends the player to any other portal on the same side. Entering and leaving are separate steps:
+  // walk onto a portal, then teleport from it.
+  function portalExits(maze, state) {
+    if (node(maze, state.side, state.at)?.type !== 'portal') return [];
+    return nodes(maze, state.side).filter(n => n.type === 'portal' && n.id !== state.at).map(n => n.id);
+  }
+
+  function teleport(maze, state, target) {
+    if (!portalExits(maze, state).includes(target)) return { state, error: 'not-a-portal-exit' };
+    return { state: { ...state, at: target } };
+  }
+
   function missingItems(maze, state) {
     return itemIds(maze).filter(id => !state.items.includes(id));
   }
@@ -115,6 +127,6 @@
     ['front', 'back'].some(s => nodes(maze, s).some(n => n.type === 'exit'));
 
   const api = { EDGES_CW, ARROWS_CW, doorOpen, screenEdge, rotAfterFlip, node, nodes, reachable, flipLanding,
-    start, starts, walk, spin, flip, missingItems, won, playable, other, mod, cssFlip, cssView };
+    start, starts, walk, spin, flip, portalExits, teleport, missingItems, won, playable, other, mod, cssFlip, cssView };
   if (typeof module !== 'undefined') module.exports = api; else root.MazeRules = api;
 })(this);

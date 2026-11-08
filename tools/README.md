@@ -27,6 +27,7 @@ Node fields: `id` (unique per side), `type`, `x`, `y`, plus:
 | `spin` | the player may rotate the card here | |
 | `flip` | triangle on the card edge; flip over that edge | `edge`: `top` `bottom` `left` `right` |
 | `item` | something to collect | `label` |
+| `portal` | teleports to any other portal on the same side; entering and leaving are separate moves | |
 | `special` | card-specific feature (lair, portal, sword, …) | `label` |
 
 Edges are walkable connections; walking an edge is always allowed, doors gate movement through the door node.

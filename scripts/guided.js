@@ -1,4 +1,4 @@
-// Guided mode: the reachable spin and flip spots light up; click one to use it. Cards with several starts let the player pick one first. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
+// Guided mode: the reachable spin and flip spots light up; click one to use it. Portals take two clicks: in, then out. Cards with several starts let the player pick one first. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -33,12 +33,14 @@ function render() {
   for (const b of document.querySelectorAll('.spot')) {
     const n = faces[state.side].contains(b) && R.node(maze, state.side, b.dataset.id);
     const usable = n && (state.choosing ? n.type === 'start'
-      : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n))));
+      : state.inPortal ? n.type === 'portal'
+      : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n))
+        || (n.type === 'portal' && R.portalExits(maze, { ...state, at: n.id }).length)));
     const can = !state.won && usable;
     b.classList.toggle('can', !!can);
     b.disabled = !can;
   }
-  const onSpin = !state.won && !state.choosing && R.node(maze, state.side, state.at).type === 'spin';
+  const onSpin = !state.won && !state.choosing && !state.inPortal && R.node(maze, state.side, state.at).type === 'spin';
   document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !onSpin));
 }
 
@@ -70,6 +72,17 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 async function onSpot(side, n) {
   if (busy || side !== state.side || state.won) return;
   if (state.choosing) { state = { ...state, at: n.id, choosing: false }; settle(); return; }
+  if (state.inPortal) { // clicking the portal you are in steps back out of it
+    state = { ...(n.id === state.at ? state : R.teleport(maze, state, n.id).state), inPortal: false };
+    settle();
+    return;
+  }
+  if (n.type === 'portal') {
+    state = { ...R.walk(maze, state, n.id).state, inPortal: true };
+    message('Pick the portal to come out of.');
+    render();
+    return;
+  }
   const res = R.walk(maze, state, n.id);
   if (res.error) return;
   busy = true;
@@ -131,8 +144,9 @@ function restart() {
   render();
 }
 
-document.querySelector('#rotate-clockwise').addEventListener('click', () => !busy && !state.won && !state.choosing && doSpin('cw'));
-document.querySelector('#rotate-counterclockwise').addEventListener('click', () => !busy && !state.won && !state.choosing && doSpin('ccw'));
+const canTurn = () => !busy && !state.won && !state.choosing && !state.inPortal;
+document.querySelector('#rotate-clockwise').addEventListener('click', () => canTurn() && doSpin('cw'));
+document.querySelector('#rotate-counterclockwise').addEventListener('click', () => canTurn() && doSpin('ccw'));
 document.querySelector('#hud-restart').addEventListener('click', () => !busy && restart());
 
 fetch(`cards/${encodeURIComponent(cardName)}/maze.json`, { cache: 'no-store' })

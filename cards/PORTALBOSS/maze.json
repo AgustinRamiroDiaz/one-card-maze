@@ -9,8 +9,8 @@
     "front": {
       "nodes": [
         {"id": "start", "type": "start", "x": 0.3, "y": 0.84},
-        {"id": "portalStart", "type": "special", "x": 0.66, "y": 0.84, "label": "portal"},
-        {"id": "portalHere", "type": "special", "x": 0.4, "y": 0.31, "label": "portal ('To here!')"},
+        {"id": "portalStart", "type": "portal", "x": 0.66, "y": 0.84},
+        {"id": "portalHere", "type": "portal", "x": 0.4, "y": 0.31},
         {"id": "topC", "type": "room", "x": 0.52, "y": 0.2},
         {"id": "flipTop", "type": "flip", "x": 0.48, "y": 0.07, "edge": "top"},
         {"id": "flipX", "type": "flip", "x": 0.9, "y": 0.33, "edge": "right"},
@@ -78,7 +78,7 @@
     },
     "back": {
       "nodes": [
-        {"id": "portalTL", "type": "special", "x": 0.15, "y": 0.1, "label": "portal"},
+        {"id": "portalTL", "type": "portal", "x": 0.15, "y": 0.1},
         {"id": "doorRtl", "type": "door", "x": 0.23, "y": 0.17, "arrow": "right"},
         {"id": "main", "type": "room", "x": 0.35, "y": 0.22},
         {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top"},
@@ -87,7 +87,7 @@
         {"id": "spinTR", "type": "spin", "x": 0.85, "y": 0.1},
         {"id": "doorUtop", "type": "door", "x": 0.77, "y": 0.17, "arrow": "up"},
         {"id": "doorLp", "type": "door", "x": 0.59, "y": 0.26, "arrow": "left"},
-        {"id": "portalR", "type": "special", "x": 0.66, "y": 0.32, "label": "portal"},
+        {"id": "portalR", "type": "portal", "x": 0.66, "y": 0.32},
         {"id": "flipR1", "type": "flip", "x": 0.9, "y": 0.32, "edge": "right"},
         {"id": "flipR2", "type": "flip", "x": 0.9, "y": 0.7, "edge": "right"},
         {"id": "doorUr", "type": "door", "x": 0.81, "y": 0.43, "arrow": "up"},
@@ -101,10 +101,10 @@
         {"id": "flipB", "type": "flip", "x": 0.47, "y": 0.96, "edge": "bottom"},
         {"id": "flipL2", "type": "flip", "x": 0.08, "y": 0.7, "edge": "left"},
         {"id": "doorDl", "type": "door", "x": 0.12, "y": 0.53, "arrow": "down"},
-        {"id": "portalL", "type": "special", "x": 0.13, "y": 0.47, "label": "portal"},
+        {"id": "portalL", "type": "portal", "x": 0.13, "y": 0.47},
         {"id": "doorUbl", "type": "door", "x": 0.22, "y": 0.9, "arrow": "up"},
-        {"id": "portalBL", "type": "special", "x": 0.13, "y": 0.92, "label": "portal"},
-        {"id": "portalBoss", "type": "special", "x": 0.64, "y": 0.67, "label": "portal (into the boss lair)"},
+        {"id": "portalBL", "type": "portal", "x": 0.13, "y": 0.92},
+        {"id": "portalBoss", "type": "portal", "x": 0.64, "y": 0.67},
         {"id": "boss", "type": "special", "x": 0.42, "y": 0.45, "label": "BOSS lair (goal)"}
       ],
       "edges": [
