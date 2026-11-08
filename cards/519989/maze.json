@@ -1,773 +1,163 @@
 {
- "status": "draft",
- "notes": "Legend #51. No exit printed; the goal is taken to be the sun (front centre), modelled as a special node plus an exit node. Three numbered arrows under it (1 up, 2 right, 3 left) read as the orientation sequence; the card does not say how it is performed. Start is on the grass mound, linked to the path by door up (0.4,0.83). Region connectivity from a path-colour component pass; door sides assigned by position. Back SW is unclear: door down (0.22,0.86) seems to lead nowhere (left as a dead end on the lower-left flip region), and door right (0.24,0.69) is assumed to join the left flip lobe to the lower-left flip region.",
- "mechanics": [
-  {
-   "type": "boss",
-   "text": "Sun with a 3-step arrow sequence: 1 up, 2 right, 3 left"
-  }
- ],
- "sides": {
-  "front": {
-   "nodes": [
-    {
-     "id": "top",
-     "type": "room",
-     "x": 0.53,
-     "y": 0.08
+  "status": "draft",
+  "notes": "Legend #51. No exit printed; the goal is taken to be the sun (front centre), modelled as a special node plus an exit node. Three numbered arrows under it (1 up, 2 right, 3 left) read as the orientation sequence; the card does not say how it is performed. Start is on the grass mound, linked to the path by door up (0.4,0.83). Region connectivity from a path-colour component pass; door sides assigned by position. Back SW is unclear: door down (0.22,0.86) seems to lead nowhere (left as a dead end on the lower-left flip region), and door right (0.24,0.69) is assumed to join the left flip lobe to the lower-left flip region.",
+  "mechanics": [
+    {"type": "boss", "text": "Sun with a 3-step arrow sequence: 1 up, 2 right, 3 left"}
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        {"id": "top", "type": "room", "x": 0.53, "y": 0.08},
+        {"id": "sun", "type": "room", "x": 0.6, "y": 0.38},
+        {"id": "west", "type": "room", "x": 0.09, "y": 0.37},
+        {"id": "east", "type": "room", "x": 0.82, "y": 0.68},
+        {"id": "bottom", "type": "room", "x": 0.45, "y": 0.8},
+        {"id": "start", "type": "start", "x": 0.1, "y": 0.88},
+        {"id": "e10", "type": "door", "x": 0.4, "y": 0.83, "arrow": "up"},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top"},
+        {"id": "e1", "type": "door", "x": 0.44, "y": 0.18, "arrow": "right"},
+        {"id": "e2", "type": "door", "x": 0.56, "y": 0.18, "arrow": "down"},
+        {"id": "e3", "type": "door", "x": 0.77, "y": 0.13, "arrow": "left"},
+        {"id": "flipLeftTop", "type": "flip", "x": 0.07, "y": 0.35, "edge": "left"},
+        {"id": "e4", "type": "door", "x": 0.25, "y": 0.29, "arrow": "down"},
+        {"id": "e5", "type": "door", "x": 0.25, "y": 0.37, "arrow": "up"},
+        {"id": "e6", "type": "door", "x": 0.26, "y": 0.45, "arrow": "right"},
+        {"id": "sunGod", "type": "special", "x": 0.6, "y": 0.4, "label": "sun (sequence up, right, left)"},
+        {"id": "exit", "type": "exit", "x": 0.6, "y": 0.48},
+        {"id": "e7", "type": "door", "x": 0.56, "y": 0.7, "arrow": "down"},
+        {"id": "e8", "type": "door", "x": 0.65, "y": 0.68, "arrow": "left"},
+        {"id": "e9", "type": "door", "x": 0.75, "y": 0.64, "arrow": "up"},
+        {"id": "flipRightTop", "type": "flip", "x": 0.93, "y": 0.61, "edge": "right"},
+        {"id": "flipLeftLow", "type": "flip", "x": 0.08, "y": 0.62, "edge": "left"},
+        {"id": "flipRightLow", "type": "flip", "x": 0.93, "y": 0.8, "edge": "right"},
+        {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.94, "edge": "bottom"},
+        {"id": "spin", "type": "spin", "x": 0.72, "y": 0.87}
+      ],
+      "edges": [
+        ["start", "e10"],
+        ["bottom", "e10"],
+        ["top", "flipTop"],
+        ["top", "e1"],
+        ["sun", "e1"],
+        ["top", "e2"],
+        ["sun", "e2"],
+        ["top", "e3"],
+        ["sun", "e3"],
+        ["west", "flipLeftTop"],
+        ["west", "e4"],
+        ["sun", "e4"],
+        ["west", "e5"],
+        ["sun", "e5"],
+        ["west", "e6"],
+        ["sun", "e6"],
+        ["sun", "sunGod"],
+        ["sun", "exit"],
+        ["sun", "e7"],
+        ["bottom", "e7"],
+        ["sun", "e8"],
+        ["east", "e8"],
+        ["sun", "e9"],
+        ["east", "e9"],
+        ["east", "flipRightTop"],
+        ["bottom", "flipLeftLow"],
+        ["bottom", "flipRightLow"],
+        ["bottom", "flipBottom"],
+        ["bottom", "spin"]
+      ]
     },
-    {
-     "id": "sun",
-     "type": "room",
-     "x": 0.6,
-     "y": 0.38
-    },
-    {
-     "id": "west",
-     "type": "room",
-     "x": 0.09,
-     "y": 0.37
-    },
-    {
-     "id": "east",
-     "type": "room",
-     "x": 0.82,
-     "y": 0.68
-    },
-    {
-     "id": "bottom",
-     "type": "room",
-     "x": 0.45,
-     "y": 0.8
-    },
-    {
-     "id": "start",
-     "type": "start",
-     "x": 0.1,
-     "y": 0.88
-    },
-    {
-     "id": "e10",
-     "type": "door",
-     "x": 0.4,
-     "y": 0.83,
-     "arrow": "up"
-    },
-    {
-     "id": "flipTop",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.07,
-     "edge": "top"
-    },
-    {
-     "id": "e1",
-     "type": "door",
-     "x": 0.44,
-     "y": 0.18,
-     "arrow": "right"
-    },
-    {
-     "id": "e2",
-     "type": "door",
-     "x": 0.56,
-     "y": 0.18,
-     "arrow": "down"
-    },
-    {
-     "id": "e3",
-     "type": "door",
-     "x": 0.77,
-     "y": 0.13,
-     "arrow": "left"
-    },
-    {
-     "id": "flipLeftTop",
-     "type": "flip",
-     "x": 0.07,
-     "y": 0.35,
-     "edge": "left"
-    },
-    {
-     "id": "e4",
-     "type": "door",
-     "x": 0.25,
-     "y": 0.29,
-     "arrow": "down"
-    },
-    {
-     "id": "e5",
-     "type": "door",
-     "x": 0.25,
-     "y": 0.37,
-     "arrow": "up"
-    },
-    {
-     "id": "e6",
-     "type": "door",
-     "x": 0.26,
-     "y": 0.45,
-     "arrow": "right"
-    },
-    {
-     "id": "sunGod",
-     "type": "special",
-     "x": 0.6,
-     "y": 0.4,
-     "label": "sun (sequence up, right, left)"
-    },
-    {
-     "id": "exit",
-     "type": "exit",
-     "x": 0.6,
-     "y": 0.48
-    },
-    {
-     "id": "e7",
-     "type": "door",
-     "x": 0.56,
-     "y": 0.7,
-     "arrow": "down"
-    },
-    {
-     "id": "e8",
-     "type": "door",
-     "x": 0.65,
-     "y": 0.68,
-     "arrow": "left"
-    },
-    {
-     "id": "e9",
-     "type": "door",
-     "x": 0.75,
-     "y": 0.64,
-     "arrow": "up"
-    },
-    {
-     "id": "flipRightTop",
-     "type": "flip",
-     "x": 0.93,
-     "y": 0.61,
-     "edge": "right"
-    },
-    {
-     "id": "flipLeftLow",
-     "type": "flip",
-     "x": 0.08,
-     "y": 0.62,
-     "edge": "left"
-    },
-    {
-     "id": "flipRightLow",
-     "type": "flip",
-     "x": 0.93,
-     "y": 0.8,
-     "edge": "right"
-    },
-    {
-     "id": "flipBottom",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.94,
-     "edge": "bottom"
-    },
-    {
-     "id": "spin",
-     "type": "spin",
-     "x": 0.72,
-     "y": 0.87
+    "back": {
+      "nodes": [
+        {"id": "top", "type": "room", "x": 0.5, "y": 0.1},
+        {"id": "west", "type": "room", "x": 0.09, "y": 0.47},
+        {"id": "ne", "type": "room", "x": 0.9, "y": 0.37},
+        {"id": "centre", "type": "room", "x": 0.5, "y": 0.55},
+        {"id": "lime", "type": "room", "x": 0.68, "y": 0.42},
+        {"id": "orange", "type": "room", "x": 0.36, "y": 0.65},
+        {"id": "pink", "type": "room", "x": 0.9, "y": 0.62},
+        {"id": "seCol", "type": "room", "x": 0.88, "y": 0.8},
+        {"id": "bottom", "type": "room", "x": 0.5, "y": 0.9},
+        {"id": "swLow", "type": "room", "x": 0.12, "y": 0.8},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.07, "edge": "top"},
+        {"id": "flipRightTop", "type": "flip", "x": 0.92, "y": 0.37, "edge": "right"},
+        {"id": "flipLeft", "type": "flip", "x": 0.08, "y": 0.62, "edge": "left"},
+        {"id": "flipRightLow", "type": "flip", "x": 0.92, "y": 0.63, "edge": "right"},
+        {"id": "flipLeftLow", "type": "flip", "x": 0.08, "y": 0.8, "edge": "left"},
+        {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.94, "edge": "bottom"},
+        {"id": "g1", "type": "door", "x": 0.11, "y": 0.1, "arrow": "down"},
+        {"id": "g2", "type": "door", "x": 0.88, "y": 0.1, "arrow": "down"},
+        {"id": "g3", "type": "door", "x": 0.42, "y": 0.27, "arrow": "left"},
+        {"id": "g4", "type": "door", "x": 0.59, "y": 0.27, "arrow": "up"},
+        {"id": "g5", "type": "door", "x": 0.23, "y": 0.33, "arrow": "left"},
+        {"id": "g6", "type": "door", "x": 0.52, "y": 0.33, "arrow": "right"},
+        {"id": "g7", "type": "door", "x": 0.78, "y": 0.37, "arrow": "down"},
+        {"id": "g8", "type": "door", "x": 0.35, "y": 0.43, "arrow": "left"},
+        {"id": "g9", "type": "door", "x": 0.59, "y": 0.43, "arrow": "down"},
+        {"id": "g10", "type": "door", "x": 0.78, "y": 0.46, "arrow": "left"},
+        {"id": "g11", "type": "door", "x": 0.89, "y": 0.49, "arrow": "down"},
+        {"id": "g12", "type": "door", "x": 0.23, "y": 0.51, "arrow": "up"},
+        {"id": "g13", "type": "door", "x": 0.78, "y": 0.56, "arrow": "up"},
+        {"id": "g14", "type": "door", "x": 0.68, "y": 0.59, "arrow": "left"},
+        {"id": "g15", "type": "door", "x": 0.45, "y": 0.6, "arrow": "down"},
+        {"id": "g16", "type": "door", "x": 0.52, "y": 0.68, "arrow": "right"},
+        {"id": "g17", "type": "door", "x": 0.24, "y": 0.69, "arrow": "right"},
+        {"id": "g18", "type": "door", "x": 0.33, "y": 0.72, "arrow": "left"},
+        {"id": "g19", "type": "door", "x": 0.58, "y": 0.76, "arrow": "left"},
+        {"id": "g20", "type": "door", "x": 0.45, "y": 0.8, "arrow": "up"},
+        {"id": "g21", "type": "door", "x": 0.22, "y": 0.86, "arrow": "down"},
+        {"id": "g22", "type": "door", "x": 0.78, "y": 0.88, "arrow": "down"}
+      ],
+      "edges": [
+        ["top", "flipTop"],
+        ["ne", "flipRightTop"],
+        ["west", "flipLeft"],
+        ["pink", "flipRightLow"],
+        ["swLow", "flipLeftLow"],
+        ["bottom", "flipBottom"],
+        ["top", "g1"],
+        ["west", "g1"],
+        ["top", "g2"],
+        ["ne", "g2"],
+        ["top", "g3"],
+        ["centre", "g3"],
+        ["top", "g4"],
+        ["lime", "g4"],
+        ["west", "g5"],
+        ["centre", "g5"],
+        ["top", "g6"],
+        ["centre", "g6"],
+        ["lime", "g7"],
+        ["ne", "g7"],
+        ["centre", "g8"],
+        ["orange", "g8"],
+        ["centre", "g9"],
+        ["lime", "g9"],
+        ["lime", "g10"],
+        ["ne", "g10"],
+        ["ne", "g11"],
+        ["pink", "g11"],
+        ["west", "g12"],
+        ["orange", "g12"],
+        ["lime", "g13"],
+        ["pink", "g13"],
+        ["lime", "g14"],
+        ["centre", "g14"],
+        ["centre", "g15"],
+        ["orange", "g15"],
+        ["centre", "g16"],
+        ["bottom", "g16"],
+        ["west", "g17"],
+        ["swLow", "g17"],
+        ["swLow", "g18"],
+        ["orange", "g18"],
+        ["centre", "g19"],
+        ["bottom", "g19"],
+        ["orange", "g20"],
+        ["bottom", "g20"],
+        ["swLow", "g21"],
+        ["centre", "g22"],
+        ["seCol", "g22"],
+        ["seCol", "pink"]
+      ]
     }
-   ],
-   "edges": [
-    [
-     "start",
-     "e10"
-    ],
-    [
-     "bottom",
-     "e10"
-    ],
-    [
-     "top",
-     "flipTop"
-    ],
-    [
-     "top",
-     "e1"
-    ],
-    [
-     "sun",
-     "e1"
-    ],
-    [
-     "top",
-     "e2"
-    ],
-    [
-     "sun",
-     "e2"
-    ],
-    [
-     "top",
-     "e3"
-    ],
-    [
-     "sun",
-     "e3"
-    ],
-    [
-     "west",
-     "flipLeftTop"
-    ],
-    [
-     "west",
-     "e4"
-    ],
-    [
-     "sun",
-     "e4"
-    ],
-    [
-     "west",
-     "e5"
-    ],
-    [
-     "sun",
-     "e5"
-    ],
-    [
-     "west",
-     "e6"
-    ],
-    [
-     "sun",
-     "e6"
-    ],
-    [
-     "sun",
-     "sunGod"
-    ],
-    [
-     "sun",
-     "exit"
-    ],
-    [
-     "sun",
-     "e7"
-    ],
-    [
-     "bottom",
-     "e7"
-    ],
-    [
-     "sun",
-     "e8"
-    ],
-    [
-     "east",
-     "e8"
-    ],
-    [
-     "sun",
-     "e9"
-    ],
-    [
-     "east",
-     "e9"
-    ],
-    [
-     "east",
-     "flipRightTop"
-    ],
-    [
-     "bottom",
-     "flipLeftLow"
-    ],
-    [
-     "bottom",
-     "flipRightLow"
-    ],
-    [
-     "bottom",
-     "flipBottom"
-    ],
-    [
-     "bottom",
-     "spin"
-    ]
-   ]
-  },
-  "back": {
-   "nodes": [
-    {
-     "id": "top",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.1
-    },
-    {
-     "id": "west",
-     "type": "room",
-     "x": 0.09,
-     "y": 0.47
-    },
-    {
-     "id": "ne",
-     "type": "room",
-     "x": 0.9,
-     "y": 0.37
-    },
-    {
-     "id": "centre",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.55
-    },
-    {
-     "id": "lime",
-     "type": "room",
-     "x": 0.68,
-     "y": 0.42
-    },
-    {
-     "id": "orange",
-     "type": "room",
-     "x": 0.36,
-     "y": 0.65
-    },
-    {
-     "id": "pink",
-     "type": "room",
-     "x": 0.9,
-     "y": 0.62
-    },
-    {
-     "id": "seCol",
-     "type": "room",
-     "x": 0.88,
-     "y": 0.8
-    },
-    {
-     "id": "bottom",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.9
-    },
-    {
-     "id": "swLow",
-     "type": "room",
-     "x": 0.12,
-     "y": 0.8
-    },
-    {
-     "id": "flipTop",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.07,
-     "edge": "top"
-    },
-    {
-     "id": "flipRightTop",
-     "type": "flip",
-     "x": 0.92,
-     "y": 0.37,
-     "edge": "right"
-    },
-    {
-     "id": "flipLeft",
-     "type": "flip",
-     "x": 0.08,
-     "y": 0.62,
-     "edge": "left"
-    },
-    {
-     "id": "flipRightLow",
-     "type": "flip",
-     "x": 0.92,
-     "y": 0.63,
-     "edge": "right"
-    },
-    {
-     "id": "flipLeftLow",
-     "type": "flip",
-     "x": 0.08,
-     "y": 0.8,
-     "edge": "left"
-    },
-    {
-     "id": "flipBottom",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.94,
-     "edge": "bottom"
-    },
-    {
-     "id": "g1",
-     "type": "door",
-     "x": 0.11,
-     "y": 0.1,
-     "arrow": "down"
-    },
-    {
-     "id": "g2",
-     "type": "door",
-     "x": 0.88,
-     "y": 0.1,
-     "arrow": "down"
-    },
-    {
-     "id": "g3",
-     "type": "door",
-     "x": 0.42,
-     "y": 0.27,
-     "arrow": "left"
-    },
-    {
-     "id": "g4",
-     "type": "door",
-     "x": 0.59,
-     "y": 0.27,
-     "arrow": "up"
-    },
-    {
-     "id": "g5",
-     "type": "door",
-     "x": 0.23,
-     "y": 0.33,
-     "arrow": "left"
-    },
-    {
-     "id": "g6",
-     "type": "door",
-     "x": 0.52,
-     "y": 0.33,
-     "arrow": "right"
-    },
-    {
-     "id": "g7",
-     "type": "door",
-     "x": 0.78,
-     "y": 0.37,
-     "arrow": "down"
-    },
-    {
-     "id": "g8",
-     "type": "door",
-     "x": 0.35,
-     "y": 0.43,
-     "arrow": "left"
-    },
-    {
-     "id": "g9",
-     "type": "door",
-     "x": 0.59,
-     "y": 0.43,
-     "arrow": "down"
-    },
-    {
-     "id": "g10",
-     "type": "door",
-     "x": 0.78,
-     "y": 0.46,
-     "arrow": "left"
-    },
-    {
-     "id": "g11",
-     "type": "door",
-     "x": 0.89,
-     "y": 0.49,
-     "arrow": "down"
-    },
-    {
-     "id": "g12",
-     "type": "door",
-     "x": 0.23,
-     "y": 0.51,
-     "arrow": "up"
-    },
-    {
-     "id": "g13",
-     "type": "door",
-     "x": 0.78,
-     "y": 0.56,
-     "arrow": "up"
-    },
-    {
-     "id": "g14",
-     "type": "door",
-     "x": 0.68,
-     "y": 0.59,
-     "arrow": "left"
-    },
-    {
-     "id": "g15",
-     "type": "door",
-     "x": 0.45,
-     "y": 0.6,
-     "arrow": "down"
-    },
-    {
-     "id": "g16",
-     "type": "door",
-     "x": 0.52,
-     "y": 0.68,
-     "arrow": "right"
-    },
-    {
-     "id": "g17",
-     "type": "door",
-     "x": 0.24,
-     "y": 0.69,
-     "arrow": "right"
-    },
-    {
-     "id": "g18",
-     "type": "door",
-     "x": 0.33,
-     "y": 0.72,
-     "arrow": "left"
-    },
-    {
-     "id": "g19",
-     "type": "door",
-     "x": 0.58,
-     "y": 0.76,
-     "arrow": "left"
-    },
-    {
-     "id": "g20",
-     "type": "door",
-     "x": 0.45,
-     "y": 0.8,
-     "arrow": "up"
-    },
-    {
-     "id": "g21",
-     "type": "door",
-     "x": 0.22,
-     "y": 0.86,
-     "arrow": "down"
-    },
-    {
-     "id": "g22",
-     "type": "door",
-     "x": 0.78,
-     "y": 0.88,
-     "arrow": "down"
-    },
-    {
-     "id": "jSE",
-     "type": "junction",
-     "x": 0.9,
-     "y": 0.72
-    }
-   ],
-   "edges": [
-    [
-     "top",
-     "flipTop"
-    ],
-    [
-     "ne",
-     "flipRightTop"
-    ],
-    [
-     "west",
-     "flipLeft"
-    ],
-    [
-     "pink",
-     "flipRightLow"
-    ],
-    [
-     "swLow",
-     "flipLeftLow"
-    ],
-    [
-     "bottom",
-     "flipBottom"
-    ],
-    [
-     "top",
-     "g1"
-    ],
-    [
-     "west",
-     "g1"
-    ],
-    [
-     "top",
-     "g2"
-    ],
-    [
-     "ne",
-     "g2"
-    ],
-    [
-     "top",
-     "g3"
-    ],
-    [
-     "centre",
-     "g3"
-    ],
-    [
-     "top",
-     "g4"
-    ],
-    [
-     "lime",
-     "g4"
-    ],
-    [
-     "west",
-     "g5"
-    ],
-    [
-     "centre",
-     "g5"
-    ],
-    [
-     "top",
-     "g6"
-    ],
-    [
-     "centre",
-     "g6"
-    ],
-    [
-     "lime",
-     "g7"
-    ],
-    [
-     "ne",
-     "g7"
-    ],
-    [
-     "centre",
-     "g8"
-    ],
-    [
-     "orange",
-     "g8"
-    ],
-    [
-     "centre",
-     "g9"
-    ],
-    [
-     "lime",
-     "g9"
-    ],
-    [
-     "lime",
-     "g10"
-    ],
-    [
-     "ne",
-     "g10"
-    ],
-    [
-     "ne",
-     "g11"
-    ],
-    [
-     "pink",
-     "g11"
-    ],
-    [
-     "west",
-     "g12"
-    ],
-    [
-     "orange",
-     "g12"
-    ],
-    [
-     "lime",
-     "g13"
-    ],
-    [
-     "pink",
-     "g13"
-    ],
-    [
-     "lime",
-     "g14"
-    ],
-    [
-     "centre",
-     "g14"
-    ],
-    [
-     "centre",
-     "g15"
-    ],
-    [
-     "orange",
-     "g15"
-    ],
-    [
-     "centre",
-     "g16"
-    ],
-    [
-     "bottom",
-     "g16"
-    ],
-    [
-     "west",
-     "g17"
-    ],
-    [
-     "swLow",
-     "g17"
-    ],
-    [
-     "swLow",
-     "g18"
-    ],
-    [
-     "orange",
-     "g18"
-    ],
-    [
-     "centre",
-     "g19"
-    ],
-    [
-     "bottom",
-     "g19"
-    ],
-    [
-     "orange",
-     "g20"
-    ],
-    [
-     "bottom",
-     "g20"
-    ],
-    [
-     "swLow",
-     "g21"
-    ],
-    [
-     "centre",
-     "g22"
-    ],
-    [
-     "seCol",
-     "g22"
-    ],
-    [
-     "seCol",
-     "jSE"
-    ],
-    [
-     "pink",
-     "jSE"
-    ]
-   ]
   }
- }
 }

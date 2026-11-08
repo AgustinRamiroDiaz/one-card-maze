@@ -23,7 +23,6 @@ Node fields: `id` (unique per side), `type`, `x`, `y`, plus:
 | `start` | where the player begins | |
 | `exit` | goal | |
 | `room` | open area | |
-| `junction` | path bend or fork | |
 | `door` | passable only while its arrow points up on screen | `arrow`: `up` `down` `left` `right`, as printed |
 | `spin` | the player may rotate the card here | |
 | `flip` | triangle on the card edge; flip over that edge | `edge`: `top` `bottom` `left` `right` |

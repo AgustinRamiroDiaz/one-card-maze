@@ -14,31 +14,17 @@ body.guided .spot {
 	cursor: pointer;
 	padding: 0;
 }
-body.guided .spot:hover,
-body.guided .spot:focus-visible {
-	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 0 6px rgba(0, 0, 0, 0.5);
+body.guided .spot:disabled { pointer-events: none; }
+body.guided .spot.can {
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95), 0 0 12px 6px rgba(255, 214, 0, 0.9);
+	animation: glow 900ms ease-in-out infinite alternate;
 }
-
-body.guided .token {
-	position: absolute;
-	width: 6%;
-	aspect-ratio: 1;
-	transform: translate(-50%, -50%);
-	border-radius: 50%;
-	background: #E8443A;
-	border: 3px solid #FFFFFF;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-	pointer-events: none;
-	transition: left 150ms linear, top 150ms linear;
-	z-index: 2;
+body.guided .spot.can:hover,
+body.guided .spot.can:focus-visible {
+	box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px rgba(0, 0, 0, 0.6), 0 0 16px 8px rgba(255, 214, 0, 1);
 }
-body.guided .token.shake { animation: shake 300ms; }
-@keyframes shake {
-	25% { transform: translate(-70%, -50%); }
-	75% { transform: translate(-30%, -50%); }
-}
-body.won .token { animation: pulse 900ms ease-in-out infinite alternate; }
-@keyframes pulse { to { transform: translate(-50%, -50%) scale(1.4); } }
+@keyframes glow { to { transform: translate(-50%, -50%) scale(1.15); } }
+@media (prefers-reduced-motion: reduce) { body.guided .spot.can { animation: none; } }
 
 body.guided .rotate-button.disabled { opacity: 0.3; cursor: default; }
 

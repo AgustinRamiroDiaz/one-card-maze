@@ -5,40 +5,48 @@
   "sides": {
     "front": {
       "nodes": [
-        { "id": "start", "type": "start", "x": 0.88, "y": 0.1 },
-        { "id": "archR", "type": "junction", "x": 0.85, "y": 0.27 },
-        { "id": "archTop", "type": "junction", "x": 0.5, "y": 0.1 },
-        { "id": "archL", "type": "junction", "x": 0.22, "y": 0.3 },
-        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.04, "edge": "top" },
-        { "id": "flipL", "type": "flip", "x": 0.06, "y": 0.45, "edge": "left" },
-        { "id": "flipR", "type": "flip", "x": 0.95, "y": 0.45, "edge": "right" }
+        {"id": "start", "type": "start", "x": 0.88, "y": 0.1},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.04, "edge": "top"},
+        {"id": "flipL", "type": "flip", "x": 0.06, "y": 0.45, "edge": "left"},
+        {"id": "flipR", "type": "flip", "x": 0.95, "y": 0.45, "edge": "right"}
       ],
       "edges": [
-        ["start", "archR"], ["archR", "archTop"], ["archTop", "flipTop"], ["archTop", "archL"],
-        ["archL", "flipL"], ["archR", "flipR"]
+        ["start", "flipR"],
+        ["flipTop", "start"],
+        ["flipTop", "flipR"],
+        ["flipL", "flipTop"],
+        ["flipL", "start"],
+        ["flipL", "flipR"]
       ]
     },
     "back": {
       "nodes": [
-        { "id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top" },
-        { "id": "top", "type": "junction", "x": 0.5, "y": 0.1 },
-        { "id": "doorL", "type": "door", "x": 0.49, "y": 0.15, "arrow": "left" },
-        { "id": "doorR", "type": "door", "x": 0.71, "y": 0.12, "arrow": "right" },
-        { "id": "right", "type": "junction", "x": 0.52, "y": 0.3 },
-        { "id": "flipR", "type": "flip", "x": 0.94, "y": 0.47, "edge": "right" },
-        { "id": "flipL", "type": "flip", "x": 0.06, "y": 0.47, "edge": "left" },
-        { "id": "left", "type": "junction", "x": 0.17, "y": 0.48 },
-        { "id": "mid", "type": "junction", "x": 0.5, "y": 0.75 },
-        { "id": "doorUp", "type": "door", "x": 0.17, "y": 0.55, "arrow": "up" },
-        { "id": "spin", "type": "spin", "x": 0.11, "y": 0.88 },
-        { "id": "doorBR", "type": "door", "x": 0.34, "y": 0.89, "arrow": "right" },
-        { "id": "doorExit", "type": "door", "x": 0.62, "y": 0.89, "arrow": "left" },
-        { "id": "exit", "type": "exit", "x": 0.8, "y": 0.88 }
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top"},
+        {"id": "doorL", "type": "door", "x": 0.49, "y": 0.15, "arrow": "left"},
+        {"id": "doorR", "type": "door", "x": 0.71, "y": 0.12, "arrow": "right"},
+        {"id": "flipR", "type": "flip", "x": 0.94, "y": 0.47, "edge": "right"},
+        {"id": "flipL", "type": "flip", "x": 0.06, "y": 0.47, "edge": "left"},
+        {"id": "doorUp", "type": "door", "x": 0.17, "y": 0.55, "arrow": "up"},
+        {"id": "spin", "type": "spin", "x": 0.11, "y": 0.88},
+        {"id": "doorBR", "type": "door", "x": 0.34, "y": 0.89, "arrow": "right"},
+        {"id": "doorExit", "type": "door", "x": 0.62, "y": 0.89, "arrow": "left"},
+        {"id": "exit", "type": "exit", "x": 0.8, "y": 0.88}
       ],
       "edges": [
-        ["flipTop", "top"], ["top", "doorL"], ["doorL", "right"], ["top", "doorR"], ["doorR", "right"],
-        ["right", "flipR"], ["flipL", "left"], ["left", "mid"], ["left", "doorUp"], ["doorUp", "spin"],
-        ["spin", "doorBR"], ["doorBR", "mid"], ["mid", "doorExit"], ["doorExit", "exit"]
+        ["doorUp", "spin"],
+        ["spin", "doorBR"],
+        ["doorExit", "exit"],
+        ["flipTop", "doorL"],
+        ["flipTop", "doorR"],
+        ["doorL", "doorR"],
+        ["doorL", "flipR"],
+        ["doorR", "flipR"],
+        ["flipL", "doorUp"],
+        ["doorBR", "doorExit"],
+        ["doorBR", "flipL"],
+        ["doorBR", "doorUp"],
+        ["doorExit", "flipL"],
+        ["doorExit", "doorUp"]
       ]
     }
   }

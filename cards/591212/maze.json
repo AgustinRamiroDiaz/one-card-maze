@@ -1,886 +1,177 @@
 {
- "status": "draft",
- "notes": "MICRO #59, boss card: no exit; win by entering the tardigrade bubble Lair (front centre) in the sword sequence. Lair reached from the bottom room (central corridor x~0.58) and through door (0.65,0.67). Doubts (front): door (0.66,0.18) treated as a 3-way junction (top room, START arch, diagonal to spinNE); strip x 0.21-0.25 below the left lower room merged into the left lower room. Back: door (0.60,0.18) treated as 3-way (top room, spinC arm, central horizontal); S-shaped corridor through door (0.25,0.42) assumed to lead to spinD (0.40,0.55); top corridor (y 0.33) assumed to turn down at x~0.48 to meet the y 0.52 horizontal; spinA assumed reachable only from the top-left junction.",
- "mechanics": [
-  {
-   "type": "boss",
-   "text": "Enter the Lair in the orientations shown by the swords in sequence: 1 dot = sword up, 2 dots = right, 3 dots = down, 4 dots = left. Wrong orientation: the BOSS attacks you."
-  }
- ],
- "sides": {
-  "front": {
-   "nodes": [
-    {
-     "id": "flipT",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.06,
-     "edge": "top"
+  "status": "draft",
+  "notes": "MICRO #59, boss card: no exit; win by entering the tardigrade bubble Lair (front centre) in the sword sequence. Lair reached from the bottom room (central corridor x~0.58) and through door (0.65,0.67). Doubts (front): door (0.66,0.18) treated as a 3-way junction (top room, START arch, diagonal to spinNE); strip x 0.21-0.25 below the left lower room merged into the left lower room. Back: door (0.60,0.18) treated as 3-way (top room, spinC arm, central horizontal); S-shaped corridor through door (0.25,0.42) assumed to lead to spinD (0.40,0.55); top corridor (y 0.33) assumed to turn down at x~0.48 to meet the y 0.52 horizontal; spinA assumed reachable only from the top-left junction.",
+  "mechanics": [
+    {"type": "boss", "text": "Enter the Lair in the orientations shown by the swords in sequence: 1 dot = sword up, 2 dots = right, 3 dots = down, 4 dots = left. Wrong orientation: the BOSS attacks you."}
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        {"id": "flipT", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top"},
+        {"id": "topRoom", "type": "room", "x": 0.5, "y": 0.08},
+        {"id": "doorS1", "type": "door", "x": 0.4, "y": 0.17, "arrow": "up"},
+        {"id": "start", "type": "start", "x": 0.5, "y": 0.26},
+        {"id": "doorS2", "type": "door", "x": 0.66, "y": 0.18, "arrow": "down"},
+        {"id": "spinNE", "type": "spin", "x": 0.85, "y": 0.1},
+        {"id": "doorNE", "type": "door", "x": 0.88, "y": 0.2, "arrow": "right"},
+        {"id": "rightRoomU", "type": "room", "x": 0.9, "y": 0.35},
+        {"id": "flipRU", "type": "flip", "x": 0.94, "y": 0.35, "edge": "right"},
+        {"id": "doorE1", "type": "door", "x": 0.76, "y": 0.37, "arrow": "up"},
+        {"id": "spinE", "type": "spin", "x": 0.86, "y": 0.5},
+        {"id": "doorE2", "type": "door", "x": 0.73, "y": 0.6, "arrow": "down"},
+        {"id": "doorL1", "type": "door", "x": 0.65, "y": 0.67, "arrow": "left"},
+        {"id": "lair", "type": "special", "x": 0.47, "y": 0.5, "label": "lair"},
+        {"id": "rightRoomL", "type": "room", "x": 0.9, "y": 0.62},
+        {"id": "flipRL", "type": "flip", "x": 0.94, "y": 0.62, "edge": "right"},
+        {"id": "doorSE", "type": "door", "x": 0.85, "y": 0.78, "arrow": "right"},
+        {"id": "spinS", "type": "spin", "x": 0.69, "y": 0.78},
+        {"id": "doorS3", "type": "door", "x": 0.7, "y": 0.92, "arrow": "down"},
+        {"id": "bottomRoom", "type": "room", "x": 0.5, "y": 0.92},
+        {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "leftRoomU", "type": "room", "x": 0.08, "y": 0.35},
+        {"id": "flipLU", "type": "flip", "x": 0.07, "y": 0.35, "edge": "left"},
+        {"id": "doorNW", "type": "door", "x": 0.12, "y": 0.21, "arrow": "right"},
+        {"id": "spinNW", "type": "spin", "x": 0.27, "y": 0.22},
+        {"id": "doorW", "type": "door", "x": 0.18, "y": 0.5, "arrow": "up"},
+        {"id": "leftRoomL", "type": "room", "x": 0.08, "y": 0.62},
+        {"id": "flipLL", "type": "flip", "x": 0.07, "y": 0.62, "edge": "left"},
+        {"id": "doorSW1", "type": "door", "x": 0.14, "y": 0.76, "arrow": "left"},
+        {"id": "spinSW", "type": "spin", "x": 0.17, "y": 0.9},
+        {"id": "doorSW2", "type": "door", "x": 0.31, "y": 0.91, "arrow": "down"}
+      ],
+      "edges": [
+        ["flipT", "topRoom"],
+        ["doorS1", "start"],
+        ["doorS2", "start"],
+        ["doorS2", "spinNE"],
+        ["spinNE", "doorNE"],
+        ["doorNE", "rightRoomU"],
+        ["rightRoomU", "flipRU"],
+        ["rightRoomU", "doorE1"],
+        ["doorE1", "spinE"],
+        ["spinE", "doorE2"],
+        ["lair", "doorL1"],
+        ["rightRoomL", "flipRL"],
+        ["rightRoomL", "doorSE"],
+        ["doorSE", "spinS"],
+        ["spinS", "doorS3"],
+        ["doorS3", "bottomRoom"],
+        ["bottomRoom", "flipB"],
+        ["flipLU", "leftRoomU"],
+        ["leftRoomU", "doorNW"],
+        ["doorNW", "spinNW"],
+        ["doorW", "leftRoomL"],
+        ["leftRoomL", "flipLL"],
+        ["leftRoomL", "doorSW1"],
+        ["doorSW1", "spinSW"],
+        ["spinSW", "doorSW2"],
+        ["doorSW2", "bottomRoom"],
+        ["topRoom", "doorS1"],
+        ["topRoom", "doorS2"],
+        ["doorE2", "doorL1"],
+        ["doorE2", "rightRoomL"],
+        ["doorL1", "rightRoomL"],
+        ["lair", "bottomRoom"],
+        ["spinNW", "doorW"]
+      ]
     },
-    {
-     "id": "topRoom",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.08
-    },
-    {
-     "id": "stemL",
-     "type": "junction",
-     "x": 0.45,
-     "y": 0.13
-    },
-    {
-     "id": "doorS1",
-     "type": "door",
-     "x": 0.4,
-     "y": 0.17,
-     "arrow": "up"
-    },
-    {
-     "id": "start",
-     "type": "start",
-     "x": 0.5,
-     "y": 0.26
-    },
-    {
-     "id": "jTR",
-     "type": "junction",
-     "x": 0.65,
-     "y": 0.1
-    },
-    {
-     "id": "doorS2",
-     "type": "door",
-     "x": 0.66,
-     "y": 0.18,
-     "arrow": "down"
-    },
-    {
-     "id": "spinNE",
-     "type": "spin",
-     "x": 0.85,
-     "y": 0.1
-    },
-    {
-     "id": "doorNE",
-     "type": "door",
-     "x": 0.88,
-     "y": 0.2,
-     "arrow": "right"
-    },
-    {
-     "id": "rightRoomU",
-     "type": "room",
-     "x": 0.9,
-     "y": 0.35
-    },
-    {
-     "id": "flipRU",
-     "type": "flip",
-     "x": 0.94,
-     "y": 0.35,
-     "edge": "right"
-    },
-    {
-     "id": "doorE1",
-     "type": "door",
-     "x": 0.76,
-     "y": 0.37,
-     "arrow": "up"
-    },
-    {
-     "id": "spinE",
-     "type": "spin",
-     "x": 0.86,
-     "y": 0.5
-    },
-    {
-     "id": "doorE2",
-     "type": "door",
-     "x": 0.73,
-     "y": 0.6,
-     "arrow": "down"
-    },
-    {
-     "id": "jRL",
-     "type": "junction",
-     "x": 0.76,
-     "y": 0.68
-    },
-    {
-     "id": "doorL1",
-     "type": "door",
-     "x": 0.65,
-     "y": 0.67,
-     "arrow": "left"
-    },
-    {
-     "id": "lair",
-     "type": "special",
-     "x": 0.47,
-     "y": 0.5,
-     "label": "lair"
-    },
-    {
-     "id": "rightRoomL",
-     "type": "room",
-     "x": 0.9,
-     "y": 0.62
-    },
-    {
-     "id": "flipRL",
-     "type": "flip",
-     "x": 0.94,
-     "y": 0.62,
-     "edge": "right"
-    },
-    {
-     "id": "doorSE",
-     "type": "door",
-     "x": 0.85,
-     "y": 0.78,
-     "arrow": "right"
-    },
-    {
-     "id": "spinS",
-     "type": "spin",
-     "x": 0.69,
-     "y": 0.78
-    },
-    {
-     "id": "doorS3",
-     "type": "door",
-     "x": 0.7,
-     "y": 0.92,
-     "arrow": "down"
-    },
-    {
-     "id": "bottomRoom",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.92
-    },
-    {
-     "id": "flipB",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.95,
-     "edge": "bottom"
-    },
-    {
-     "id": "jC",
-     "type": "junction",
-     "x": 0.58,
-     "y": 0.78
-    },
-    {
-     "id": "leftRoomU",
-     "type": "room",
-     "x": 0.08,
-     "y": 0.35
-    },
-    {
-     "id": "flipLU",
-     "type": "flip",
-     "x": 0.07,
-     "y": 0.35,
-     "edge": "left"
-    },
-    {
-     "id": "doorNW",
-     "type": "door",
-     "x": 0.12,
-     "y": 0.21,
-     "arrow": "right"
-    },
-    {
-     "id": "spinNW",
-     "type": "spin",
-     "x": 0.27,
-     "y": 0.22
-    },
-    {
-     "id": "pathW",
-     "type": "junction",
-     "x": 0.3,
-     "y": 0.38
-    },
-    {
-     "id": "doorW",
-     "type": "door",
-     "x": 0.18,
-     "y": 0.5,
-     "arrow": "up"
-    },
-    {
-     "id": "leftRoomL",
-     "type": "room",
-     "x": 0.08,
-     "y": 0.62
-    },
-    {
-     "id": "flipLL",
-     "type": "flip",
-     "x": 0.07,
-     "y": 0.62,
-     "edge": "left"
-    },
-    {
-     "id": "doorSW1",
-     "type": "door",
-     "x": 0.14,
-     "y": 0.76,
-     "arrow": "left"
-    },
-    {
-     "id": "spinSW",
-     "type": "spin",
-     "x": 0.17,
-     "y": 0.9
-    },
-    {
-     "id": "doorSW2",
-     "type": "door",
-     "x": 0.31,
-     "y": 0.91,
-     "arrow": "down"
+    "back": {
+      "nodes": [
+        {"id": "flipT", "type": "flip", "x": 0.5, "y": 0.04, "edge": "top"},
+        {"id": "topRoom", "type": "room", "x": 0.5, "y": 0.06},
+        {"id": "doorT1", "type": "door", "x": 0.31, "y": 0.09, "arrow": "down"},
+        {"id": "spinA", "type": "spin", "x": 0.35, "y": 0.24},
+        {"id": "doorL1", "type": "door", "x": 0.12, "y": 0.21, "arrow": "up"},
+        {"id": "leftRoomU", "type": "room", "x": 0.08, "y": 0.36},
+        {"id": "flipLU", "type": "flip", "x": 0.07, "y": 0.36, "edge": "left"},
+        {"id": "doorT2", "type": "door", "x": 0.47, "y": 0.17, "arrow": "up"},
+        {"id": "spinB", "type": "spin", "x": 0.47, "y": 0.27},
+        {"id": "doorT3", "type": "door", "x": 0.6, "y": 0.18, "arrow": "down"},
+        {"id": "spinC", "type": "spin", "x": 0.71, "y": 0.18},
+        {"id": "doorT4", "type": "door", "x": 0.87, "y": 0.18, "arrow": "right"},
+        {"id": "rightRoomU", "type": "room", "x": 0.91, "y": 0.36},
+        {"id": "flipRU", "type": "flip", "x": 0.93, "y": 0.36, "edge": "right"},
+        {"id": "doorR1", "type": "door", "x": 0.76, "y": 0.42, "arrow": "right"},
+        {"id": "rightRoomL", "type": "room", "x": 0.91, "y": 0.63},
+        {"id": "flipRL", "type": "flip", "x": 0.93, "y": 0.63, "edge": "right"},
+        {"id": "doorH1", "type": "door", "x": 0.33, "y": 0.33, "arrow": "right"},
+        {"id": "doorMid", "type": "door", "x": 0.49, "y": 0.67, "arrow": "right"},
+        {"id": "spinE", "type": "spin", "x": 0.7, "y": 0.65},
+        {"id": "doorE", "type": "door", "x": 0.72, "y": 0.79, "arrow": "left"},
+        {"id": "bottomRoom", "type": "room", "x": 0.5, "y": 0.92},
+        {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "doorD1", "type": "door", "x": 0.25, "y": 0.42, "arrow": "up"},
+        {"id": "spinD", "type": "spin", "x": 0.4, "y": 0.55},
+        {"id": "doorD2", "type": "door", "x": 0.24, "y": 0.53, "arrow": "down"},
+        {"id": "leftRoomL", "type": "room", "x": 0.08, "y": 0.63},
+        {"id": "flipLL", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left"},
+        {"id": "doorSW1", "type": "door", "x": 0.13, "y": 0.77, "arrow": "left"},
+        {"id": "spinSW", "type": "spin", "x": 0.15, "y": 0.88},
+        {"id": "doorSW2", "type": "door", "x": 0.32, "y": 0.91, "arrow": "down"}
+      ],
+      "edges": [
+        ["flipT", "topRoom"],
+        ["topRoom", "doorT1"],
+        ["doorL1", "leftRoomU"],
+        ["leftRoomU", "flipLU"],
+        ["topRoom", "doorT2"],
+        ["doorT2", "spinB"],
+        ["doorT3", "topRoom"],
+        ["doorT3", "spinC"],
+        ["spinC", "doorT4"],
+        ["doorT4", "rightRoomU"],
+        ["rightRoomU", "flipRU"],
+        ["rightRoomL", "flipRL"],
+        ["doorMid", "spinE"],
+        ["spinE", "doorE"],
+        ["bottomRoom", "flipB"],
+        ["doorD1", "spinD"],
+        ["leftRoomL", "flipLL"],
+        ["doorSW1", "spinSW"],
+        ["spinSW", "doorSW2"],
+        ["doorSW2", "bottomRoom"],
+        ["doorT1", "spinA"],
+        ["doorT1", "doorL1"],
+        ["spinA", "doorL1"],
+        ["spinB", "doorT3"],
+        ["doorR1", "spinB"],
+        ["doorR1", "doorT3"],
+        ["rightRoomU", "rightRoomL"],
+        ["rightRoomU", "doorR1"],
+        ["rightRoomL", "doorR1"],
+        ["leftRoomU", "doorH1"],
+        ["doorH1", "doorR1"],
+        ["doorH1", "rightRoomU"],
+        ["doorH1", "rightRoomL"],
+        ["doorMid", "doorH1"],
+        ["doorMid", "doorR1"],
+        ["doorMid", "rightRoomU"],
+        ["doorMid", "rightRoomL"],
+        ["doorE", "bottomRoom"],
+        ["rightRoomL", "doorE"],
+        ["rightRoomL", "bottomRoom"],
+        ["leftRoomU", "doorD1"],
+        ["leftRoomU", "doorD2"],
+        ["doorD1", "doorD2"],
+        ["doorD2", "doorMid"],
+        ["doorD2", "doorH1"],
+        ["doorD2", "doorR1"],
+        ["doorD2", "rightRoomU"],
+        ["doorD2", "rightRoomL"],
+        ["leftRoomL", "doorSW1"],
+        ["leftRoomL", "doorD2"],
+        ["leftRoomL", "doorMid"],
+        ["leftRoomL", "doorH1"],
+        ["leftRoomL", "doorR1"],
+        ["leftRoomL", "rightRoomU"],
+        ["leftRoomL", "rightRoomL"],
+        ["doorSW1", "doorD2"],
+        ["doorSW1", "doorMid"],
+        ["doorSW1", "doorH1"],
+        ["doorSW1", "doorR1"],
+        ["doorSW1", "rightRoomU"],
+        ["doorSW1", "rightRoomL"]
+      ]
     }
-   ],
-   "edges": [
-    [
-     "flipT",
-     "topRoom"
-    ],
-    [
-     "topRoom",
-     "stemL"
-    ],
-    [
-     "stemL",
-     "doorS1"
-    ],
-    [
-     "doorS1",
-     "start"
-    ],
-    [
-     "topRoom",
-     "jTR"
-    ],
-    [
-     "jTR",
-     "doorS2"
-    ],
-    [
-     "doorS2",
-     "start"
-    ],
-    [
-     "doorS2",
-     "spinNE"
-    ],
-    [
-     "spinNE",
-     "doorNE"
-    ],
-    [
-     "doorNE",
-     "rightRoomU"
-    ],
-    [
-     "rightRoomU",
-     "flipRU"
-    ],
-    [
-     "rightRoomU",
-     "doorE1"
-    ],
-    [
-     "doorE1",
-     "spinE"
-    ],
-    [
-     "spinE",
-     "doorE2"
-    ],
-    [
-     "doorE2",
-     "jRL"
-    ],
-    [
-     "lair",
-     "doorL1"
-    ],
-    [
-     "doorL1",
-     "jRL"
-    ],
-    [
-     "jRL",
-     "rightRoomL"
-    ],
-    [
-     "rightRoomL",
-     "flipRL"
-    ],
-    [
-     "rightRoomL",
-     "doorSE"
-    ],
-    [
-     "doorSE",
-     "spinS"
-    ],
-    [
-     "spinS",
-     "doorS3"
-    ],
-    [
-     "doorS3",
-     "bottomRoom"
-    ],
-    [
-     "bottomRoom",
-     "flipB"
-    ],
-    [
-     "lair",
-     "jC"
-    ],
-    [
-     "jC",
-     "bottomRoom"
-    ],
-    [
-     "flipLU",
-     "leftRoomU"
-    ],
-    [
-     "leftRoomU",
-     "doorNW"
-    ],
-    [
-     "doorNW",
-     "spinNW"
-    ],
-    [
-     "spinNW",
-     "pathW"
-    ],
-    [
-     "pathW",
-     "doorW"
-    ],
-    [
-     "doorW",
-     "leftRoomL"
-    ],
-    [
-     "leftRoomL",
-     "flipLL"
-    ],
-    [
-     "leftRoomL",
-     "doorSW1"
-    ],
-    [
-     "doorSW1",
-     "spinSW"
-    ],
-    [
-     "spinSW",
-     "doorSW2"
-    ],
-    [
-     "doorSW2",
-     "bottomRoom"
-    ]
-   ]
-  },
-  "back": {
-   "nodes": [
-    {
-     "id": "flipT",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.04,
-     "edge": "top"
-    },
-    {
-     "id": "topRoom",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.06
-    },
-    {
-     "id": "doorT1",
-     "type": "door",
-     "x": 0.31,
-     "y": 0.09,
-     "arrow": "down"
-    },
-    {
-     "id": "jTL",
-     "type": "junction",
-     "x": 0.17,
-     "y": 0.1
-    },
-    {
-     "id": "spinA",
-     "type": "spin",
-     "x": 0.35,
-     "y": 0.24
-    },
-    {
-     "id": "doorL1",
-     "type": "door",
-     "x": 0.12,
-     "y": 0.21,
-     "arrow": "up"
-    },
-    {
-     "id": "leftRoomU",
-     "type": "room",
-     "x": 0.08,
-     "y": 0.36
-    },
-    {
-     "id": "flipLU",
-     "type": "flip",
-     "x": 0.07,
-     "y": 0.36,
-     "edge": "left"
-    },
-    {
-     "id": "doorT2",
-     "type": "door",
-     "x": 0.47,
-     "y": 0.17,
-     "arrow": "up"
-    },
-    {
-     "id": "spinB",
-     "type": "spin",
-     "x": 0.47,
-     "y": 0.27
-    },
-    {
-     "id": "centerH",
-     "type": "junction",
-     "x": 0.62,
-     "y": 0.27
-    },
-    {
-     "id": "doorT3",
-     "type": "door",
-     "x": 0.6,
-     "y": 0.18,
-     "arrow": "down"
-    },
-    {
-     "id": "spinC",
-     "type": "spin",
-     "x": 0.71,
-     "y": 0.18
-    },
-    {
-     "id": "doorT4",
-     "type": "door",
-     "x": 0.87,
-     "y": 0.18,
-     "arrow": "right"
-    },
-    {
-     "id": "rightRoomU",
-     "type": "room",
-     "x": 0.91,
-     "y": 0.36
-    },
-    {
-     "id": "flipRU",
-     "type": "flip",
-     "x": 0.93,
-     "y": 0.36,
-     "edge": "right"
-    },
-    {
-     "id": "vR",
-     "type": "junction",
-     "x": 0.76,
-     "y": 0.32
-    },
-    {
-     "id": "doorR1",
-     "type": "door",
-     "x": 0.76,
-     "y": 0.42,
-     "arrow": "right"
-    },
-    {
-     "id": "hB",
-     "type": "junction",
-     "x": 0.75,
-     "y": 0.52
-    },
-    {
-     "id": "hBR",
-     "type": "junction",
-     "x": 0.87,
-     "y": 0.52
-    },
-    {
-     "id": "rightRoomL",
-     "type": "room",
-     "x": 0.91,
-     "y": 0.63
-    },
-    {
-     "id": "flipRL",
-     "type": "flip",
-     "x": 0.93,
-     "y": 0.63,
-     "edge": "right"
-    },
-    {
-     "id": "topH",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.33
-    },
-    {
-     "id": "doorH1",
-     "type": "door",
-     "x": 0.33,
-     "y": 0.33,
-     "arrow": "right"
-    },
-    {
-     "id": "jC",
-     "type": "junction",
-     "x": 0.5,
-     "y": 0.53
-    },
-    {
-     "id": "jMid",
-     "type": "junction",
-     "x": 0.42,
-     "y": 0.66
-    },
-    {
-     "id": "doorMid",
-     "type": "door",
-     "x": 0.49,
-     "y": 0.67,
-     "arrow": "right"
-    },
-    {
-     "id": "spinE",
-     "type": "spin",
-     "x": 0.7,
-     "y": 0.65
-    },
-    {
-     "id": "doorE",
-     "type": "door",
-     "x": 0.72,
-     "y": 0.79,
-     "arrow": "left"
-    },
-    {
-     "id": "bottomCorrR",
-     "type": "junction",
-     "x": 0.72,
-     "y": 0.9
-    },
-    {
-     "id": "jRB",
-     "type": "junction",
-     "x": 0.84,
-     "y": 0.86
-    },
-    {
-     "id": "bottomRoom",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.92
-    },
-    {
-     "id": "flipB",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.95,
-     "edge": "bottom"
-    },
-    {
-     "id": "leftArea",
-     "type": "junction",
-     "x": 0.15,
-     "y": 0.47
-    },
-    {
-     "id": "doorD1",
-     "type": "door",
-     "x": 0.25,
-     "y": 0.42,
-     "arrow": "up"
-    },
-    {
-     "id": "spinD",
-     "type": "spin",
-     "x": 0.4,
-     "y": 0.55
-    },
-    {
-     "id": "doorD2",
-     "type": "door",
-     "x": 0.24,
-     "y": 0.53,
-     "arrow": "down"
-    },
-    {
-     "id": "jV",
-     "type": "junction",
-     "x": 0.21,
-     "y": 0.67
-    },
-    {
-     "id": "leftRoomL",
-     "type": "room",
-     "x": 0.08,
-     "y": 0.63
-    },
-    {
-     "id": "flipLL",
-     "type": "flip",
-     "x": 0.07,
-     "y": 0.63,
-     "edge": "left"
-    },
-    {
-     "id": "jLL",
-     "type": "junction",
-     "x": 0.13,
-     "y": 0.71
-    },
-    {
-     "id": "doorSW1",
-     "type": "door",
-     "x": 0.13,
-     "y": 0.77,
-     "arrow": "left"
-    },
-    {
-     "id": "spinSW",
-     "type": "spin",
-     "x": 0.15,
-     "y": 0.88
-    },
-    {
-     "id": "doorSW2",
-     "type": "door",
-     "x": 0.32,
-     "y": 0.91,
-     "arrow": "down"
-    }
-   ],
-   "edges": [
-    [
-     "flipT",
-     "topRoom"
-    ],
-    [
-     "topRoom",
-     "doorT1"
-    ],
-    [
-     "doorT1",
-     "jTL"
-    ],
-    [
-     "jTL",
-     "spinA"
-    ],
-    [
-     "jTL",
-     "doorL1"
-    ],
-    [
-     "doorL1",
-     "leftRoomU"
-    ],
-    [
-     "leftRoomU",
-     "flipLU"
-    ],
-    [
-     "topRoom",
-     "doorT2"
-    ],
-    [
-     "doorT2",
-     "spinB"
-    ],
-    [
-     "spinB",
-     "centerH"
-    ],
-    [
-     "centerH",
-     "doorT3"
-    ],
-    [
-     "doorT3",
-     "topRoom"
-    ],
-    [
-     "doorT3",
-     "spinC"
-    ],
-    [
-     "spinC",
-     "doorT4"
-    ],
-    [
-     "doorT4",
-     "rightRoomU"
-    ],
-    [
-     "rightRoomU",
-     "flipRU"
-    ],
-    [
-     "centerH",
-     "vR"
-    ],
-    [
-     "vR",
-     "doorR1"
-    ],
-    [
-     "doorR1",
-     "hB"
-    ],
-    [
-     "hB",
-     "hBR"
-    ],
-    [
-     "hBR",
-     "rightRoomU"
-    ],
-    [
-     "hBR",
-     "rightRoomL"
-    ],
-    [
-     "rightRoomL",
-     "flipRL"
-    ],
-    [
-     "leftRoomU",
-     "topH"
-    ],
-    [
-     "topH",
-     "doorH1"
-    ],
-    [
-     "doorH1",
-     "jC"
-    ],
-    [
-     "jC",
-     "hB"
-    ],
-    [
-     "jC",
-     "jMid"
-    ],
-    [
-     "jMid",
-     "doorMid"
-    ],
-    [
-     "doorMid",
-     "spinE"
-    ],
-    [
-     "spinE",
-     "doorE"
-    ],
-    [
-     "doorE",
-     "bottomCorrR"
-    ],
-    [
-     "bottomCorrR",
-     "bottomRoom"
-    ],
-    [
-     "bottomRoom",
-     "flipB"
-    ],
-    [
-     "bottomCorrR",
-     "jRB"
-    ],
-    [
-     "jRB",
-     "rightRoomL"
-    ],
-    [
-     "leftRoomU",
-     "leftArea"
-    ],
-    [
-     "leftArea",
-     "doorD1"
-    ],
-    [
-     "doorD1",
-     "spinD"
-    ],
-    [
-     "leftArea",
-     "doorD2"
-    ],
-    [
-     "doorD2",
-     "jV"
-    ],
-    [
-     "jV",
-     "jMid"
-    ],
-    [
-     "jV",
-     "jLL"
-    ],
-    [
-     "jLL",
-     "leftRoomL"
-    ],
-    [
-     "leftRoomL",
-     "flipLL"
-    ],
-    [
-     "jLL",
-     "doorSW1"
-    ],
-    [
-     "doorSW1",
-     "spinSW"
-    ],
-    [
-     "spinSW",
-     "doorSW2"
-    ],
-    [
-     "doorSW2",
-     "bottomRoom"
-    ]
-   ]
   }
- }
 }

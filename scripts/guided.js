@@ -1,10 +1,9 @@
-// Guided mode: click to walk, spin and flip; the rules in rules.js decide what is allowed.
+// Guided mode: the reachable spin and flip spots light up; click one to use it. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
 const cardEl = document.querySelector('#card');
 const faces = { front: document.querySelector('.front.card'), back: document.querySelector('.back.card') };
-const STEP_MS = 160;
 const FLIP_MS = 1000; // matches the 1s transform transition in index.css
 
 document.body.classList.add('guided');
@@ -26,23 +25,36 @@ document.querySelector('#app-wrapper').append(hud);
 const message = text => { document.querySelector('#hud-message').textContent = text; };
 
 let maze, state, css, busy = false;
-const token = document.createElement('div');
-token.className = 'token';
-token.setAttribute('aria-hidden', 'true');
 
 function render() {
   cardEl.style.transform = `rotate(${css.R}deg) rotateX(${css.X}deg) rotateY(${css.Y}deg)`;
   for (const side of ['front', 'back']) faces[side].querySelector('.layer').classList.toggle('active', side === state.side);
-  const here = R.node(maze, state.side, state.at);
-  faces[state.side].querySelector('.layer').append(token);
-  placeToken(here);
-  const onSpin = here.type === 'spin';
+  const reach = R.reachable(maze, state);
+  for (const b of document.querySelectorAll('.spot')) {
+    const n = R.node(maze, state.side, b.dataset.id);
+    const can = !state.won && faces[state.side].contains(b) && reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n)));
+    b.classList.toggle('can', !!can);
+    b.disabled = !can;
+  }
+  const onSpin = !state.won && R.node(maze, state.side, state.at).type === 'spin';
   document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !onSpin));
 }
 
-function placeToken(n) {
-  token.style.left = n.x * 100 + '%';
-  token.style.top = n.y * 100 + '%';
+// Picks up every reachable item, then walks to the exit if it is reachable and unlocked.
+function settle() {
+  const reach = R.reachable(maze, state);
+  const items = new Set(state.items);
+  for (const id of reach.keys()) if (R.node(maze, state.side, id).type === 'item') items.add(`${state.side}.${id}`);
+  state = { ...state, items: [...items] };
+  const exit = [...reach.keys()].find(id => R.node(maze, state.side, id).type === 'exit');
+  if (exit && R.missingItems(maze, state).length === 0) {
+    state = { ...R.walk(maze, state, exit).state, won: true };
+    message('You found the exit!');
+    document.body.classList.add('won');
+  } else {
+    message(exit ? `The exit is locked. ${status()}` : status() || 'Find the exit.');
+  }
+  render();
 }
 
 function status() {
@@ -53,28 +65,15 @@ function status() {
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
-function nudge() {
-  token.classList.remove('shake');
-  void token.offsetWidth;
-  token.classList.add('shake');
-}
-
 async function onSpot(side, n) {
   if (busy || side !== state.side || state.won) return;
+  const res = R.walk(maze, state, n.id);
+  if (res.error) return;
   busy = true;
   try {
-    if (n.id === state.at) {
-      if (n.type === 'spin') await doSpin('cw');
-      else if (n.type === 'flip') await doFlip();
-      return;
-    }
-    const res = R.walk(maze, state, n.id);
-    if (res.error) { nudge(); message("Can't get there from here."); return; }
-    for (const id of res.path) { placeToken(R.node(maze, side, id)); await wait(STEP_MS); }
     state = res.state;
-    message(status());
-    if (n.type === 'flip') await doFlip();
-    checkWin();
+    if (n.type === 'spin') await doSpin('cw');
+    else if (n.type === 'flip') await doFlip();
   } finally {
     busy = false;
   }
@@ -82,31 +81,23 @@ async function onSpot(side, n) {
 
 async function doSpin(dir) {
   const res = R.spin(maze, state, dir);
-  if (res.error) { nudge(); message('You can only turn the card on a spin icon.'); return; }
+  if (res.error) return;
   state = res.state;
   css = { ...css, R: css.R + (dir === 'ccw' ? -90 : 90) };
   render();
   await wait(FLIP_MS);
+  settle();
 }
 
 async function doFlip() {
   const res = R.flip(maze, state);
-  if (res.error) { nudge(); message(res.error === 'no-landing' ? 'This flip leads nowhere on the other side.' : 'Walk onto a flip triangle first.'); return; }
+  if (res.error) return;
   state = res.state;
   css = R.cssFlip(css, res.edge);
   console.assert(JSON.stringify(R.cssView(css)) === JSON.stringify({ side: state.side, rot: state.rot }), 'card view out of sync with rules');
   render();
   await wait(FLIP_MS);
-  checkWin();
-}
-
-function checkWin() {
-  const here = R.node(maze, state.side, state.at);
-  if (here.type !== 'exit') return;
-  if (!R.won(maze, state)) { message(`The exit is locked. ${status()}`); return; }
-  state.won = true;
-  message('You found the exit!');
-  document.body.classList.add('won');
+  settle();
 }
 
 function buildSpots() {
@@ -131,8 +122,7 @@ function restart() {
   state = R.start(maze);
   css = { R: 0, X: 0, Y: state.side === 'back' ? 180 : 0 };
   document.body.classList.remove('won');
-  message(status() || 'Find the exit.');
-  render();
+  settle();
 }
 
 document.querySelector('#rotate-clockwise').addEventListener('click', () => !busy && !state.won && doSpin('cw'));

@@ -1,288 +1,62 @@
 {
-  "status": "draft",
+  "status": "reviewed",
   "notes": "Same layout as MAZERULES (water mask and visual check match); graph copied from the reviewed MAZERULES map. Tutorial card. Route: start, door1, spin3, rotate CW, door2, flip bottom; back: door right, spin, door up, left arm, door up, spin, door down, exit.",
   "mechanics": [],
   "sides": {
     "front": {
       "nodes": [
-        {
-          "id": "start",
-          "type": "start",
-          "x": 0.45,
-          "y": 0.31
-        },
-        {
-          "id": "door1",
-          "type": "door",
-          "x": 0.17,
-          "y": 0.39,
-          "arrow": "up"
-        },
-        {
-          "id": "west",
-          "type": "junction",
-          "x": 0.2,
-          "y": 0.52
-        },
-        {
-          "id": "spinroom",
-          "type": "room",
-          "x": 0.27,
-          "y": 0.75
-        },
-        {
-          "id": "spin3",
-          "type": "spin",
-          "x": 0.23,
-          "y": 0.88
-        },
-        {
-          "id": "door2",
-          "type": "door",
-          "x": 0.4,
-          "y": 0.6,
-          "arrow": "left"
-        },
-        {
-          "id": "room2",
-          "type": "room",
-          "x": 0.65,
-          "y": 0.6
-        },
-        {
-          "id": "room4",
-          "type": "room",
-          "x": 0.7,
-          "y": 0.8
-        },
-        {
-          "id": "flipBottom",
-          "type": "flip",
-          "x": 0.5,
-          "y": 0.95,
-          "edge": "bottom"
-        },
-        {
-          "id": "flipTop",
-          "type": "flip",
-          "x": 0.5,
-          "y": 0.05,
-          "edge": "top"
-        },
-        {
-          "id": "northeast",
-          "type": "room",
-          "x": 0.75,
-          "y": 0.15
-        },
-        {
-          "id": "flipRight",
-          "type": "flip",
-          "x": 0.93,
-          "y": 0.37,
-          "edge": "right"
-        }
+        {"id": "start", "type": "start", "x": 0.45, "y": 0.31},
+        {"id": "door1", "type": "door", "x": 0.17, "y": 0.39, "arrow": "up"},
+        {"id": "spinroom", "type": "room", "x": 0.27, "y": 0.75},
+        {"id": "spin3", "type": "spin", "x": 0.23, "y": 0.88},
+        {"id": "door2", "type": "door", "x": 0.4, "y": 0.6, "arrow": "left"},
+        {"id": "room2", "type": "room", "x": 0.65, "y": 0.6},
+        {"id": "room4", "type": "room", "x": 0.7, "y": 0.8},
+        {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top"},
+        {"id": "northeast", "type": "room", "x": 0.75, "y": 0.15},
+        {"id": "flipRight", "type": "flip", "x": 0.93, "y": 0.37, "edge": "right"}
       ],
       "edges": [
-        [
-          "start",
-          "door1"
-        ],
-        [
-          "door1",
-          "west"
-        ],
-        [
-          "west",
-          "spinroom"
-        ],
-        [
-          "spinroom",
-          "spin3"
-        ],
-        [
-          "spinroom",
-          "door2"
-        ],
-        [
-          "door2",
-          "room2"
-        ],
-        [
-          "room2",
-          "room4"
-        ],
-        [
-          "room4",
-          "flipBottom"
-        ],
-        [
-          "flipTop",
-          "northeast"
-        ],
-        [
-          "northeast",
-          "flipRight"
-        ]
+        ["start", "door1"],
+        ["spinroom", "spin3"],
+        ["spinroom", "door2"],
+        ["door2", "room2"],
+        ["room2", "room4"],
+        ["room4", "flipBottom"],
+        ["flipTop", "northeast"],
+        ["northeast", "flipRight"],
+        ["door1", "spinroom"]
       ]
     },
     "back": {
       "nodes": [
-        {
-          "id": "flipBottom",
-          "type": "flip",
-          "x": 0.5,
-          "y": 0.95,
-          "edge": "bottom"
-        },
-        {
-          "id": "landing",
-          "type": "room",
-          "x": 0.5,
-          "y": 0.8
-        },
-        {
-          "id": "doorRight",
-          "type": "door",
-          "x": 0.66,
-          "y": 0.9,
-          "arrow": "right"
-        },
-        {
-          "id": "spinSE",
-          "type": "spin",
-          "x": 0.81,
-          "y": 0.88
-        },
-        {
-          "id": "doorUpSE",
-          "type": "door",
-          "x": 0.82,
-          "y": 0.72,
-          "arrow": "up"
-        },
-        {
-          "id": "bend",
-          "type": "junction",
-          "x": 0.85,
-          "y": 0.6
-        },
-        {
-          "id": "path",
-          "type": "junction",
-          "x": 0.4,
-          "y": 0.6
-        },
-        {
-          "id": "leftArm",
-          "type": "room",
-          "x": 0.15,
-          "y": 0.4
-        },
-        {
-          "id": "flipLeft",
-          "type": "flip",
-          "x": 0.07,
-          "y": 0.37,
-          "edge": "left"
-        },
-        {
-          "id": "doorUpNW",
-          "type": "door",
-          "x": 0.27,
-          "y": 0.28,
-          "arrow": "up"
-        },
-        {
-          "id": "spinNW",
-          "type": "spin",
-          "x": 0.19,
-          "y": 0.15
-        },
-        {
-          "id": "doorDown",
-          "type": "door",
-          "x": 0.32,
-          "y": 0.13,
-          "arrow": "down"
-        },
-        {
-          "id": "top",
-          "type": "room",
-          "x": 0.47,
-          "y": 0.12
-        },
-        {
-          "id": "flipTop",
-          "type": "flip",
-          "x": 0.5,
-          "y": 0.06,
-          "edge": "top"
-        },
-        {
-          "id": "exit",
-          "type": "exit",
-          "x": 0.6,
-          "y": 0.27
-        }
+        {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "landing", "type": "room", "x": 0.5, "y": 0.8},
+        {"id": "doorRight", "type": "door", "x": 0.66, "y": 0.9, "arrow": "right"},
+        {"id": "spinSE", "type": "spin", "x": 0.81, "y": 0.88},
+        {"id": "doorUpSE", "type": "door", "x": 0.82, "y": 0.72, "arrow": "up"},
+        {"id": "leftArm", "type": "room", "x": 0.15, "y": 0.4},
+        {"id": "flipLeft", "type": "flip", "x": 0.07, "y": 0.37, "edge": "left"},
+        {"id": "doorUpNW", "type": "door", "x": 0.27, "y": 0.28, "arrow": "up"},
+        {"id": "spinNW", "type": "spin", "x": 0.19, "y": 0.15},
+        {"id": "doorDown", "type": "door", "x": 0.32, "y": 0.13, "arrow": "down"},
+        {"id": "top", "type": "room", "x": 0.47, "y": 0.12},
+        {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top"},
+        {"id": "exit", "type": "exit", "x": 0.6, "y": 0.27}
       ],
       "edges": [
-        [
-          "flipBottom",
-          "landing"
-        ],
-        [
-          "landing",
-          "doorRight"
-        ],
-        [
-          "doorRight",
-          "spinSE"
-        ],
-        [
-          "spinSE",
-          "doorUpSE"
-        ],
-        [
-          "doorUpSE",
-          "bend"
-        ],
-        [
-          "bend",
-          "path"
-        ],
-        [
-          "path",
-          "leftArm"
-        ],
-        [
-          "leftArm",
-          "flipLeft"
-        ],
-        [
-          "leftArm",
-          "doorUpNW"
-        ],
-        [
-          "doorUpNW",
-          "spinNW"
-        ],
-        [
-          "spinNW",
-          "doorDown"
-        ],
-        [
-          "doorDown",
-          "top"
-        ],
-        [
-          "top",
-          "flipTop"
-        ],
-        [
-          "top",
-          "exit"
-        ]
+        ["flipBottom", "landing"],
+        ["landing", "doorRight"],
+        ["doorRight", "spinSE"],
+        ["spinSE", "doorUpSE"],
+        ["leftArm", "flipLeft"],
+        ["doorUpNW", "spinNW"],
+        ["spinNW", "doorDown"],
+        ["doorDown", "top"],
+        ["top", "flipTop"],
+        ["top", "exit"],
+        ["leftArm", "doorUpSE"]
       ]
     }
   }

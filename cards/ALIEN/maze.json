@@ -1,721 +1,135 @@
 {
- "status": "draft",
- "notes": "ALIEN #43, boss card with items: no exit; the three weapons on the back must each be picked up before the matching attack on the alien Lair (front centre). ROUGH MAP: the tentacle lanes cross and branch in ways I could not resolve; most junctions are guesses and need a full human pass in the editor. Doubts: how the start gun panel connects (assumed: lane above it, to the top blob and to door 0.63,0.13); which tentacles of the alien body (lair) reach doors (0.37,0.76), (0.65,0.79), (0.75,0.56), (0.23,0.60); back item bubbles' entrances (orange via doors 0.37,0.33 and 0.33,0.56; red via doors 0.79,0.42 and 0.78,0.75; blue via the lane at (0.25,0.85)).",
- "mechanics": [
-  {
-   "type": "collect",
-   "text": "Pick up each item before each attack (items: red 1-dot weapon, orange 2-dot weapon, blue 3-dot weapon on the back)."
-  },
-  {
-   "type": "boss",
-   "text": "Attack the Lair in order: 1 dot (red) = arrow up, 2 dots (orange) = arrow right, 3 dots (blue) = arrow left; each attack needs its item first."
-  }
- ],
- "sides": {
-  "front": {
-   "nodes": [
-    {
-     "id": "flipT",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.06,
-     "edge": "top"
+  "status": "draft",
+  "notes": "ALIEN #43, boss card with items: no exit; the three weapons on the back must each be picked up before the matching attack on the alien Lair (front centre). ROUGH MAP: the tentacle lanes cross and branch in ways I could not resolve; most junctions are guesses and need a full human pass in the editor. Doubts: how the start gun panel connects (assumed: lane above it, to the top blob and to door 0.63,0.13); which tentacles of the alien body (lair) reach doors (0.37,0.76), (0.65,0.79), (0.75,0.56), (0.23,0.60); back item bubbles' entrances (orange via doors 0.37,0.33 and 0.33,0.56; red via doors 0.79,0.42 and 0.78,0.75; blue via the lane at (0.25,0.85)).",
+  "mechanics": [
+    {"type": "collect", "text": "Pick up each item before each attack (items: red 1-dot weapon, orange 2-dot weapon, blue 3-dot weapon on the back)."},
+    {"type": "boss", "text": "Attack the Lair in order: 1 dot (red) = arrow up, 2 dots (orange) = arrow right, 3 dots (blue) = arrow left; each attack needs its item first."}
+  ],
+  "sides": {
+    "front": {
+      "nodes": [
+        {"id": "flipT", "type": "flip", "x": 0.5, "y": 0.06, "edge": "top"},
+        {"id": "topBlob", "type": "room", "x": 0.5, "y": 0.06},
+        {"id": "start", "type": "start", "x": 0.45, "y": 0.22},
+        {"id": "doorF1", "type": "door", "x": 0.63, "y": 0.13, "arrow": "up"},
+        {"id": "rightBlobU", "type": "room", "x": 0.93, "y": 0.35},
+        {"id": "flipRU", "type": "flip", "x": 0.94, "y": 0.35, "edge": "right"},
+        {"id": "leftBlobU", "type": "room", "x": 0.05, "y": 0.37},
+        {"id": "flipLU", "type": "flip", "x": 0.06, "y": 0.35, "edge": "left"},
+        {"id": "doorF2", "type": "door", "x": 0.22, "y": 0.42, "arrow": "down"},
+        {"id": "spinF", "type": "spin", "x": 0.22, "y": 0.5},
+        {"id": "doorF3", "type": "door", "x": 0.23, "y": 0.6, "arrow": "right"},
+        {"id": "lair", "type": "special", "x": 0.5, "y": 0.58, "label": "lair"},
+        {"id": "leftBlobL", "type": "room", "x": 0.05, "y": 0.62},
+        {"id": "flipLL", "type": "flip", "x": 0.06, "y": 0.63, "edge": "left"},
+        {"id": "doorF4", "type": "door", "x": 0.37, "y": 0.76, "arrow": "up"},
+        {"id": "bottomBlob", "type": "room", "x": 0.5, "y": 0.93},
+        {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "doorF5", "type": "door", "x": 0.75, "y": 0.56, "arrow": "right"},
+        {"id": "rightBlobL", "type": "room", "x": 0.93, "y": 0.62},
+        {"id": "flipRL", "type": "flip", "x": 0.94, "y": 0.63, "edge": "right"},
+        {"id": "doorF6", "type": "door", "x": 0.65, "y": 0.79, "arrow": "left"},
+        {"id": "doorF7", "type": "door", "x": 0.77, "y": 0.94, "arrow": "down"}
+      ],
+      "edges": [
+        ["flipT", "topBlob"],
+        ["rightBlobU", "flipRU"],
+        ["flipLU", "leftBlobU"],
+        ["leftBlobU", "doorF2"],
+        ["doorF2", "spinF"],
+        ["doorF3", "lair"],
+        ["leftBlobL", "flipLL"],
+        ["bottomBlob", "flipB"],
+        ["rightBlobL", "flipRL"],
+        ["doorF7", "bottomBlob"],
+        ["topBlob", "start"],
+        ["topBlob", "doorF1"],
+        ["start", "doorF1"],
+        ["doorF1", "rightBlobU"],
+        ["spinF", "doorF3"],
+        ["spinF", "leftBlobL"],
+        ["doorF3", "leftBlobL"],
+        ["lair", "doorF4"],
+        ["doorF4", "bottomBlob"],
+        ["doorF4", "leftBlobL"],
+        ["bottomBlob", "leftBlobL"],
+        ["lair", "doorF5"],
+        ["doorF5", "rightBlobL"],
+        ["doorF5", "rightBlobU"],
+        ["rightBlobL", "rightBlobU"],
+        ["lair", "doorF6"],
+        ["doorF6", "rightBlobL"],
+        ["doorF6", "doorF7"],
+        ["rightBlobL", "doorF7"]
+      ]
     },
-    {
-     "id": "topBlob",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.06
-    },
-    {
-     "id": "start",
-     "type": "start",
-     "x": 0.45,
-     "y": 0.22
-    },
-    {
-     "id": "jS",
-     "type": "junction",
-     "x": 0.42,
-     "y": 0.16
-    },
-    {
-     "id": "doorF1",
-     "type": "door",
-     "x": 0.63,
-     "y": 0.13,
-     "arrow": "up"
-    },
-    {
-     "id": "jNE",
-     "type": "junction",
-     "x": 0.88,
-     "y": 0.15
-    },
-    {
-     "id": "rightBlobU",
-     "type": "room",
-     "x": 0.93,
-     "y": 0.35
-    },
-    {
-     "id": "flipRU",
-     "type": "flip",
-     "x": 0.94,
-     "y": 0.35,
-     "edge": "right"
-    },
-    {
-     "id": "leftBlobU",
-     "type": "room",
-     "x": 0.05,
-     "y": 0.37
-    },
-    {
-     "id": "flipLU",
-     "type": "flip",
-     "x": 0.06,
-     "y": 0.35,
-     "edge": "left"
-    },
-    {
-     "id": "doorF2",
-     "type": "door",
-     "x": 0.22,
-     "y": 0.42,
-     "arrow": "down"
-    },
-    {
-     "id": "spinF",
-     "type": "spin",
-     "x": 0.22,
-     "y": 0.5
-    },
-    {
-     "id": "jL",
-     "type": "junction",
-     "x": 0.2,
-     "y": 0.58
-    },
-    {
-     "id": "doorF3",
-     "type": "door",
-     "x": 0.23,
-     "y": 0.6,
-     "arrow": "right"
-    },
-    {
-     "id": "lair",
-     "type": "special",
-     "x": 0.5,
-     "y": 0.58,
-     "label": "lair"
-    },
-    {
-     "id": "leftBlobL",
-     "type": "room",
-     "x": 0.05,
-     "y": 0.62
-    },
-    {
-     "id": "flipLL",
-     "type": "flip",
-     "x": 0.06,
-     "y": 0.63,
-     "edge": "left"
-    },
-    {
-     "id": "jT1",
-     "type": "junction",
-     "x": 0.4,
-     "y": 0.68
-    },
-    {
-     "id": "doorF4",
-     "type": "door",
-     "x": 0.37,
-     "y": 0.76,
-     "arrow": "up"
-    },
-    {
-     "id": "jSW",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.85
-    },
-    {
-     "id": "bottomBlob",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.93
-    },
-    {
-     "id": "flipB",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.95,
-     "edge": "bottom"
-    },
-    {
-     "id": "jT2",
-     "type": "junction",
-     "x": 0.66,
-     "y": 0.62
-    },
-    {
-     "id": "doorF5",
-     "type": "door",
-     "x": 0.75,
-     "y": 0.56,
-     "arrow": "right"
-    },
-    {
-     "id": "jE",
-     "type": "junction",
-     "x": 0.83,
-     "y": 0.5
-    },
-    {
-     "id": "rightBlobL",
-     "type": "room",
-     "x": 0.93,
-     "y": 0.62
-    },
-    {
-     "id": "flipRL",
-     "type": "flip",
-     "x": 0.94,
-     "y": 0.63,
-     "edge": "right"
-    },
-    {
-     "id": "jT3",
-     "type": "junction",
-     "x": 0.55,
-     "y": 0.75
-    },
-    {
-     "id": "doorF6",
-     "type": "door",
-     "x": 0.65,
-     "y": 0.79,
-     "arrow": "left"
-    },
-    {
-     "id": "jSE",
-     "type": "junction",
-     "x": 0.8,
-     "y": 0.82
-    },
-    {
-     "id": "doorF7",
-     "type": "door",
-     "x": 0.77,
-     "y": 0.94,
-     "arrow": "down"
+    "back": {
+      "nodes": [
+        {"id": "flipT", "type": "flip", "x": 0.5, "y": 0.04, "edge": "top"},
+        {"id": "topBlob", "type": "room", "x": 0.5, "y": 0.05},
+        {"id": "leftBlobU", "type": "room", "x": 0.06, "y": 0.36},
+        {"id": "flipLU", "type": "flip", "x": 0.06, "y": 0.35, "edge": "left"},
+        {"id": "doorA", "type": "door", "x": 0.74, "y": 0.27, "arrow": "down"},
+        {"id": "rightBlobU", "type": "room", "x": 0.93, "y": 0.36},
+        {"id": "flipRU", "type": "flip", "x": 0.94, "y": 0.35, "edge": "right"},
+        {"id": "doorB", "type": "door", "x": 0.37, "y": 0.33, "arrow": "right"},
+        {"id": "orange", "type": "item", "x": 0.37, "y": 0.47, "label": "orange weapon (2 dots)"},
+        {"id": "doorC", "type": "door", "x": 0.47, "y": 0.31, "arrow": "left"},
+        {"id": "spin", "type": "spin", "x": 0.58, "y": 0.49},
+        {"id": "doorD", "type": "door", "x": 0.79, "y": 0.42, "arrow": "down"},
+        {"id": "red", "type": "item", "x": 0.7, "y": 0.62, "label": "red weapon (1 dot)"},
+        {"id": "doorE", "type": "door", "x": 0.2, "y": 0.51, "arrow": "left"},
+        {"id": "leftBlobL", "type": "room", "x": 0.06, "y": 0.63},
+        {"id": "flipLL", "type": "flip", "x": 0.06, "y": 0.63, "edge": "left"},
+        {"id": "doorG", "type": "door", "x": 0.33, "y": 0.56, "arrow": "right"},
+        {"id": "doorH", "type": "door", "x": 0.53, "y": 0.6, "arrow": "up"},
+        {"id": "doorI", "type": "door", "x": 0.36, "y": 0.75, "arrow": "down"},
+        {"id": "blue", "type": "item", "x": 0.14, "y": 0.92, "label": "blue weapon (3 dots)"},
+        {"id": "doorJ", "type": "door", "x": 0.6, "y": 0.73, "arrow": "up"},
+        {"id": "bottomBlob", "type": "room", "x": 0.5, "y": 0.95},
+        {"id": "flipB", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
+        {"id": "doorK", "type": "door", "x": 0.78, "y": 0.75, "arrow": "right"},
+        {"id": "rightBlobL", "type": "room", "x": 0.93, "y": 0.63},
+        {"id": "flipRL", "type": "flip", "x": 0.94, "y": 0.63, "edge": "right"}
+      ],
+      "edges": [
+        ["flipT", "topBlob"],
+        ["leftBlobU", "flipLU"],
+        ["doorA", "rightBlobU"],
+        ["rightBlobU", "flipRU"],
+        ["doorB", "orange"],
+        ["spin", "doorH"],
+        ["rightBlobU", "doorD"],
+        ["doorD", "red"],
+        ["leftBlobU", "doorE"],
+        ["doorE", "leftBlobL"],
+        ["leftBlobL", "flipLL"],
+        ["doorG", "orange"],
+        ["bottomBlob", "flipB"],
+        ["doorJ", "bottomBlob"],
+        ["red", "doorK"],
+        ["doorK", "rightBlobL"],
+        ["rightBlobL", "flipRL"],
+        ["topBlob", "leftBlobU"],
+        ["topBlob", "doorB"],
+        ["leftBlobU", "doorB"],
+        ["topBlob", "doorA"],
+        ["topBlob", "doorC"],
+        ["topBlob", "spin"],
+        ["doorA", "doorC"],
+        ["doorA", "spin"],
+        ["doorC", "spin"],
+        ["leftBlobL", "doorG"],
+        ["leftBlobL", "doorC"],
+        ["doorG", "doorC"],
+        ["doorH", "doorI"],
+        ["doorH", "doorJ"],
+        ["doorI", "doorJ"],
+        ["doorI", "blue"],
+        ["doorI", "bottomBlob"],
+        ["blue", "bottomBlob"],
+        ["rightBlobL", "bottomBlob"]
+      ]
     }
-   ],
-   "edges": [
-    [
-     "flipT",
-     "topBlob"
-    ],
-    [
-     "topBlob",
-     "jS"
-    ],
-    [
-     "jS",
-     "start"
-    ],
-    [
-     "jS",
-     "doorF1"
-    ],
-    [
-     "doorF1",
-     "jNE"
-    ],
-    [
-     "jNE",
-     "rightBlobU"
-    ],
-    [
-     "rightBlobU",
-     "flipRU"
-    ],
-    [
-     "flipLU",
-     "leftBlobU"
-    ],
-    [
-     "leftBlobU",
-     "doorF2"
-    ],
-    [
-     "doorF2",
-     "spinF"
-    ],
-    [
-     "spinF",
-     "jL"
-    ],
-    [
-     "jL",
-     "doorF3"
-    ],
-    [
-     "doorF3",
-     "lair"
-    ],
-    [
-     "jL",
-     "leftBlobL"
-    ],
-    [
-     "leftBlobL",
-     "flipLL"
-    ],
-    [
-     "lair",
-     "jT1"
-    ],
-    [
-     "jT1",
-     "doorF4"
-    ],
-    [
-     "doorF4",
-     "jSW"
-    ],
-    [
-     "jSW",
-     "bottomBlob"
-    ],
-    [
-     "bottomBlob",
-     "flipB"
-    ],
-    [
-     "jSW",
-     "leftBlobL"
-    ],
-    [
-     "lair",
-     "jT2"
-    ],
-    [
-     "jT2",
-     "doorF5"
-    ],
-    [
-     "doorF5",
-     "jE"
-    ],
-    [
-     "jE",
-     "rightBlobL"
-    ],
-    [
-     "rightBlobL",
-     "flipRL"
-    ],
-    [
-     "rightBlobU",
-     "jE"
-    ],
-    [
-     "lair",
-     "jT3"
-    ],
-    [
-     "jT3",
-     "doorF6"
-    ],
-    [
-     "doorF6",
-     "jSE"
-    ],
-    [
-     "jSE",
-     "rightBlobL"
-    ],
-    [
-     "jSE",
-     "doorF7"
-    ],
-    [
-     "doorF7",
-     "bottomBlob"
-    ]
-   ]
-  },
-  "back": {
-   "nodes": [
-    {
-     "id": "flipT",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.04,
-     "edge": "top"
-    },
-    {
-     "id": "topBlob",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.05
-    },
-    {
-     "id": "jTL",
-     "type": "junction",
-     "x": 0.22,
-     "y": 0.15
-    },
-    {
-     "id": "leftBlobU",
-     "type": "room",
-     "x": 0.06,
-     "y": 0.36
-    },
-    {
-     "id": "flipLU",
-     "type": "flip",
-     "x": 0.06,
-     "y": 0.35,
-     "edge": "left"
-    },
-    {
-     "id": "jTR",
-     "type": "junction",
-     "x": 0.55,
-     "y": 0.2
-    },
-    {
-     "id": "doorA",
-     "type": "door",
-     "x": 0.74,
-     "y": 0.27,
-     "arrow": "down"
-    },
-    {
-     "id": "rightBlobU",
-     "type": "room",
-     "x": 0.93,
-     "y": 0.36
-    },
-    {
-     "id": "flipRU",
-     "type": "flip",
-     "x": 0.94,
-     "y": 0.35,
-     "edge": "right"
-    },
-    {
-     "id": "doorB",
-     "type": "door",
-     "x": 0.37,
-     "y": 0.33,
-     "arrow": "right"
-    },
-    {
-     "id": "orange",
-     "type": "item",
-     "x": 0.37,
-     "y": 0.47,
-     "label": "orange weapon (2 dots)"
-    },
-    {
-     "id": "doorC",
-     "type": "door",
-     "x": 0.47,
-     "y": 0.31,
-     "arrow": "left"
-    },
-    {
-     "id": "jM",
-     "type": "junction",
-     "x": 0.45,
-     "y": 0.38
-    },
-    {
-     "id": "spin",
-     "type": "spin",
-     "x": 0.58,
-     "y": 0.49
-    },
-    {
-     "id": "doorD",
-     "type": "door",
-     "x": 0.79,
-     "y": 0.42,
-     "arrow": "down"
-    },
-    {
-     "id": "red",
-     "type": "item",
-     "x": 0.7,
-     "y": 0.62,
-     "label": "red weapon (1 dot)"
-    },
-    {
-     "id": "doorE",
-     "type": "door",
-     "x": 0.2,
-     "y": 0.51,
-     "arrow": "left"
-    },
-    {
-     "id": "leftBlobL",
-     "type": "room",
-     "x": 0.06,
-     "y": 0.63
-    },
-    {
-     "id": "flipLL",
-     "type": "flip",
-     "x": 0.06,
-     "y": 0.63,
-     "edge": "left"
-    },
-    {
-     "id": "jL",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.6
-    },
-    {
-     "id": "doorG",
-     "type": "door",
-     "x": 0.33,
-     "y": 0.56,
-     "arrow": "right"
-    },
-    {
-     "id": "doorH",
-     "type": "door",
-     "x": 0.53,
-     "y": 0.6,
-     "arrow": "up"
-    },
-    {
-     "id": "jC",
-     "type": "junction",
-     "x": 0.45,
-     "y": 0.66
-    },
-    {
-     "id": "doorI",
-     "type": "door",
-     "x": 0.36,
-     "y": 0.75,
-     "arrow": "down"
-    },
-    {
-     "id": "jSW",
-     "type": "junction",
-     "x": 0.3,
-     "y": 0.82
-    },
-    {
-     "id": "blue",
-     "type": "item",
-     "x": 0.14,
-     "y": 0.92,
-     "label": "blue weapon (3 dots)"
-    },
-    {
-     "id": "doorJ",
-     "type": "door",
-     "x": 0.6,
-     "y": 0.73,
-     "arrow": "up"
-    },
-    {
-     "id": "bottomBlob",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.95
-    },
-    {
-     "id": "flipB",
-     "type": "flip",
-     "x": 0.5,
-     "y": 0.95,
-     "edge": "bottom"
-    },
-    {
-     "id": "doorK",
-     "type": "door",
-     "x": 0.78,
-     "y": 0.75,
-     "arrow": "right"
-    },
-    {
-     "id": "rightBlobL",
-     "type": "room",
-     "x": 0.93,
-     "y": 0.63
-    },
-    {
-     "id": "flipRL",
-     "type": "flip",
-     "x": 0.94,
-     "y": 0.63,
-     "edge": "right"
-    },
-    {
-     "id": "jSE",
-     "type": "junction",
-     "x": 0.85,
-     "y": 0.85
-    }
-   ],
-   "edges": [
-    [
-     "flipT",
-     "topBlob"
-    ],
-    [
-     "topBlob",
-     "jTL"
-    ],
-    [
-     "jTL",
-     "leftBlobU"
-    ],
-    [
-     "leftBlobU",
-     "flipLU"
-    ],
-    [
-     "topBlob",
-     "jTR"
-    ],
-    [
-     "jTR",
-     "doorA"
-    ],
-    [
-     "doorA",
-     "rightBlobU"
-    ],
-    [
-     "rightBlobU",
-     "flipRU"
-    ],
-    [
-     "jTL",
-     "doorB"
-    ],
-    [
-     "doorB",
-     "orange"
-    ],
-    [
-     "jTR",
-     "doorC"
-    ],
-    [
-     "doorC",
-     "jM"
-    ],
-    [
-     "jTR",
-     "spin"
-    ],
-    [
-     "spin",
-     "doorH"
-    ],
-    [
-     "doorH",
-     "jC"
-    ],
-    [
-     "rightBlobU",
-     "doorD"
-    ],
-    [
-     "doorD",
-     "red"
-    ],
-    [
-     "leftBlobU",
-     "doorE"
-    ],
-    [
-     "doorE",
-     "leftBlobL"
-    ],
-    [
-     "leftBlobL",
-     "flipLL"
-    ],
-    [
-     "leftBlobL",
-     "jL"
-    ],
-    [
-     "jL",
-     "doorG"
-    ],
-    [
-     "doorG",
-     "orange"
-    ],
-    [
-     "jC",
-     "doorI"
-    ],
-    [
-     "doorI",
-     "jSW"
-    ],
-    [
-     "jSW",
-     "blue"
-    ],
-    [
-     "jSW",
-     "bottomBlob"
-    ],
-    [
-     "bottomBlob",
-     "flipB"
-    ],
-    [
-     "jC",
-     "doorJ"
-    ],
-    [
-     "doorJ",
-     "bottomBlob"
-    ],
-    [
-     "red",
-     "doorK"
-    ],
-    [
-     "doorK",
-     "rightBlobL"
-    ],
-    [
-     "rightBlobL",
-     "flipRL"
-    ],
-    [
-     "rightBlobL",
-     "jSE"
-    ],
-    [
-     "jSE",
-     "bottomBlob"
-    ],
-    [
-     "jM",
-     "jL"
-    ]
-   ]
   }
- }
 }

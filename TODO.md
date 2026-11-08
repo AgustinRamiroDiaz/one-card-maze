@@ -13,7 +13,7 @@ How the game works (from the `MAZERULES` and `BOSSRULES` cards):
 Tasks:
 
 - [x] Define a per-card data file, e.g. `cards/<name>/maze.json`, describing both sides as a graph:
-  - nodes: start, exit, rooms/junctions, spin spots, flip edges, items, lair, with positions as fractions of the image (0–1), so they scale with the card
+  - nodes: start, exit, rooms, spin spots, flip edges, items, lair, with positions as fractions of the image (0–1), so they scale with the card
   - edges: path segments between nodes, with any door on them and the door's arrow direction
   - flip links: which flip edge on one side lands on which flip edge on the other side
 - [x] Build an editor (`tools/editor.html`) to view and fix the graph on each card.
@@ -23,7 +23,7 @@ Tasks:
 - [ ] Decide how boss cards are won: 31 cards have no exit; some drafts add an `exit` node in the lair, others only a `special` node.
 - [ ] Two-card co-op (`PAD` + `PRESSURE`): gates on one card are opened by buttons on the other.
 - [x] Write the rules engine (`scripts/rules.js`; `node tools/solve.js` solves every card, `--self-test` checks the engine): given the state (side, rotation, position, items, boss progress), list the legal moves.
-  Rotation after a flip: flipping over an edge that is left/right on screen turns rotation `t` into `-t`; over an edge that is top/bottom on screen, into `180 - t`. This solves `MAZERULES`; `MAZE3` and `MAZE823023` only solve if every flip gives `-t`, which probably means a misread connection there.
+      Rotation after a flip: flipping over an edge that is left/right on screen turns rotation `t` into `-t`; over an edge that is top/bottom on screen, into `180 - t`. This solves `MAZERULES`; `MAZE3` and `MAZE823023` only solve if every flip gives `-t`, which probably means a misread connection there.
 - [ ] Add per-card mechanics as small plugins: items/keys, boss sequence, and others found while annotating.
 - [x] Show a win state. (Lose states arrive with boss rules.)
 - [x] Cards without a playable map (no start or exit, e.g. boss cards) fall back to free play; the index fades them in guided mode.
@@ -55,3 +55,7 @@ Depends on: the graph and engine from §1.
 - [ ] `/<cardname>` plays that card, e.g. `/BURGER`.
 - [ ] Make it work on a static host (GitHub Pages) and on `python3 -m http.server`.
 - [ ] Update the index links.
+
+# Infinite view
+
+show a preview of the other sides of the card like "Patrick Parabox" does

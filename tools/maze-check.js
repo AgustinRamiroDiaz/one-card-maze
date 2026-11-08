@@ -1,6 +1,6 @@
 // Shared by validate.js (Node) and editor.html (browser): checkMaze(maze) -> { errors, warnings }
 (function (root) {
-  const TYPES = ['start', 'exit', 'room', 'junction', 'door', 'spin', 'flip', 'item', 'special'];
+  const TYPES = ['start', 'exit', 'room', 'door', 'spin', 'flip', 'item', 'special'];
   const ARROWS = ['up', 'down', 'left', 'right'];
   const MIRROR = { top: 'top', bottom: 'bottom', left: 'right', right: 'left' };
   const STATUSES = ['draft', 'reviewed', 'unplayable'];

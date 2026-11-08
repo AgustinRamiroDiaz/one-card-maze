@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "tools/editor.html"
+        ],
+        "createdAt": "2026-11-08T19:25:11.261Z",
+        "reason": "Claude: #card-img src is assigned at runtime by setSide() in the same file"
+      }
+    ]
+  }
+}

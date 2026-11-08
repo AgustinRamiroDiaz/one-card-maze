@@ -1,45 +1,57 @@
 {
   "status": "draft",
   "notes": "Landscape promo card (Steelgrim collaboration); the back is a business card with two side corridors. 'You can also solve the MAZE from END to START!' Doubt: front START and END boxes are taken as separate from the spin boxes below them (dark gap at y~0.6-0.65).",
-  "mechanics": [ { "type": "other", "text": "You can also solve the MAZE from END to START!" } ],
+  "mechanics": [
+    {"type": "other", "text": "You can also solve the MAZE from END to START!"}
+  ],
   "sides": {
     "front": {
       "nodes": [
-        { "id": "start", "type": "start", "x": 0.27, "y": 0.55 },
-        { "id": "doorUl", "type": "door", "x": 0.14, "y": 0.5, "arrow": "up" },
-        { "id": "flipL", "type": "flip", "x": 0.05, "y": 0.5, "edge": "left" },
-        { "id": "exit", "type": "exit", "x": 0.73, "y": 0.55 },
-        { "id": "doorUr", "type": "door", "x": 0.86, "y": 0.5, "arrow": "up" },
-        { "id": "flipR", "type": "flip", "x": 0.95, "y": 0.5, "edge": "right" },
-        { "id": "spinBL", "type": "spin", "x": 0.27, "y": 0.77 },
-        { "id": "flipBL", "type": "flip", "x": 0.12, "y": 0.93, "edge": "bottom" },
-        { "id": "spinBR", "type": "spin", "x": 0.73, "y": 0.77 },
-        { "id": "flipBR", "type": "flip", "x": 0.88, "y": 0.93, "edge": "bottom" },
-        { "id": "flipTL", "type": "flip", "x": 0.12, "y": 0.08, "edge": "top" },
-        { "id": "spinTop", "type": "spin", "x": 0.5, "y": 0.18 },
-        { "id": "flipTR", "type": "flip", "x": 0.88, "y": 0.08, "edge": "top" }
+        {"id": "start", "type": "start", "x": 0.27, "y": 0.55},
+        {"id": "doorUl", "type": "door", "x": 0.14, "y": 0.5, "arrow": "up"},
+        {"id": "flipL", "type": "flip", "x": 0.05, "y": 0.5, "edge": "left"},
+        {"id": "exit", "type": "exit", "x": 0.73, "y": 0.55},
+        {"id": "doorUr", "type": "door", "x": 0.86, "y": 0.5, "arrow": "up"},
+        {"id": "flipR", "type": "flip", "x": 0.95, "y": 0.5, "edge": "right"},
+        {"id": "spinBL", "type": "spin", "x": 0.27, "y": 0.77},
+        {"id": "flipBL", "type": "flip", "x": 0.12, "y": 0.93, "edge": "bottom"},
+        {"id": "spinBR", "type": "spin", "x": 0.73, "y": 0.77},
+        {"id": "flipBR", "type": "flip", "x": 0.88, "y": 0.93, "edge": "bottom"},
+        {"id": "flipTL", "type": "flip", "x": 0.12, "y": 0.08, "edge": "top"},
+        {"id": "spinTop", "type": "spin", "x": 0.5, "y": 0.18},
+        {"id": "flipTR", "type": "flip", "x": 0.88, "y": 0.08, "edge": "top"}
       ],
       "edges": [
-        ["start", "doorUl"], ["doorUl", "flipL"], ["exit", "doorUr"], ["doorUr", "flipR"],
-        ["spinBL", "flipBL"], ["spinBR", "flipBR"], ["flipTL", "spinTop"], ["spinTop", "flipTR"]
+        ["start", "doorUl"],
+        ["doorUl", "flipL"],
+        ["exit", "doorUr"],
+        ["doorUr", "flipR"],
+        ["spinBL", "flipBL"],
+        ["spinBR", "flipBR"],
+        ["flipTL", "spinTop"],
+        ["spinTop", "flipTR"]
       ]
     },
     "back": {
       "nodes": [
-        { "id": "flipTL", "type": "flip", "x": 0.12, "y": 0.08, "edge": "top" },
-        { "id": "doorLl", "type": "door", "x": 0.13, "y": 0.33, "arrow": "left" },
-        { "id": "leftCol", "type": "junction", "x": 0.12, "y": 0.5 },
-        { "id": "flipL", "type": "flip", "x": 0.05, "y": 0.5, "edge": "left" },
-        { "id": "flipBL", "type": "flip", "x": 0.12, "y": 0.93, "edge": "bottom" },
-        { "id": "flipTR", "type": "flip", "x": 0.88, "y": 0.08, "edge": "top" },
-        { "id": "doorRr", "type": "door", "x": 0.88, "y": 0.33, "arrow": "right" },
-        { "id": "rightCol", "type": "junction", "x": 0.88, "y": 0.5 },
-        { "id": "flipR", "type": "flip", "x": 0.95, "y": 0.5, "edge": "right" },
-        { "id": "flipBR", "type": "flip", "x": 0.88, "y": 0.93, "edge": "bottom" }
+        {"id": "flipTL", "type": "flip", "x": 0.12, "y": 0.08, "edge": "top"},
+        {"id": "doorLl", "type": "door", "x": 0.13, "y": 0.33, "arrow": "left"},
+        {"id": "flipL", "type": "flip", "x": 0.05, "y": 0.5, "edge": "left"},
+        {"id": "flipBL", "type": "flip", "x": 0.12, "y": 0.93, "edge": "bottom"},
+        {"id": "flipTR", "type": "flip", "x": 0.88, "y": 0.08, "edge": "top"},
+        {"id": "doorRr", "type": "door", "x": 0.88, "y": 0.33, "arrow": "right"},
+        {"id": "flipR", "type": "flip", "x": 0.95, "y": 0.5, "edge": "right"},
+        {"id": "flipBR", "type": "flip", "x": 0.88, "y": 0.93, "edge": "bottom"}
       ],
       "edges": [
-        ["flipTL", "doorLl"], ["doorLl", "leftCol"], ["leftCol", "flipL"], ["leftCol", "flipBL"],
-        ["flipTR", "doorRr"], ["doorRr", "rightCol"], ["rightCol", "flipR"], ["rightCol", "flipBR"]
+        ["flipTL", "doorLl"],
+        ["flipTR", "doorRr"],
+        ["doorLl", "flipL"],
+        ["doorLl", "flipBL"],
+        ["flipL", "flipBL"],
+        ["doorRr", "flipR"],
+        ["doorRr", "flipBR"],
+        ["flipR", "flipBR"]
       ]
     }
   }

@@ -1,459 +1,100 @@
 {
- "status": "draft",
- "notes": "CINDERELLA #68. Start in the fireplace room (front), exit on the back (EXIT sign beside the carriage), entered only through the door (0.66,0.68, arrow right). Route sketch: start, door up, left flip; back: right flip, central plaza, down to the lower-left lanes, bottom flip; front: right lane, door up into the lantern room spin, rotate, then work round to the back east lane with the card rotated so the exit door's arrow points up. Doubts: back exit band assumed closed at its top (dark line at y 0.6) so the central lane x~0.5 does NOT reach the exit directly; back wide area (0.55,0.42) assumed linked to the right horizontal via the gap at x 0.64-0.72. Small light stubs at the top edge (front x 0.25, back x 0.75) treated as decoration (no flip triangle there).",
- "mechanics": [],
- "sides": {
-  "front": {
-   "nodes": [
-    {
-     "id": "start",
-     "type": "start",
-     "x": 0.3,
-     "y": 0.33
+  "status": "draft",
+  "notes": "CINDERELLA #68. Start in the fireplace room (front), exit on the back (EXIT sign beside the carriage), entered only through the door (0.66,0.68, arrow right). Route sketch: start, door up, left flip; back: right flip, central plaza, down to the lower-left lanes, bottom flip; front: right lane, door up into the lantern room spin, rotate, then work round to the back east lane with the card rotated so the exit door's arrow points up. Doubts: back exit band assumed closed at its top (dark line at y 0.6) so the central lane x~0.5 does NOT reach the exit directly; back wide area (0.55,0.42) assumed linked to the right horizontal via the gap at x 0.64-0.72. Small light stubs at the top edge (front x 0.25, back x 0.75) treated as decoration (no flip triangle there).",
+  "mechanics": [],
+  "sides": {
+    "front": {
+      "nodes": [
+        {"id": "start", "type": "start", "x": 0.3, "y": 0.33},
+        {"id": "doorS", "type": "door", "x": 0.15, "y": 0.31, "arrow": "up"},
+        {"id": "flipLU", "type": "flip", "x": 0.05, "y": 0.31, "edge": "left"},
+        {"id": "flipT", "type": "flip", "x": 0.75, "y": 0.04, "edge": "top"},
+        {"id": "flipRU", "type": "flip", "x": 0.95, "y": 0.31, "edge": "right"},
+        {"id": "flipRL", "type": "flip", "x": 0.95, "y": 0.67, "edge": "right"},
+        {"id": "flipLL", "type": "flip", "x": 0.05, "y": 0.67, "edge": "left"},
+        {"id": "flipBL", "type": "flip", "x": 0.25, "y": 0.96, "edge": "bottom"},
+        {"id": "doorU", "type": "door", "x": 0.65, "y": 0.75, "arrow": "up"},
+        {"id": "lantern", "type": "room", "x": 0.5, "y": 0.8},
+        {"id": "spin", "type": "spin", "x": 0.5, "y": 0.83},
+        {"id": "doorLft", "type": "door", "x": 0.65, "y": 0.89, "arrow": "left"},
+        {"id": "flipBR", "type": "flip", "x": 0.75, "y": 0.96, "edge": "bottom"}
+      ],
+      "edges": [
+        ["start", "doorS"],
+        ["doorS", "flipLU"],
+        ["doorU", "lantern"],
+        ["lantern", "spin"],
+        ["doorLft", "lantern"],
+        ["flipT", "flipRU"],
+        ["flipRL", "flipT"],
+        ["flipRL", "flipRU"],
+        ["flipLL", "flipBL"],
+        ["flipLL", "flipRL"],
+        ["flipLL", "flipT"],
+        ["flipLL", "flipRU"],
+        ["flipBL", "flipRL"],
+        ["flipBL", "flipT"],
+        ["flipBL", "flipRU"],
+        ["doorU", "flipRL"],
+        ["doorU", "flipT"],
+        ["doorU", "flipRU"],
+        ["doorU", "flipLL"],
+        ["doorU", "flipBL"],
+        ["doorLft", "flipBR"],
+        ["doorLft", "doorU"],
+        ["doorLft", "flipRL"],
+        ["doorLft", "flipT"],
+        ["doorLft", "flipRU"],
+        ["doorLft", "flipLL"],
+        ["doorLft", "flipBL"],
+        ["flipBR", "doorU"],
+        ["flipBR", "flipRL"],
+        ["flipBR", "flipT"],
+        ["flipBR", "flipRU"],
+        ["flipBR", "flipLL"],
+        ["flipBR", "flipBL"]
+      ]
     },
-    {
-     "id": "doorS",
-     "type": "door",
-     "x": 0.15,
-     "y": 0.31,
-     "arrow": "up"
-    },
-    {
-     "id": "flipLU",
-     "type": "flip",
-     "x": 0.05,
-     "y": 0.31,
-     "edge": "left"
-    },
-    {
-     "id": "flipT",
-     "type": "flip",
-     "x": 0.75,
-     "y": 0.04,
-     "edge": "top"
-    },
-    {
-     "id": "jR1",
-     "type": "junction",
-     "x": 0.75,
-     "y": 0.31
-    },
-    {
-     "id": "flipRU",
-     "type": "flip",
-     "x": 0.95,
-     "y": 0.31,
-     "edge": "right"
-    },
-    {
-     "id": "jR2",
-     "type": "junction",
-     "x": 0.75,
-     "y": 0.64
-    },
-    {
-     "id": "flipRL",
-     "type": "flip",
-     "x": 0.95,
-     "y": 0.67,
-     "edge": "right"
-    },
-    {
-     "id": "curve",
-     "type": "junction",
-     "x": 0.45,
-     "y": 0.62
-    },
-    {
-     "id": "jL",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.67
-    },
-    {
-     "id": "flipLL",
-     "type": "flip",
-     "x": 0.05,
-     "y": 0.67,
-     "edge": "left"
-    },
-    {
-     "id": "flipBL",
-     "type": "flip",
-     "x": 0.25,
-     "y": 0.96,
-     "edge": "bottom"
-    },
-    {
-     "id": "jR3",
-     "type": "junction",
-     "x": 0.75,
-     "y": 0.75
-    },
-    {
-     "id": "doorU",
-     "type": "door",
-     "x": 0.65,
-     "y": 0.75,
-     "arrow": "up"
-    },
-    {
-     "id": "lantern",
-     "type": "room",
-     "x": 0.5,
-     "y": 0.8
-    },
-    {
-     "id": "spin",
-     "type": "spin",
-     "x": 0.5,
-     "y": 0.83
-    },
-    {
-     "id": "jR4",
-     "type": "junction",
-     "x": 0.75,
-     "y": 0.89
-    },
-    {
-     "id": "doorLft",
-     "type": "door",
-     "x": 0.65,
-     "y": 0.89,
-     "arrow": "left"
-    },
-    {
-     "id": "flipBR",
-     "type": "flip",
-     "x": 0.75,
-     "y": 0.96,
-     "edge": "bottom"
+    "back": {
+      "nodes": [
+        {"id": "flipT", "type": "flip", "x": 0.25, "y": 0.04, "edge": "top"},
+        {"id": "doorBL", "type": "door", "x": 0.33, "y": 0.13, "arrow": "left"},
+        {"id": "plaza", "type": "room", "x": 0.45, "y": 0.2},
+        {"id": "spin", "type": "spin", "x": 0.45, "y": 0.2},
+        {"id": "doorBR", "type": "door", "x": 0.33, "y": 0.27, "arrow": "right"},
+        {"id": "flipLU", "type": "flip", "x": 0.05, "y": 0.32, "edge": "left"},
+        {"id": "flipRU", "type": "flip", "x": 0.95, "y": 0.32, "edge": "right"},
+        {"id": "wide", "type": "room", "x": 0.55, "y": 0.42},
+        {"id": "doorLL", "type": "door", "x": 0.15, "y": 0.67, "arrow": "down"},
+        {"id": "flipLL", "type": "flip", "x": 0.05, "y": 0.67, "edge": "left"},
+        {"id": "flipBL", "type": "flip", "x": 0.25, "y": 0.96, "edge": "bottom"},
+        {"id": "exit", "type": "exit", "x": 0.55, "y": 0.68},
+        {"id": "doorX", "type": "door", "x": 0.66, "y": 0.68, "arrow": "right"},
+        {"id": "flipRL", "type": "flip", "x": 0.95, "y": 0.67, "edge": "right"},
+        {"id": "doorE", "type": "door", "x": 0.75, "y": 0.84, "arrow": "left"},
+        {"id": "flipBR", "type": "flip", "x": 0.75, "y": 0.96, "edge": "bottom"}
+      ],
+      "edges": [
+        ["doorBL", "plaza"],
+        ["plaza", "spin"],
+        ["doorBR", "plaza"],
+        ["doorLL", "flipLL"],
+        ["exit", "doorX"],
+        ["doorE", "flipBR"],
+        ["flipT", "doorBL"],
+        ["doorBR", "flipT"],
+        ["doorBR", "doorBL"],
+        ["flipLU", "doorBR"],
+        ["flipLU", "flipT"],
+        ["flipLU", "doorBL"],
+        ["flipRU", "wide"],
+        ["doorLL", "flipBL"],
+        ["doorLL", "wide"],
+        ["flipBL", "wide"],
+        ["doorX", "flipRL"],
+        ["doorX", "doorE"],
+        ["flipRL", "doorE"]
+      ]
     }
-   ],
-   "edges": [
-    [
-     "start",
-     "doorS"
-    ],
-    [
-     "doorS",
-     "flipLU"
-    ],
-    [
-     "flipT",
-     "jR1"
-    ],
-    [
-     "jR1",
-     "flipRU"
-    ],
-    [
-     "jR1",
-     "jR2"
-    ],
-    [
-     "jR2",
-     "flipRL"
-    ],
-    [
-     "jR2",
-     "curve"
-    ],
-    [
-     "curve",
-     "jL"
-    ],
-    [
-     "jL",
-     "flipLL"
-    ],
-    [
-     "jL",
-     "flipBL"
-    ],
-    [
-     "jR2",
-     "jR3"
-    ],
-    [
-     "jR3",
-     "doorU"
-    ],
-    [
-     "doorU",
-     "lantern"
-    ],
-    [
-     "lantern",
-     "spin"
-    ],
-    [
-     "jR3",
-     "jR4"
-    ],
-    [
-     "jR4",
-     "doorLft"
-    ],
-    [
-     "doorLft",
-     "lantern"
-    ],
-    [
-     "jR4",
-     "flipBR"
-    ]
-   ]
-  },
-  "back": {
-   "nodes": [
-    {
-     "id": "flipT",
-     "type": "flip",
-     "x": 0.25,
-     "y": 0.04,
-     "edge": "top"
-    },
-    {
-     "id": "jA",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.13
-    },
-    {
-     "id": "doorBL",
-     "type": "door",
-     "x": 0.33,
-     "y": 0.13,
-     "arrow": "left"
-    },
-    {
-     "id": "plaza",
-     "type": "room",
-     "x": 0.45,
-     "y": 0.2
-    },
-    {
-     "id": "spin",
-     "type": "spin",
-     "x": 0.45,
-     "y": 0.2
-    },
-    {
-     "id": "jB",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.27
-    },
-    {
-     "id": "doorBR",
-     "type": "door",
-     "x": 0.33,
-     "y": 0.27,
-     "arrow": "right"
-    },
-    {
-     "id": "jTL",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.32
-    },
-    {
-     "id": "flipLU",
-     "type": "flip",
-     "x": 0.05,
-     "y": 0.32,
-     "edge": "left"
-    },
-    {
-     "id": "flipRU",
-     "type": "flip",
-     "x": 0.95,
-     "y": 0.32,
-     "edge": "right"
-    },
-    {
-     "id": "jR",
-     "type": "junction",
-     "x": 0.7,
-     "y": 0.32
-    },
-    {
-     "id": "wide",
-     "type": "room",
-     "x": 0.55,
-     "y": 0.42
-    },
-    {
-     "id": "jW",
-     "type": "junction",
-     "x": 0.48,
-     "y": 0.53
-    },
-    {
-     "id": "jL2",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.55
-    },
-    {
-     "id": "jL3",
-     "type": "junction",
-     "x": 0.25,
-     "y": 0.67
-    },
-    {
-     "id": "doorLL",
-     "type": "door",
-     "x": 0.15,
-     "y": 0.67,
-     "arrow": "down"
-    },
-    {
-     "id": "flipLL",
-     "type": "flip",
-     "x": 0.05,
-     "y": 0.67,
-     "edge": "left"
-    },
-    {
-     "id": "flipBL",
-     "type": "flip",
-     "x": 0.25,
-     "y": 0.96,
-     "edge": "bottom"
-    },
-    {
-     "id": "exit",
-     "type": "exit",
-     "x": 0.55,
-     "y": 0.68
-    },
-    {
-     "id": "doorX",
-     "type": "door",
-     "x": 0.66,
-     "y": 0.68,
-     "arrow": "right"
-    },
-    {
-     "id": "jE",
-     "type": "junction",
-     "x": 0.75,
-     "y": 0.67
-    },
-    {
-     "id": "flipRL",
-     "type": "flip",
-     "x": 0.95,
-     "y": 0.67,
-     "edge": "right"
-    },
-    {
-     "id": "doorE",
-     "type": "door",
-     "x": 0.75,
-     "y": 0.84,
-     "arrow": "left"
-    },
-    {
-     "id": "flipBR",
-     "type": "flip",
-     "x": 0.75,
-     "y": 0.96,
-     "edge": "bottom"
-    }
-   ],
-   "edges": [
-    [
-     "flipT",
-     "jA"
-    ],
-    [
-     "jA",
-     "jB"
-    ],
-    [
-     "jB",
-     "jTL"
-    ],
-    [
-     "jTL",
-     "flipLU"
-    ],
-    [
-     "jA",
-     "doorBL"
-    ],
-    [
-     "doorBL",
-     "plaza"
-    ],
-    [
-     "plaza",
-     "spin"
-    ],
-    [
-     "jB",
-     "doorBR"
-    ],
-    [
-     "doorBR",
-     "plaza"
-    ],
-    [
-     "flipRU",
-     "jR"
-    ],
-    [
-     "jR",
-     "wide"
-    ],
-    [
-     "wide",
-     "jW"
-    ],
-    [
-     "jW",
-     "jL2"
-    ],
-    [
-     "jL2",
-     "jL3"
-    ],
-    [
-     "jL3",
-     "doorLL"
-    ],
-    [
-     "doorLL",
-     "flipLL"
-    ],
-    [
-     "jL3",
-     "flipBL"
-    ],
-    [
-     "exit",
-     "doorX"
-    ],
-    [
-     "doorX",
-     "jE"
-    ],
-    [
-     "jE",
-     "flipRL"
-    ],
-    [
-     "jE",
-     "doorE"
-    ],
-    [
-     "doorE",
-     "flipBR"
-    ]
-   ]
   }
- }
 }

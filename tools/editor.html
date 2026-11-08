@@ -65,6 +65,7 @@
   <label>Zoom <input id="zoom" type="range" min="50" max="250" value="85"></label>
   <span class="sep"></span>
   <button id="undo" title="Ctrl+Z">Undo</button>
+  <button id="reset" title="Clear this card's nodes, edges, notes and mechanics (undoable)">Reset card</button>
   <button id="connect-folder" title="Pick the repo folder so Save writes cards/&lt;name&gt;/maze.json directly">Connect repo folder</button>
   <button id="save" title="Ctrl+S">Save</button>
   <span id="status-line">Loading…</span>
@@ -114,7 +115,6 @@ const STYLE = {
   start:    { fill: '#6bd18b', glyph: 'S' },
   exit:     { fill: '#ff6b6b', glyph: 'E' },
   room:     { fill: '#ffe066', glyph: '' },
-  junction: { fill: '#ffe066', glyph: '', small: true },
   door:     { fill: '#ffffff', glyph: null },
   spin:     { fill: '#5ec8ff', glyph: '⟳' },
   flip:     { fill: '#ff3fd8', glyph: null },
@@ -123,12 +123,12 @@ const STYLE = {
 };
 const ARROW_GLYPH = { up: '↑', down: '↓', left: '←', right: '→' };
 const FLIP_GLYPH = { top: '▲', bottom: '▼', left: '◀', right: '▶' };
-const TYPE_KEYS = ['room', 'junction', 'door', 'spin', 'flip', 'start', 'exit', 'item', 'special'];
+const TYPE_KEYS = ['room', 'door', 'spin', 'flip', 'start', 'exit', 'item', 'special'];
 
 const $ = id => document.getElementById(id);
 const svg = $('overlay');
 const state = {
-  cards: [], current: null, side: 'front', addType: 'junction',
+  cards: [], current: null, side: 'front', addType: 'room',
   mazes: {},     // name -> maze (loaded or edited)
   dirty: new Set(),
   undo: {},      // name -> [json snapshots]
@@ -507,7 +507,7 @@ function setAddType(t) {
   state.addType = t;
   for (const b of $('type-buttons').children) b.setAttribute('aria-pressed', b.dataset.type === t);
 }
-setAddType('junction');
+setAddType('room');
 
 $('side-front').onclick = () => setSide('front');
 $('side-back').onclick = () => setSide('back');
@@ -515,6 +515,13 @@ const step = d => openCard(state.cards[(state.cards.indexOf(state.current) + d +
 $('prev').onclick = () => step(-1);
 $('next').onclick = () => step(1);
 $('undo').onclick = undo;
+$('reset').onclick = () => {
+  snapshot();
+  state.mazes[state.current] = emptyMaze();
+  state.sel = null;
+  renderCardFields();
+  render();
+};
 $('save').onclick = save;
 $('filter').oninput = renderList;
 $('zoom').oninput = e => $('stage').style.setProperty('--h', e.target.value + 'vh');
