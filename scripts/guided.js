@@ -1,4 +1,4 @@
-// Guided mode: the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Portals take two clicks: in, then out. Cards with several starts let the player pick one first. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
+// Guided mode: the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Portals take two clicks: in, then out. Cards with several starts let the player pick one first. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -43,6 +43,7 @@ function render() {
     const usable = n && (state.choosing ? n.type === 'start'
       : state.inPortal ? n.type === 'portal'
       : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n))
+        || (n.type === 'exit' && R.missingItems(maze, state).length === 0)
         || (n.type === 'portal' && R.portalExits(maze, { ...state, at: n.id }).length)));
     const can = !state.won && !astray && usable;
     b.classList.toggle('can', !!can);
@@ -53,20 +54,16 @@ function render() {
   document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !onSpin));
 }
 
-// Picks up every reachable item, then walks to the exit if it is reachable and unlocked.
+// Picks up every reachable item and says whether the exit can be reached.
 function settle() {
   const reach = R.reachable(maze, state);
   const items = new Set(state.items);
   for (const id of reach.keys()) if (R.node(maze, state.side, id).type === 'item') items.add(`${state.side}.${id}`);
   state = { ...state, items: [...items] };
   const exit = [...reach.keys()].find(id => R.node(maze, state.side, id).type === 'exit');
-  if (exit && R.missingItems(maze, state).length === 0) {
-    state = { ...R.walk(maze, state, exit).state, won: true };
-    message('You found the exit!');
-    document.body.classList.add('won');
-  } else {
-    message(exit ? `The exit is locked. ${status()}` : status() || 'Find the exit.');
-  }
+  if (!exit) message(status() || 'Find the exit.');
+  else if (R.missingItems(maze, state).length) message(`The exit is locked. ${status()}`);
+  else message('The exit is open. Tap it to leave.');
   render();
 }
 
@@ -95,11 +92,41 @@ async function onSpot(side, n) {
   const res = R.walk(maze, state, n.id);
   if (res.error) return;
   state = res.state;
-  if (n.type === 'spin') {
+  if (n.type === 'exit') {
+    state = { ...state, won: R.won(maze, state) };
+    message('You found the exit!');
+    document.body.classList.add('won');
+    render();
+    confetti();
+  }
+  else if (n.type === 'spin') {
     message(motionOn ? 'Turn the phone to turn the card.' : 'Turn the card with the arrows.');
     render();
   }
   else if (n.type === 'flip') await doFlip();
+}
+
+// A burst of paper bits from the top of the screen; removed when it lands.
+function confetti() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors = ['#E8443A', '#FFD600', '#2B8A3E', '#1C7ED6', '#F783AC', '#FFFFFF'];
+  const layer = document.createElement('div');
+  layer.className = 'confetti';
+  layer.setAttribute('aria-hidden', 'true');
+  document.body.append(layer);
+  const h = window.innerHeight;
+  const falls = Array.from({ length: 120 }, () => {
+    const bit = document.createElement('i');
+    bit.style.left = Math.random() * 100 + '%';
+    bit.style.background = colors[Math.floor(Math.random() * colors.length)];
+    layer.append(bit);
+    const drift = (Math.random() - 0.5) * 200, spin = (Math.random() - 0.5) * 1440;
+    return bit.animate([
+      { transform: 'translate(0, -20px) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${drift}px, ${h + 40}px) rotate(${spin}deg)`, opacity: 0.8 },
+    ], { duration: 2200 + Math.random() * 1800, delay: Math.random() * 400, easing: 'cubic-bezier(.25,.6,.5,1)', fill: 'forwards' }).finished;
+  });
+  Promise.all(falls).then(() => layer.remove());
 }
 
 // body.busy while the card animates; input is ignored until it clears (the e2e tests wait on it).

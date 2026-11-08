@@ -97,6 +97,17 @@ async function playThrough(page, card, startId) {
       pending = null;
     }
   }
+  // The solver's last move walks onto the exit; the player has to tap it.
+  expect(R.node(maze, s.side, s.at).type).toBe('exit');
+  await expect(page.locator('#hud-message')).toHaveText('The exit is open. Tap it to leave.');
+  await expect(page.locator('body')).not.toHaveClass(/\bwon\b/);
+  // Confetti is skipped under reduced motion, which the suite uses; allow motion for the winning tap. The glow
+  // starts pulsing again, so the tap is dispatched instead of waiting for the spot to hold still.
+  await expect(spot(page, s.side, s.at)).toHaveClass(/\bcan\b/);
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await spot(page, s.side, s.at).dispatchEvent('click');
+  await expect(page.locator('.confetti i')).toHaveCount(120);
+  await expect(page.locator('.confetti'), 'confetti cleans up after landing').toHaveCount(0, { timeout: 8000 });
   await expect(page.locator('#hud-message')).toHaveText('You found the exit!');
   await expect(page.locator('body')).toHaveClass(/\bwon\b/);
   expect(await highlighted(page)).toEqual([]);

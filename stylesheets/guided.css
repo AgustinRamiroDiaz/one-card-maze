@@ -86,3 +86,6 @@ body.guided .spot, body.guided .rotate-button, .hud-button { touch-action: manip
 	.hud-button { padding: .45rem .8rem; font-size: .9rem; }
 	#hud-message { font-size: .9rem; }
 }
+
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 20; }
+.confetti i { position: absolute; top: 0; width: 8px; height: 14px; border-radius: 2px; }
