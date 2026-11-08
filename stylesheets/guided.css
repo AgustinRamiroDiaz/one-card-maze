@@ -23,6 +23,7 @@ body.guided .spot.can:hover,
 body.guided .spot.can:focus-visible {
 	box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px rgba(0, 0, 0, 0.6), 0 0 16px 8px rgba(255, 214, 0, 1);
 }
+body.guided .spot.can.here { box-shadow: 0 0 0 4px #FFFFFF, 0 0 0 7px #2B8A3E, 0 0 14px 8px rgba(255, 214, 0, 0.9); }
 @keyframes glow { to { transform: translate(-50%, -50%) scale(1.15); } }
 @media (prefers-reduced-motion: reduce) { body.guided .spot.can { animation: none; } }
 

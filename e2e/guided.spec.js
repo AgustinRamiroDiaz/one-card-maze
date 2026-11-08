@@ -71,8 +71,14 @@ async function playThrough(page, card, startId) {
       s = R.walk(maze, s, arg.split('.')[1]).state;
       pending = s.at;
     } else if (kind === 'spin') {
-      if (pending) { await click(s.side, pending); if (arg === 'ccw') { await turn('ccw'); await turn('ccw'); } }
-      else await turn(arg);
+      if (pending) {
+        const before = await page.locator('#card').getAttribute('style');
+        await click(s.side, pending);
+        expect(await page.locator('#card').getAttribute('style'), 'clicking a spin does not turn the card').toBe(before);
+        await expect(spot(page, s.side, pending), 'standing on the spin marks it').toHaveClass(/\bhere\b/);
+        await expect(page.locator('#rotate-clockwise'), 'standing on a spin enables the arrows').not.toHaveClass(/disabled/);
+      }
+      await turn(arg);
       s = R.spin(maze, s, arg).state;
       pending = null;
     } else if (kind === 'flip') {

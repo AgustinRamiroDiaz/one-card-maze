@@ -1,4 +1,4 @@
-// Guided mode: the reachable spin and flip spots light up; click one to use it. Portals take two clicks: in, then out. Cards with several starts let the player pick one first. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
+// Guided mode: the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons then turn the card. Portals take two clicks: in, then out. Cards with several starts let the player pick one first. Items and the exit count once reachable; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -38,6 +38,7 @@ function render() {
         || (n.type === 'portal' && R.portalExits(maze, { ...state, at: n.id }).length)));
     const can = !state.won && usable;
     b.classList.toggle('can', !!can);
+    b.classList.toggle('here', !!can && n.type === 'spin' && n.id === state.at);
     b.disabled = !can;
   }
   const onSpin = !state.won && !state.choosing && !state.inPortal && R.node(maze, state.side, state.at).type === 'spin';
@@ -86,7 +87,7 @@ async function onSpot(side, n) {
   const res = R.walk(maze, state, n.id);
   if (res.error) return;
   state = res.state;
-  if (n.type === 'spin') await doSpin('cw');
+  if (n.type === 'spin') { message('Turn the card with the arrows.'); render(); }
   else if (n.type === 'flip') await doFlip();
 }
 
