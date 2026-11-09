@@ -208,13 +208,18 @@ function onOrientation(e) {
   if (q !== phoneQ) { phoneQ = q; syncPhone(); }
 }
 
-// Brings the game in line with the phone: on a spin the card turns with it; anywhere else the game waits.
+// Brings the game in line with the phone: on a spin the card turns with it. Off a spin, if exactly one spin is
+// reachable the player is walked onto it first; otherwise (none, or a choice to make) the game waits.
 function syncPhone() {
   if (!motionOn || !state || state.won || busy) return;
   const diff = R.mod(phoneQ - R.mod(state.rot - R.cssView(css).rot, 360) / 90, 4);
   if (diff === 0) {
     if (astray) { astray = false; settle(); }
     return;
+  }
+  if (canTurn() && R.node(maze, state.side, state.at).type !== 'spin') {
+    const spins = [...R.reachable(maze, state).keys()].filter(id => R.node(maze, state.side, id).type === 'spin');
+    if (spins.length === 1) state = R.walk(maze, state, spins[0]).state;
   }
   if (canTurn() && R.node(maze, state.side, state.at).type === 'spin') {
     const dir = diff === 3 ? 'ccw' : 'cw';

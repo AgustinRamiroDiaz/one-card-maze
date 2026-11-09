@@ -157,18 +157,12 @@ test('with Motion on, turning the phone on a spin turns the card without moving 
   await turn(0);
   const picture = await page.locator('#card').getAttribute('style');
 
-  // Off a spin the game waits until the phone is upright again.
+  // spin3 is the only spin in reach, so turning the phone walks the player onto it and turns the card:
+  // door 2 opens (as the cw spin does) and the flip lights up.
   await turn(90);
-  await expect(msg).toHaveText('You can only turn the card on a spin. Turn the phone back.');
-  expect(await highlighted(page)).toEqual([]);
-  await turn(0);
-  expect(await highlighted(page)).toEqual(['front.spin3']);
-
-  // On the spin, a quarter turn of the phone opens door 2 (as the cw spin does) and the flip lights up.
-  await spot(page, 'front', 'spin3').tap();
   await expect(msg).toHaveText('Turn the phone to turn the card.');
-  await turn(90);
   expect(await highlighted(page)).toEqual(['front.flipBottom', 'front.spin3']);
+  await expect(spot(page, 'front', 'spin3')).toHaveClass(/\bhere\b/);
   expect(await page.locator('#card').getAttribute('style'), 'the picture stays still').toBe(picture);
 
   // Flip while the phone is still turned: the rules and the picture must agree (guided.js asserts it).
@@ -184,3 +178,21 @@ test('with Motion on, turning the phone on a spin turns the card without moving 
   await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   expect(await highlighted(page)).toEqual(['back.flipBottom', 'back.spinSE']);
 });
+
+for (const [card, why] of [['MAZE2', 'no spin in reach'], ['MAZE730453', 'two spins in reach']]) {
+  test(`with Motion on, turning the phone waits when there is ${why}`, async ({ page, context, isMobile, browserName }) => {
+    test.skip(!isMobile || browserName !== 'chromium', 'needs a touch device that lets the test fire orientation events');
+    await context.grantPermissions(['accelerometer', 'gyroscope', 'magnetometer']);
+    const { pose } = require('../tools/motion-test.js');
+    const turn = t => page.evaluate(p => window.dispatchEvent(new DeviceOrientationEvent('deviceorientation', p)), pose(t));
+    await open(page, card);
+    await page.locator('#hud-motion').tap();
+    await turn(0);
+    const before = await highlighted(page);
+    await turn(90);
+    await expect(page.locator('#hud-message')).toHaveText('You can only turn the card on a spin. Turn the phone back.');
+    expect(await highlighted(page)).toEqual([]);
+    await turn(0);
+    expect(await highlighted(page)).toEqual(before);
+  });
+}
