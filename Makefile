@@ -1,4 +1,10 @@
-.PHONY: check validate test winnable e2e hooks
+.PHONY: dev check validate test winnable e2e hooks
+
+PORT ?= 8000
+
+# Serve the game locally at http://localhost:$(PORT).
+dev:
+	python3 -m http.server $(PORT)
 
 check: validate test
 

@@ -1,5 +1,6 @@
-/* Guided mode only: everything is scoped under body.guided so free play looks like the original. */
+/* The game page (guided.js sets body.guided in both modes; body.free while rules are off). */
 body.guided .card:after { pointer-events: none; }
+body.free #card { touch-action: none; cursor: grab; } /* swipes flip the card instead of scrolling the page */
 body.guided .layer { position: absolute; inset: 0; }
 body.guided .layer:not(.active) .spot { pointer-events: none; }
 
@@ -75,17 +76,36 @@ body.guided .spot, body.guided .rotate-button, .hud-button { touch-action: manip
 
 /* Phones in portrait: the turn buttons go under the card instead of beside it. */
 @media only screen and (max-width: 600px) {
-	body.guided #card-wrapper { flex-wrap: wrap; align-content: center; gap: 1.25rem 3rem; padding-top: 3.5rem; }
+	body.guided #card-wrapper { flex-wrap: wrap; align-content: center; gap: 1.25rem 3rem; padding-top: 5.5rem; }
 	body.guided #card { flex-basis: 100%; order: -1; }
 	body.guided .rotate-button {
 		display: flex !important;
 		margin: 0 !important;
 		width: 56px; min-width: 56px; height: 56px; min-height: 56px;
 	}
-	#hud { top: max(8px, env(safe-area-inset-top)); left: 8px; right: 8px; gap: 8px; }
-	.hud-button { padding: .45rem .8rem; font-size: .9rem; }
-	#hud-message { font-size: .9rem; }
+	#hud { top: max(8px, env(safe-area-inset-top)); left: 8px; right: 8px; gap: 8px; flex-wrap: wrap; justify-content: space-between; }
+	.hud-button { padding: .45rem .7rem; font-size: .85rem; }
+	#hud-message { font-size: .9rem; order: 1; flex-basis: 100%; }
+	#hud-message:empty { display: none; }
 }
+
+#north {
+	position: fixed;
+	right: 16px;
+	bottom: max(16px, env(safe-area-inset-bottom));
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background: #000000;
+	color: #FFFFFF;
+	display: grid;
+	place-items: center;
+	z-index: 10;
+	pointer-events: none;
+}
+#north[hidden] { display: none; }
+#north svg { width: 22px; height: 22px; fill: #E8443A; margin-top: 12px; }
+#north b { position: absolute; top: 3px; font-size: .7rem; }
 
 .confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 20; }
 .confetti i { position: absolute; top: 0; width: 8px; height: 14px; border-radius: 2px; }

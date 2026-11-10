@@ -164,6 +164,7 @@ test('with Motion on, turning the phone on a spin turns the card without moving 
   expect(await highlighted(page)).toEqual(['front.flipBottom', 'front.spin3']);
   await expect(spot(page, 'front', 'spin3')).toHaveClass(/\bhere\b/);
   expect(await page.locator('#card').getAttribute('style'), 'the picture stays still').toBe(picture);
+  await expect(page.locator('#north'), 'the north arrow turns against the phone').toHaveAttribute('style', /rotate\(-(89\.9|90)/);
 
   // Flip while the phone is still turned: the rules and the picture must agree (guided.js asserts it).
   const failures = [];
@@ -196,3 +197,49 @@ for (const [card, why] of [['MAZE2', 'no spin in reach'], ['MAZE730453', 'two sp
     expect(await highlighted(page)).toEqual(before);
   });
 }
+
+test('switching modes inside a level keeps the card as it lies, without reloading, and asks where the player is', async ({ page }) => {
+  await page.goto('/play.html?card=MAZERULES');
+  await expect(page.locator('#hud-mode')).toHaveText('Enforce rules');
+  await page.evaluate(() => { window.samePage = true; });
+  const settled = () => expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
+
+  // Free play: a swipe right flips the card to its back, and the arrows turn it anywhere.
+  const box = await page.locator('#card').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2, { steps: 5 });
+  await page.mouse.up();
+  await settled();
+  await page.locator('#rotate-clockwise').click();
+  await settled();
+  await expect(page.locator('#card')).toHaveAttribute('style', /rotate\(90deg\) rotateX\(0deg\) rotateY\(180deg\)/);
+
+  await page.locator('#hud-mode').click();
+  await expect(page).toHaveURL(/mode=guided/);
+  await expect(page.locator('#hud-message')).toHaveText('Tap where you are on the card.');
+  await expect(page.locator('#card')).toHaveAttribute('style', /rotate\(90deg\) rotateX\(0deg\) rotateY\(180deg\)/);
+  const offered = await highlighted(page);
+  expect(offered).toContain('back.spinSE');
+  expect(offered.every(id => id.startsWith('back.'))).toBe(true);
+  await expect(page.locator('#rotate-clockwise')).toHaveClass(/disabled/);
+
+  await spot(page, 'back', 'spinSE').click();
+  await expect(page.locator('#hud-message')).not.toHaveText('Tap where you are on the card.');
+  await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
+
+  await page.locator('#hud-mode').click();
+  await expect(page).not.toHaveURL(/mode=guided/);
+  await expect(page.locator('#hud-mode')).toHaveText('Enforce rules');
+  expect(await highlighted(page)).toEqual([]);
+  await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
+  expect(await page.evaluate(() => window.samePage), 'the page did not reload').toBe(true);
+});
+
+test('a card without a rules map plays free, with no way to turn rules on', async ({ page }) => {
+  const card = require('fs').readdirSync('cards').find(c => !R.playable(loadMaze(c)));
+  await page.goto(`/play.html?mode=guided&card=${card}`);
+  await expect(page.locator('#hud-message')).toHaveText('Rules are not available for this card yet.');
+  await expect(page.locator('#hud-mode')).toBeHidden();
+  await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
+});

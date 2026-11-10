@@ -1,4 +1,6 @@
-// Guided mode: the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Portals take two clicks: in, then out. Cards with several starts let the player pick one first. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
+// The game, in two modes that can be switched at any time without reloading.
+// Free play: swipe the card to flip it over the edge you swipe toward; the arrows always turn it. Nothing is checked.
+// Rules (?mode=guided): the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Portals take two clicks: in, then out. Cards with several starts let the player pick one first; switching in from free play keeps the card as it lies and lets the player pick any spot on it. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -8,12 +10,12 @@ const FLIP_MS = 1000; // matches the 1s transform transition in index.css
 
 document.body.classList.add('guided');
 for (const side of ['front', 'back']) {
-  faces[side].innerHTML = `<img src="cards/${encodeURIComponent(cardName)}/${side}.png" alt=""><div class="layer"></div>`;
+  faces[side].innerHTML = `<img src="cards/${encodeURIComponent(cardName)}/${side}.png" alt="" draggable="false"><div class="layer"></div>`;
 }
 
 function fitCard() { cardEl.style.height = cardEl.offsetWidth * 1.4 + 'px'; }
 fitCard();
-window.addEventListener('resize', () => { fitCard(); if (state) render(); });
+window.addEventListener('resize', () => { fitCard(); render(); });
 
 const hud = document.createElement('div');
 hud.id = 'hud';
@@ -21,11 +23,22 @@ hud.innerHTML = `
   <a href="./" class="hud-button">← Levels</a>
   <span id="hud-message" role="status" aria-live="polite"></span>
   <button type="button" id="hud-motion" class="hud-button" aria-pressed="false" hidden>Motion</button>
-  <button type="button" id="hud-restart" class="hud-button">Restart</button>`;
+  <button type="button" id="hud-restart" class="hud-button">Restart</button>
+  <button type="button" id="hud-mode" class="hud-button" hidden></button>`;
 document.querySelector('#app-wrapper').append(hud);
+
+// With Motion on, points to world up (where a door's arrow must point to open) as the phone turns.
+const north = document.createElement('div');
+north.id = 'north';
+north.hidden = true;
+north.setAttribute('aria-hidden', 'true');
+north.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2 19 20 12 16 5 20Z"/></svg><b>N</b>';
+document.body.append(north);
+
 const message = text => { document.querySelector('#hud-message').textContent = text; };
 
-let maze, state, css, busy = false;
+// css is the card as drawn and is the only state free play has; state (rules.js) exists only once rules are on.
+let maze, state, css = { R: 0, X: 0, Y: 0 }, busy = false, free = true;
 // Motion: phoneQ is how many quarters the phone is turned clockwise. The card on screen does not follow the phone,
 // so the card's turn in the world is its turn on screen plus the phone's: state.rot = cssView(css).rot + 90 * phoneQ.
 // Turning the phone off a spin breaks that; the game then waits (`astray`) until the phone is turned back.
@@ -36,22 +49,42 @@ function render() {
   const sideways = R.mod(css.R, 180) !== 0;
   const scale = sideways ? Math.min(1, (window.innerWidth - 32) / cardEl.offsetHeight) : 1;
   cardEl.style.transform = `scale(${scale}) rotate(${css.R}deg) rotateX(${css.X}deg) rotateY(${css.Y}deg)`;
-  for (const side of ['front', 'back']) faces[side].querySelector('.layer').classList.toggle('active', side === state.side);
-  const reach = R.reachable(maze, state);
+  const up = free ? R.cssView(css).side : state.side;
+  for (const side of ['front', 'back']) faces[side].querySelector('.layer').classList.toggle('active', side === up);
+  const reach = !free && R.reachable(maze, state);
   for (const b of document.querySelectorAll('.spot')) {
-    const n = faces[state.side].contains(b) && R.node(maze, state.side, b.dataset.id);
-    const usable = n && (state.choosing ? n.type === 'start'
+    const n = !free && faces[state.side].contains(b) && R.node(maze, state.side, b.dataset.id);
+    const usable = n && (state.choosing === 'any' ? n.type !== 'door' && n.type !== 'exit'
+      : state.choosing ? n.type === 'start'
       : state.inPortal ? n.type === 'portal'
       : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n))
         || (n.type === 'exit' && R.missingItems(maze, state).length === 0)
         || (n.type === 'portal' && R.portalExits(maze, { ...state, at: n.id }).length)));
-    const can = !state.won && !astray && usable;
+    const can = usable && !state.won && !astray;
     b.classList.toggle('can', !!can);
     b.classList.toggle('here', !!can && n.type === 'spin' && n.id === state.at);
     b.disabled = !can;
   }
-  const onSpin = !state.won && !astray && !state.choosing && !state.inPortal && R.node(maze, state.side, state.at).type === 'spin';
+  const onSpin = free || (!state.won && !astray && !state.choosing && !state.inPortal && R.node(maze, state.side, state.at).type === 'spin');
   document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !onSpin));
+}
+
+// Turns rules on (the player then picks where they are on the card as it lies) or off, keeping the card in place.
+function setFree(on) {
+  if (busy) return;
+  if (on && motionOn) setMotion(false); // motion only turns the card on a spin, so it belongs to rules
+  free = on;
+  document.body.classList.toggle('free', on);
+  document.body.classList.remove('won');
+  const modeButton = document.querySelector('#hud-mode');
+  modeButton.textContent = on ? 'Enforce rules' : 'Free play';
+  modeButton.hidden = !maze;
+  document.querySelector('#hud-restart').hidden = on;
+  motionButton.hidden = on || !motionSupported;
+  const url = new URL(location.href);
+  if (on) url.searchParams.delete('mode'); else url.searchParams.set('mode', 'guided');
+  history.replaceState(null, '', url);
+  if (on) { message(''); render(); } else restart(R.cssView(css));
 }
 
 // Picks up every reachable item and says whether the exit can be reached.
@@ -137,9 +170,32 @@ async function animate() {
   await wait(FLIP_MS);
   busy = false;
   document.body.classList.remove('busy');
+  if (free) { render(); return; }
   settle();
   syncPhone(); // the phone may have turned during the animation
 }
+
+function freeTurn(dir) {
+  css = { ...css, R: css.R + (dir === 'ccw' ? -90 : 90) };
+  animate();
+}
+
+// Free play: a drag of 50px or more flips the card over the screen edge it moves toward, once per drag.
+let dragFrom = null;
+cardEl.addEventListener('pointerdown', e => {
+  if (!free || busy) return;
+  dragFrom = { x: e.clientX, y: e.clientY };
+  cardEl.setPointerCapture(e.pointerId); // keep getting moves once the finger leaves the card
+});
+cardEl.addEventListener('pointermove', e => {
+  if (!dragFrom) return;
+  const dx = e.clientX - dragFrom.x, dy = e.clientY - dragFrom.y;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 50) return;
+  dragFrom = null;
+  css = R.cssFlip(css, Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'bottom' : 'top'));
+  animate();
+});
+for (const type of ['pointerup', 'pointercancel']) cardEl.addEventListener(type, () => { dragFrom = null; });
 
 async function doSpin(dir) {
   const res = R.spin(maze, state, dir);
@@ -177,33 +233,40 @@ function buildSpots() {
   }
 }
 
-function restart() {
+// view ({ side, rot }) starts with the card lying that way and any spot on it pickable; otherwise the card's own start(s).
+function restart(view) {
   const starts = R.starts(maze);
-  state = { ...starts[0], choosing: starts.length > 1 }; // maze-check keeps every start on one side
-  css = { R: 0, X: 0, Y: state.side === 'back' ? 180 : 0 };
+  state = view ? { ...view, at: null, items: [], choosing: 'any' }
+    : { ...starts[0], choosing: starts.length > 1 }; // maze-check keeps every start on one side
+  // view came from css, so css already draws it; rebuilding it would animate the card through an equivalent pose.
+  if (!view) css = { R: state.rot, X: 0, Y: state.side === 'back' ? 180 : 0 };
   document.body.classList.remove('won');
   astray = false;
   if (!state.choosing) settle();
-  else { message('Pick where to start.'); render(); }
+  else { message(view ? 'Tap where you are on the card.' : 'Pick where to start.'); render(); }
   syncPhone();
 }
 
 const canTurn = () => !busy && !state.won && !state.choosing && !state.inPortal;
-document.querySelector('#rotate-clockwise').addEventListener('click', () => canTurn() && doSpin('cw'));
-document.querySelector('#rotate-counterclockwise').addEventListener('click', () => canTurn() && doSpin('ccw'));
+const turnCard = dir => busy ? null : free ? freeTurn(dir) : canTurn() && doSpin(dir);
+document.querySelector('#rotate-clockwise').addEventListener('click', () => turnCard('cw'));
+document.querySelector('#rotate-counterclockwise').addEventListener('click', () => turnCard('ccw'));
 document.querySelector('#hud-restart').addEventListener('click', () => !busy && restart());
+document.querySelector('#hud-mode').addEventListener('click', () => setFree(!free));
 
 // Motion controls (opt-in): standing on a spin, turning the upright phone a quarter turns the card with it.
 const tracker = MazeMotion.quarterTracker();
 const motionButton = document.querySelector('#hud-motion');
 let sawMotion = false;
-motionButton.hidden = !('DeviceOrientationEvent' in window && matchMedia('(pointer: coarse)').matches);
+const motionSupported = 'DeviceOrientationEvent' in window && matchMedia('(pointer: coarse)').matches;
 
 function onOrientation(e) {
   if (e.beta != null) sawMotion = true;
   // shortcut: if the browser auto-rotated the page, the phone's turn no longer matches the screen; we just ask for
   // the rotation lock instead of compensating for screen.orientation.angle.
   if (screen.orientation && screen.orientation.angle !== 0) { message("Turn on your phone's rotation lock."); return; }
+  const turn = MazeMotion.screenTurn(e);
+  if (turn != null) north.style.transform = `rotate(${-turn}deg)`;
   const q = tracker.update(e);
   if (q !== phoneQ) { phoneQ = q; syncPhone(); }
 }
@@ -240,9 +303,11 @@ function setMotion(on) {
   phoneQ = 0;
   astray = false;
   motionButton.setAttribute('aria-pressed', on);
+  north.hidden = !on;
+  north.style.transform = '';
   if (on) window.addEventListener('deviceorientation', onOrientation);
   else window.removeEventListener('deviceorientation', onOrientation);
-  if (state) settle();
+  if (state && !free) settle(); else render();
 }
 
 motionButton.addEventListener('click', async () => {
@@ -265,16 +330,10 @@ fetch(`cards/${encodeURIComponent(cardName)}/maze.json`, { cache: 'no-store' })
   .then(r => (r.ok ? r.json() : null))
   .catch(() => null)
   .then(m => {
-    if (!R.playable(m)) {
-      message('Guided mode is not available for this card yet.');
-      const free = document.createElement('a');
-      free.className = 'hud-button';
-      free.href = `play.html?card=${encodeURIComponent(cardName)}`;
-      free.textContent = 'Free play';
-      document.querySelector('#hud-restart').replaceWith(free);
-      return;
-    }
-    maze = m;
-    buildSpots();
-    restart();
+    if (R.playable(m)) { maze = m; buildSpots(); }
+    const wantRules = params.get('mode') === 'guided';
+    if (wantRules && maze) { setFree(false); restart(); return; } // a fresh level with rules starts at the card's own start
+    setFree(true);
+    if (wantRules) message('Rules are not available for this card yet.');
   });
+render();
