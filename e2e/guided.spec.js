@@ -209,7 +209,7 @@ for (const [card, why] of [['MAZE2', 'no spin in reach'], ['MAZE730453', 'two sp
   });
 }
 
-test('switching modes inside a level keeps the card as it lies, without reloading, and asks where the player is', async ({ page }) => {
+test('switching modes inside a level does not reload; turning rules on restarts the card', async ({ page }) => {
   await page.goto('/play.html?card=MAZERULES');
   await expect(page.locator('#hud-mode')).toHaveText('Enforce rules');
   await page.evaluate(() => { window.samePage = true; });
@@ -224,16 +224,10 @@ test('switching modes inside a level keeps the card as it lies, without reloadin
 
   await page.locator('#hud-mode').click();
   await expect(page).toHaveURL(/mode=guided/);
-  await expect(page.locator('#hud-message')).toHaveText('Tap where you are on the card.');
-  await expect(page.locator('#card')).toHaveAttribute('style', /rotate\(90deg\) rotateX\(0deg\) rotateY\(180deg\)/);
-  const offered = await highlighted(page);
-  expect(offered).toContain('back.spinSE');
-  expect(offered.every(id => id.startsWith('back.'))).toBe(true);
-  await expect(page.locator('#rotate-clockwise')).toHaveClass(/disabled/);
-
-  await spot(page, 'back', 'spinSE').click();
-  await expect(page.locator('#hud-message')).not.toHaveText('Tap where you are on the card.');
-  await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
+  await expect(page.locator('#card')).toHaveAttribute('style', /rotate\(0deg\) rotateX\(0deg\) rotateY\(0deg\)/);
+  await settled();
+  await expect(page.locator('#hud-message')).toHaveText('Find the exit.');
+  expect(await highlighted(page)).toEqual(['front.spin3']);
 
   await page.locator('#hud-mode').click();
   await expect(page).not.toHaveURL(/mode=guided/);
@@ -242,6 +236,24 @@ test('switching modes inside a level keeps the card as it lies, without reloadin
   await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
   expect(await page.evaluate(() => window.samePage), 'the page did not reload').toBe(true);
 });
+
+test('with one spin in reach the arrows walk onto it and turn the card', async ({ page }) => {
+  await open(page, 'MAZERULES');
+  await expect(spot(page, 'front', 'spin3')).not.toHaveClass(/\bhere\b/);
+  await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
+  await page.locator('#rotate-clockwise').click();
+  await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
+  await expect(spot(page, 'front', 'spin3')).toHaveClass(/\bhere\b/);
+  expect(await highlighted(page), 'door 2 opens as with the cw spin').toEqual(['front.flipBottom', 'front.spin3']);
+});
+
+for (const [card, why] of [['MAZE2', 'no spin in reach'], ['MAZE730453', 'two spins in reach']]) {
+  test(`the arrows stay off when there is ${why}`, async ({ page }) => {
+    await open(page, card);
+    await expect(page.locator('#hud-message')).not.toBeEmpty();
+    await expect(page.locator('#rotate-clockwise')).toHaveClass(/disabled/);
+  });
+}
 
 test('a card without a rules map plays free, with no way to turn rules on', async ({ page }) => {
   const card = require('fs').readdirSync('cards').find(c => !R.playable(loadMaze(c)));

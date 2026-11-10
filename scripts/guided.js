@@ -1,6 +1,6 @@
 // The game, in two modes that can be switched at any time without reloading.
 // Free play: swipe the card to flip it over the edge you swipe toward; the arrows always turn it. Nothing is checked.
-// Rules (?mode=guided): the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Swiping uses the one reachable flip on the edge opposite the swipe (swipe up to go out the bottom) (a toast says when there is none, or more than one). Portals take two clicks: in, then out. Cards with several starts let the player pick one first; switching in from free play keeps the card as it lies and lets the player pick any spot on it. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
+// Rules (?mode=guided): the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card, and when only one spin is in reach they walk the player onto it and turn. Swiping uses the one reachable flip on the edge opposite the swipe (swipe up to go out the bottom); a toast says when there is none, or more than one. Portals take two clicks: in, then out. Turning rules on restarts the card; cards with several starts let the player pick one first. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -54,8 +54,7 @@ function render() {
   const reach = !free && R.reachable(maze, state);
   for (const b of document.querySelectorAll('.spot')) {
     const n = !free && faces[state.side].contains(b) && R.node(maze, state.side, b.dataset.id);
-    const usable = n && (state.choosing === 'any' ? n.type !== 'door' && n.type !== 'exit'
-      : state.choosing ? n.type === 'start'
+    const usable = n && (state.choosing ? n.type === 'start'
       : state.inPortal ? n.type === 'portal'
       : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && R.flipLanding(maze, state.side, n))
         || (n.type === 'exit' && R.missingItems(maze, state).length === 0)
@@ -65,11 +64,11 @@ function render() {
     b.classList.toggle('here', !!can && n.type === 'spin' && n.id === state.at);
     b.disabled = !can;
   }
-  const onSpin = free || (!state.won && !astray && !state.choosing && !state.inPortal && R.node(maze, state.side, state.at).type === 'spin');
-  document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !onSpin));
+  const canTurn = free || (!astray && !!turnSpin());
+  document.querySelectorAll('.rotate-button').forEach(b => b.classList.toggle('disabled', !canTurn));
 }
 
-// Turns rules on (the player then picks where they are on the card as it lies) or off, keeping the card in place.
+// Turns rules on (restarting the card) or off (keeping the card where it is).
 function setFree(on) {
   if (busy) return;
   if (on && motionOn) setMotion(false); // motion only turns the card on a spin, so it belongs to rules
@@ -84,7 +83,7 @@ function setFree(on) {
   const url = new URL(location.href);
   if (on) url.searchParams.delete('mode'); else url.searchParams.set('mode', 'guided');
   history.replaceState(null, '', url);
-  if (on) { message(''); render(); } else restart(R.cssView(css));
+  if (on) { message(''); render(); } else restart();
 }
 
 // Picks up every reachable item and says whether the exit can be reached.
@@ -259,22 +258,34 @@ function buildSpots() {
   }
 }
 
-// view ({ side, rot }) starts with the card lying that way and any spot on it pickable; otherwise the card's own start(s).
-function restart(view) {
+function restart() {
   const starts = R.starts(maze);
-  state = view ? { ...view, at: null, items: [], choosing: 'any' }
-    : { ...starts[0], choosing: starts.length > 1 }; // maze-check keeps every start on one side
-  // view came from css, so css already draws it; rebuilding it would animate the card through an equivalent pose.
-  if (!view) css = { R: state.rot, X: 0, Y: state.side === 'back' ? 180 : 0 };
+  state = { ...starts[0], choosing: starts.length > 1 }; // maze-check keeps every start on one side
+  css = { R: 0, X: 0, Y: state.side === 'back' ? 180 : 0 };
   document.body.classList.remove('won');
   astray = false;
   if (!state.choosing) settle();
-  else { message(view ? 'Tap where you are on the card.' : 'Pick where to start.'); render(); }
+  else { message('Pick where to start.'); render(); }
   syncPhone();
 }
 
-const canTurn = () => !busy && !state.won && !state.choosing && !state.inPortal;
-const turnCard = dir => busy ? null : free ? freeTurn(dir) : canTurn() && doSpin(dir);
+// The spin a turn would use: the one the player stands on, or else the only one in reach (they are walked onto it).
+// With none, or several to choose from, there is none and the player has to tap a spin first.
+function turnSpin() {
+  if (state.won || state.choosing || state.inPortal) return null;
+  if (R.node(maze, state.side, state.at).type === 'spin') return state.at;
+  const spins = [...R.reachable(maze, state).keys()].filter(id => R.node(maze, state.side, id).type === 'spin');
+  return spins.length === 1 ? spins[0] : null;
+}
+
+function turnCard(dir) {
+  if (busy) return;
+  if (free) { freeTurn(dir); return; }
+  const spin = !astray && turnSpin();
+  if (!spin) return;
+  state = R.walk(maze, state, spin).state;
+  doSpin(dir);
+}
 document.querySelector('#rotate-clockwise').addEventListener('click', () => turnCard('cw'));
 document.querySelector('#rotate-counterclockwise').addEventListener('click', () => turnCard('ccw'));
 document.querySelector('#hud-restart').addEventListener('click', () => !busy && restart());
@@ -306,11 +317,9 @@ function syncPhone() {
     if (astray) { astray = false; settle(); }
     return;
   }
-  if (canTurn() && R.node(maze, state.side, state.at).type !== 'spin') {
-    const spins = [...R.reachable(maze, state).keys()].filter(id => R.node(maze, state.side, id).type === 'spin');
-    if (spins.length === 1) state = R.walk(maze, state, spins[0]).state;
-  }
-  if (canTurn() && R.node(maze, state.side, state.at).type === 'spin') {
+  const spin = turnSpin();
+  if (spin) {
+    state = R.walk(maze, state, spin).state;
     const dir = diff === 3 ? 'ccw' : 'cw';
     for (let i = 0; i < (diff === 3 ? 1 : diff); i++) state = R.spin(maze, state, dir).state;
     astray = false;
@@ -358,7 +367,7 @@ fetch(`cards/${encodeURIComponent(cardName)}/maze.json`, { cache: 'no-store' })
   .then(m => {
     if (R.playable(m)) { maze = m; buildSpots(); }
     const wantRules = params.get('mode') === 'guided';
-    if (wantRules && maze) { setFree(false); restart(); return; } // a fresh level with rules starts at the card's own start
+    if (wantRules && maze) { setFree(false); return; }
     setFree(true);
     if (wantRules) message('Rules are not available for this card yet.');
   });

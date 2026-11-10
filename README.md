@@ -10,4 +10,4 @@ The cards and game code come from [singingsimon's repos](https://github.com/sing
 make dev            # or: make dev PORT=9000
 ```
 
-Open http://localhost:8000, then pick a card. Drag or swipe to flip it; the side buttons rotate it. Inside a level, the top-right button switches between free play and enforced rules; switching to rules keeps the card as it lies and asks where you are on it.
+Open http://localhost:8000, then pick a card. Drag or swipe to flip it; the side buttons rotate it. Inside a level, the top-right button switches between free play and enforced rules; switching to rules restarts the card.
