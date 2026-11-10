@@ -29,7 +29,10 @@ function overlay() {
     const move = e => { dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; dot.style.opacity = 1; };
     addEventListener('pointermove', move, true);
     addEventListener('pointerdown', e => { move(e); dot.classList.add('down'); }, true);
-    addEventListener('pointerup', () => dot.classList.remove('down'), true);
+    addEventListener('pointerup', e => {
+      dot.classList.remove('down');
+      if (e.pointerType === 'touch') setTimeout(() => { dot.style.opacity = 0; }, 300); // a finger leaves no cursor behind
+    }, true);
   });
 }
 
@@ -50,12 +53,11 @@ function director(page, isMobile) {
     settled: () => expect(page.locator('body')).not.toHaveClass(/\bbusy\b/),
     async open(url) {
       await page.goto(url);
-      await expect(page.locator('.front.card img')).toHaveJSProperty('complete', true);
+      if (url.includes('play.html')) await expect(page.locator('.front.card img')).toHaveJSProperty('complete', true);
       await d.beat(600);
     },
     // Taps by coordinates: the spots pulse, and Playwright's own click waits for elements to hold still.
     async press(locator) {
-      await locator.scrollIntoViewIfNeeded();
       const b = await locator.boundingBox();
       const x = b.x + b.width / 2, y = b.y + b.height / 2;
       if (isMobile) await page.touchscreen.tap(x, y);
@@ -172,14 +174,18 @@ test('03-rules-spin-and-flip', async ({ page, isMobile }) => {
   await d.open('/play.html?mode=guided&card=MAZERULES');
   await d.say('With rules on, only the moves in reach light up.');
   await d.beat(2500);
-  await playRoute(d, 'MAZERULES', { limit: 4 });
+  await d.say('With one spin in reach, the arrows walk you onto it and turn the card.');
+  await d.press(d.arrow('cw'));
+  await d.beat(800);
+  await d.say('Tap a glowing triangle to flip the card over that edge.');
+  await d.press(d.spot('front', 'flipBottom'));
   await d.say('');
   await d.beat(1500);
 });
 
 test('04-swipe-to-flip', async ({ page, isMobile }) => {
   const d = director(page, isMobile);
-  await d.open('/play.html?mode=guided&card=25502893');
+  await d.open('/play.html?mode=guided&card=3394568');
   await d.say('Swipe to use the flip in reach. Like scrolling: swipe down to go out the top.');
   await d.beat(2000);
   await d.swipe('bottom');
@@ -199,12 +205,10 @@ test('05-switch-modes', async ({ page, isMobile }) => {
   await d.say('Play freely for a while…');
   await d.swipe('right');
   await d.press(d.arrow('cw'));
-  await d.say('…then turn the rules on. The card stays as it lies.');
+  await d.say('…then turn the rules on. The card restarts from its start.');
   await d.press(page.locator('#hud-mode'));
-  await d.say('Tap where you are on the card.');
   await d.beat(1500);
-  await d.press(d.spot('back', 'spinSE'));
-  await d.say('From there, the rules decide what is in reach.');
+  await d.say('Now the rules decide what is in reach.');
   await d.beat(2500);
   await d.say('Switch back to free play at any time.');
   await d.press(page.locator('#hud-mode'));
