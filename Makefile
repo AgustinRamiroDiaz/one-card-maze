@@ -2,9 +2,9 @@
 
 PORT ?= 8000
 
-# Serve the game locally at http://localhost:$(PORT).
+# Serve the game locally at http://localhost:$(PORT), never cached, so edits show on reload.
 dev:
-	python3 -m http.server $(PORT)
+	python3 tools/dev-server.py $(PORT)
 
 check: validate test
 

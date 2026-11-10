@@ -1,6 +1,6 @@
 // The game, in two modes that can be switched at any time without reloading.
 // Free play: swipe the card to flip it over the edge you swipe toward; the arrows always turn it. Nothing is checked.
-// Rules (?mode=guided): the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Portals take two clicks: in, then out. Cards with several starts let the player pick one first; switching in from free play keeps the card as it lies and lets the player pick any spot on it. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
+// Rules (?mode=guided): the reachable spin and flip spots light up; click one to use it. A spin only puts the player on it; the arrow buttons (or turning the phone, with Motion on) then turn the card. Swiping uses the one reachable flip on the edge opposite the swipe (swipe up to go out the bottom) (a toast says when there is none, or more than one). Portals take two clicks: in, then out. Cards with several starts let the player pick one first; switching in from free play keeps the card as it lies and lets the player pick any spot on it. Items are picked up once reachable; the exit lights up once reachable and unlocked, and tapping it wins; the rules in rules.js decide what is allowed.
 const R = MazeRules;
 const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
@@ -180,19 +180,43 @@ function freeTurn(dir) {
   animate();
 }
 
-// Free play: a drag of 50px or more flips the card over the screen edge it moves toward, once per drag.
+// Rules: a swipe travels the other way, like scrolling (swipe up to go out the bottom), using the one reachable flip on
+// that screen edge as if it had been tapped; none or several get a toast.
+function swipeFlip(swipedToward) {
+  if (state.won || astray || state.choosing || state.inPortal) return;
+  // +2 is the opposite edge; on a turned phone, screen edges are not world edges, hence + phoneQ.
+  const worldEdge = R.EDGES_CW[R.mod(R.EDGES_CW.indexOf(swipedToward) + 2 + phoneQ, 4)];
+  const flips = [...R.reachable(maze, state).keys()].map(id => R.node(maze, state.side, id))
+    .filter(n => n.type === 'flip' && R.screenEdge(n, state.rot) === worldEdge && R.flipLanding(maze, state.side, n));
+  if (flips.length === 1) onSpot(state.side, flips[0]);
+  else toast(flips.length ? 'More than one flip on that edge is in reach. Tap the one to use.' : 'No flip in reach on that edge.');
+}
+
+const toastEl = document.createElement('div');
+toastEl.id = 'toast';
+toastEl.setAttribute('role', 'status');
+document.body.append(toastEl);
+let toastTimer;
+function toast(text) {
+  toastEl.textContent = text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
+}
+
+// A drag of 50px or more flips the card over the screen edge it moves toward, once per drag.
 let dragFrom = null;
-cardEl.addEventListener('pointerdown', e => {
-  if (!free || busy) return;
-  dragFrom = { x: e.clientX, y: e.clientY };
-  cardEl.setPointerCapture(e.pointerId); // keep getting moves once the finger leaves the card
-});
+cardEl.addEventListener('pointerdown', e => { dragFrom = busy ? null : { x: e.clientX, y: e.clientY }; });
 cardEl.addEventListener('pointermove', e => {
   if (!dragFrom) return;
-  const dx = e.clientX - dragFrom.x, dy = e.clientY - dragFrom.y;
-  if (Math.max(Math.abs(dx), Math.abs(dy)) < 50) return;
+  const dx = e.clientX - dragFrom.x, dy = e.clientY - dragFrom.y, d = Math.max(Math.abs(dx), Math.abs(dy));
+  // Capture only once it is a drag: capturing on pointerdown would steal the click from a tapped spot.
+  if (d > 10 && !cardEl.hasPointerCapture(e.pointerId)) cardEl.setPointerCapture(e.pointerId);
+  if (d < 50) return;
   dragFrom = null;
-  css = R.cssFlip(css, Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'bottom' : 'top'));
+  const edge = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'bottom' : 'top');
+  if (!free) { swipeFlip(edge); return; }
+  css = R.cssFlip(css, edge);
   animate();
 });
 for (const type of ['pointerup', 'pointercancel']) cardEl.addEventListener(type, () => { dragFrom = null; });
@@ -210,7 +234,9 @@ async function doFlip() {
   if (res.error) return;
   state = res.state;
   // res.edge is the edge as the player sees it in the world; on a turned phone that is a different screen edge.
-  css = R.cssFlip(css, R.EDGES_CW[R.mod(R.EDGES_CW.indexOf(res.edge) - phoneQ, 4)]);
+  // The card rolls away from the flip's edge (+2, the opposite edge), the way the swipe that picks it moves
+  // (swipe up to go out the bottom); the opposite edge turns the same axis, so the card ends up the same.
+  css = R.cssFlip(css, R.EDGES_CW[R.mod(R.EDGES_CW.indexOf(res.edge) + 2 - phoneQ, 4)]);
   console.assert(JSON.stringify(R.cssView(css)) === JSON.stringify({ side: state.side, rot: R.mod(state.rot - 90 * phoneQ, 360) }), 'card view out of sync with rules');
   await animate();
 }

@@ -19,11 +19,16 @@
 
   // The game draws the card like the original UI: rotate(R) rotateX(X) rotateY(Y).
   // A flip turns X or Y by 180 depending on which local axis lies along the screen edge.
+  // The sign only changes the animation: the card must roll toward the edge (a swipe right lifts the left edge
+  // toward the viewer and lays it down on the right). Animating X turns the card about rotate(R)·x on screen,
+  // Y about rotate(R)·rotateX(X)·y, so the sign depends on R and on whether X is flipped. Matches the original UI.js.
   function cssFlip(css, edgeOnScreen) {
     const sideways = edgeOnScreen === 'left' || edgeOnScreen === 'right';
     const axis = sideways === (mod(css.R, 180) === 0) ? 'Y' : 'X';
-    const sign = edgeOnScreen === 'right' || edgeOnScreen === 'bottom' ? 1 : -1; // only affects the animation
-    return { ...css, [axis]: css[axis] + 180 * sign };
+    const q = mod(css.R, 360) / 90;
+    const along = axis === 'X' ? (q <= 1 ? 1 : -1) : (q === 0 || q === 3 ? 1 : -1) * (mod(css.X, 360) === 180 ? -1 : 1);
+    const toward = edgeOnScreen === 'right' || edgeOnScreen === 'top' ? 1 : -1;
+    return { ...css, [axis]: css[axis] + 180 * toward * along };
   }
   function cssView(css) {
     const x = mod(css.X, 360) === 180, y = mod(css.Y, 360) === 180;

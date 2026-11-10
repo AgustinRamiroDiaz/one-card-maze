@@ -8,6 +8,17 @@ const spot = (page, side, id) => page.locator(`.${side}.card .spot[data-id="${id
 const highlighted = page => page.locator('.spot.can').evaluateAll(els =>
   els.map(b => `${b.closest('.card').classList[0]}.${b.dataset.id}`).sort());
 
+// Drags across the middle of the card toward a screen edge.
+async function swipe(page, edge) {
+  const box = await page.locator('#card').boundingBox();
+  const x = box.x + box.width / 2, y = box.y + box.height / 2;
+  const [dx, dy] = { left: [-120, 0], right: [120, 0], top: [0, -120], bottom: [0, 120] }[edge];
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x + dx, y + dy, { steps: 5 });
+  await page.mouse.up();
+}
+
 // Counts glow-coloured pixels in a screenshot of the area around a spot, so the test fails if the
 // browser computes the highlight style but never paints it.
 async function glowPixels(page, locator) {
@@ -205,11 +216,7 @@ test('switching modes inside a level keeps the card as it lies, without reloadin
   const settled = () => expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
 
   // Free play: a swipe right flips the card to its back, and the arrows turn it anywhere.
-  const box = await page.locator('#card').boundingBox();
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2, { steps: 5 });
-  await page.mouse.up();
+  await swipe(page, 'right');
   await settled();
   await page.locator('#rotate-clockwise').click();
   await settled();
@@ -242,4 +249,28 @@ test('a card without a rules map plays free, with no way to turn rules on', asyn
   await expect(page.locator('#hud-message')).toHaveText('Rules are not available for this card yet.');
   await expect(page.locator('#hud-mode')).toBeHidden();
   await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
+});
+
+test('with rules on, a swipe uses the one flip in reach on the opposite edge, like scrolling', async ({ page }) => {
+  await open(page, '25502893');
+  await expect(spot(page, 'front', 'flipTop')).toHaveClass(/\bcan\b/);
+  await swipe(page, 'bottom'); // swipe down to go out the top
+  await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
+  const maze = loadMaze('25502893');
+  const landed = R.flip(maze, R.walk(maze, R.start(maze), 'flipTop').state).state;
+  await expect(page.locator(`.back.card .spot[data-id="${landed.at}"]`), 'the player stands where the flip lands').toHaveClass(/\bcan\b/);
+  expect((await highlighted(page)).every(id => id.startsWith('back.'))).toBe(true);
+});
+
+test('with rules on, a swipe toward an edge with two flips in reach only shows a toast', async ({ page }) => {
+  await open(page, '472933');
+  await expect(page.locator('#hud-message')).not.toBeEmpty();
+  const before = await highlighted(page);
+  await swipe(page, 'right'); // toward the right: out the left, where both flips are
+  await expect(page.locator('#toast')).toHaveClass(/\bshow\b/);
+  await expect(page.locator('#toast')).toHaveText('More than one flip on that edge is in reach. Tap the one to use.');
+  expect(await highlighted(page)).toEqual(before);
+  await swipe(page, 'top');
+  await expect(page.locator('#toast')).toHaveText('No flip in reach on that edge.');
+  expect(await highlighted(page)).toEqual(before);
 });

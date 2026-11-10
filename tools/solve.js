@@ -41,6 +41,17 @@ function selfTest() {
       assert.notStrictEqual(after.side, before.side);
       assert.strictEqual(after.rot, R.rotAfterFlip(before.rot, edge), `R=${R0} X=${X} Y=${Y} ${edge}`);
     }
+  // The original UI.js swipe handler, per rotation: which swipe turns X and which turns Y, and the sign for a
+  // right/down swipe (Y's sign reverses once X is flipped). cssFlip must animate the same way.
+  const original = { 0: { X: ['v', -1], Y: ['h', 1] }, 90: { X: ['h', 1], Y: ['v', 1] },
+    180: { X: ['v', 1], Y: ['h', -1] }, 270: { X: ['h', -1], Y: ['v', -1] } };
+  for (const R0 of [0, 90, 180, 270]) for (const X of [0, 180]) for (const edge of R.EDGES_CW) {
+    const swipe = edge === 'left' || edge === 'right' ? 'h' : 'v', dir = edge === 'right' || edge === 'bottom' ? 1 : -1;
+    const axis = original[R0].X[0] === swipe ? 'X' : 'Y';
+    const want = 180 * dir * original[R0][axis][1] * (axis === 'Y' && X === 180 ? -1 : 1);
+    const got = R.cssFlip({ R: R0, X, Y: 0 }, edge);
+    assert.deepStrictEqual(got, { R: R0, X, Y: 0, [axis]: (axis === 'X' ? X : 0) + want }, `animation R=${R0} X=${X} ${edge}`);
+  }
   const maze = JSON.parse(fs.readFileSync(path.join(cardsDir, 'MAZERULES', 'maze.json'), 'utf8'));
   let s = R.start(maze);
   assert.ok(R.walk(maze, s, 'door2').error, 'door2 starts locked');
