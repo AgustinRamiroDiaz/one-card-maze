@@ -10,7 +10,7 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
 	<link rel="manifest" href="manifest.webmanifest">
-	<meta name="theme-color" content="#FFFFFF">
+	<meta name="theme-color" content="#e9e6e1">
 	<meta name="description" content="Get Lost on One Card">
 	<meta property="og:site_name" content="One Card Maze">
 	<meta property="og:url" content="https://onecardmaze.com">
@@ -29,23 +29,55 @@
 	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
 	<meta http-equiv="pragma" content="no-cache">
 	
-	<link rel="stylesheet" type="text/css" href="stylesheets/index.css">
-	<link rel="stylesheet" type="text/css" href="stylesheets/guided.css">
+	<link rel="preload" href="assets/fonts/gochi-hand-latin.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="stylesheet" type="text/css" href="stylesheets/play.css">
 </head>
 <body>
-	<div id="app-wrapper" on-table>
-		<div id="card-wrapper">
-			<div id="rotate-counterclockwise" class="rotate-button"></div>
-			<!-- SLEEVE -->
-			<!-- <div id="card-sleeve"></div> -->
-		
-			<div id="card">
-				<!-- FRONT -->
-				<div class="front card"></div>
-				<!-- BACK -->
-				<div class="back card"></div>
+	<!-- Hand-drawn glyphs (48x48, ink strokes) and the wobble that makes straight lines look inked. -->
+	<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+		<defs>
+			<filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
+				<feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/>
+				<feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+			</filter>
+			<symbol id="i-back" viewBox="0 0 48 48"><path d="M19 13 8 23l11 10"/><path d="M9 23h17c8 0 13 5 13 13"/></symbol>
+			<symbol id="i-restart" viewBox="0 0 48 48"><path d="M12 12v24"/><path class="fill" d="M37 11 17 24l20 13z"/></symbol>
+			<symbol id="i-rules" viewBox="0 0 48 48">
+				<ellipse class="fill" cx="16" cy="31" rx="5.5" ry="8.5" transform="rotate(-12 16 31)"/>
+				<circle class="fill" cx="12" cy="19" r="2"/><circle class="fill" cx="16.5" cy="18" r="2"/><circle class="fill" cx="21" cy="19.5" r="2"/>
+				<ellipse class="fill" cx="32" cy="22" rx="5.5" ry="8.5" transform="rotate(12 32 22)"/>
+				<circle class="fill" cx="28" cy="10" r="2"/><circle class="fill" cx="32.5" cy="9" r="2"/><circle class="fill" cx="37" cy="10.5" r="2"/>
+			</symbol>
+			<symbol id="i-motion" viewBox="0 0 48 48"><rect x="16" y="9" width="16" height="30" rx="3" transform="rotate(-14 24 24)"/><path d="M7 17a17 17 0 0 0 0 14M41 17a17 17 0 0 1 0 14"/></symbol>
+			<symbol id="i-cw" viewBox="0 0 48 48"><path d="M37 29a14 14 0 1 1-3-15"/><path d="M36 6v9h-9"/></symbol>
+			<symbol id="i-ccw" viewBox="0 0 48 48"><path d="M11 29a14 14 0 1 0 3-15"/><path d="M12 6v9h9"/></symbol>
+			<symbol id="i-next" viewBox="0 0 48 48"><path d="M9 24h28M26 12l12 12-12 12"/></symbol>
+			<symbol id="i-grid" viewBox="0 0 48 48"><rect x="9" y="8" width="12" height="15" rx="2"/><rect x="27" y="8" width="12" height="15" rx="2"/><rect x="9" y="27" width="12" height="15" rx="2"/><rect x="27" y="27" width="12" height="15" rx="2"/></symbol>
+			<symbol id="i-tick" viewBox="0 0 48 48"><path d="M11 25l9 9 17-19" stroke-width="6"/></symbol>
+			<symbol id="i-q" viewBox="0 0 48 48"><path d="M17 17c0-6 5-9 8-9 5 0 8 3 8 7 0 6-8 7-8 13v2" stroke-width="5"/><circle class="fill" cx="25" cy="39" r="3.2"/></symbol>
+			<symbol id="i-me" viewBox="0 0 48 52">
+				<path class="fill" d="M24 4c10 0 15 10 15 22s-5 18-15 18S9 38 9 26 14 4 24 4z"/>
+				<path d="M17 44l-2 5M31 44l2 5" stroke-width="4"/>
+				<circle cx="19" cy="21" r="5" fill="#fff" stroke="none"/><circle cx="30" cy="21" r="5" fill="#fff" stroke="none"/>
+				<circle class="fill" cx="20" cy="22" r="2.2"/><circle class="fill" cx="31" cy="22" r="2.2"/>
+			</symbol>
+		</defs>
+	</svg>
+	<div id="app-wrapper">
+		<div id="panel">
+			<div id="card-wrapper">
+				<button type="button" id="rotate-counterclockwise" class="rotate-button" aria-label="Turn left"><svg viewBox="-12 -12 116 116"><path class="tail" d="M36 12 46 -10 56 12"/><circle cx="46" cy="46" r="38"/><path class="tail tail-cover" d="M36 12 46 -10 56 12"/><svg x="18" y="18" width="56" height="56" class="g"><use href="#i-ccw"/></svg></svg></button>
+				<div id="card">
+					<div class="front card"></div>
+					<div class="back card"></div>
+				</div>
+				<svg class="marks" viewBox="0 0 150 140" aria-hidden="true">
+					<g class="spin"><path d="M14 104C2 80 2 60 14 36M4 92C-2 76-2 64 4 48M12 40l2-6 6 3"/><path d="M136 36c12 24 12 44 0 68M146 48c6 16 6 28 0 44M138 100l-2 6-6-3"/></g>
+					<g class="flip-x"><path d="M18 40H2M14 56H-6M18 72H0M14 88H-4M18 104H4"/><path d="M132 40h16M136 56h18M132 72h18M136 88h14M132 104h14"/></g>
+					<g class="flip-y"><path d="M45 -6V-20M60 -4V-24M75 -6V-22M90 -4V-20M105 -6V-18"/><path d="M45 146v14M60 144v20M75 146v16M90 144v20M105 146v12"/></g>
+				</svg>
+				<button type="button" id="rotate-clockwise" class="rotate-button" aria-label="Turn right"><svg viewBox="-12 -12 116 116"><path class="tail" d="M36 12 46 -10 56 12"/><circle cx="46" cy="46" r="38"/><path class="tail tail-cover" d="M36 12 46 -10 56 12"/><svg x="18" y="18" width="56" height="56" class="g"><use href="#i-cw"/></svg></svg></button>
 			</div>
-			<div id="rotate-clockwise" class="rotate-button"></div>
 		</div>
 	</div>
 	<script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});</script>

@@ -32,9 +32,11 @@ Only spots the player can use right now glow:
 
 Nothing glows after winning, or while Motion waits for the phone to be turned back.
 
+Two more spot stages are drawn but not tappable: a **hatched ring** on a shut door next to where the player can walk, and on the exit while items are missing; a **tick** on items already picked up. The player is an ink bean standing on their spot, kept upright however the card is turned.
+
 ## Messages
 
-Status line (HUD):
+Status line (screen-reader live region; see [modes.md](modes.md#hud)):
 
 | Message | When |
 |---|---|
@@ -46,7 +48,7 @@ Status line (HUD):
 | Pick the portal to come out of. | Inside a portal |
 | You found the exit! | Won |
 
-Toasts (bottom, 2.5s), after a swipe that can't flip:
+After a swipe that can't flip, the card shudders and the status line says:
 
 - "More than one flip on that edge is in reach. Tap the one to use."
 - "No flip in reach on that edge."

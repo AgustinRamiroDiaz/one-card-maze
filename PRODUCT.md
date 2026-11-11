@@ -40,7 +40,7 @@ The cards are the protagonist. The UI exists only to pick a card and to make han
 ## Evidence on Hand
 
 - 124 card folders under `cards/`, each with front, back, and `maze.json`.
-- Existing icons: `assets/images/clockwise.png`, `counterclockwise.png`, `logo.png`; table texture `assets/images/wood-seamless-pattern.jpg`.
+- Existing images: `assets/images/logo.png`; table texture `assets/images/wood-seamless-pattern.jpg` (picker only). Glyphs for play.html are an inline SVG sprite; the hand-lettered face is Gochi Hand (OFL), self-hosted in `assets/fonts/`.
 - Phone and desktop demo recordings in `demo/clips/`.
 
 ## Product Principles

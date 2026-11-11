@@ -8,7 +8,7 @@ const params = new URLSearchParams(location.search);
 const cardName = params.get('card') || 'MAZERULES';
 
 V.init(cardName);
-window.addEventListener('resize', () => { V.fitCard(); render(); });
+window.addEventListener('resize', () => render());
 
 // state (game.js) exists only once rules are on; free play has only the card as drawn, which view.js keeps.
 let maze, state, busy = false, free = true;
@@ -19,6 +19,7 @@ let motionOn = false, phoneQ = 0, astray = false;
 
 const view = () => free ? {} : {
   up: state.side,
+  at: state.choosing ? null : state.at,
   spots: astray ? new Map() : G.spotStates(maze, state),
   canTurn: !astray && !!G.turnSpin(maze, state),
 };
@@ -110,6 +111,7 @@ function setFree(on) {
 V.buttons.cw.addEventListener('click', () => onArrow('cw'));
 V.buttons.ccw.addEventListener('click', () => onArrow('ccw'));
 V.buttons.restart.addEventListener('click', () => !busy && restart());
+V.buttons.again.addEventListener('click', () => !busy && restart());
 V.buttons.mode.addEventListener('click', () => setFree(!free));
 
 // Motion controls (opt-in): standing on a spin, turning the upright phone a quarter turns the card with it.
@@ -178,6 +180,15 @@ V.buttons.motion.addEventListener('click', async () => {
     if (motionOn && !sawMotion) { setMotion(false); V.say('no-sensor'); }
   }, 1500);
 });
+
+// The win burst's next card is the one after this in the level picker's order.
+V.setNext(null);
+fetch('./').then(r => r.text()).then(html => {
+  const cards = [...new DOMParser().parseFromString(html, 'text/html').querySelectorAll('main a[href*="card="]')]
+    .map(a => new URL(a.getAttribute('href'), location.href).searchParams.get('card'));
+  const next = cards[cards.indexOf(cardName) + 1];
+  if (next) V.setNext(`play.html?card=${encodeURIComponent(next)}&mode=guided`);
+}).catch(() => {});
 
 fetch(`cards/${encodeURIComponent(cardName)}/maze.json`, { cache: 'no-store' })
   .then(r => (r.ok ? r.json() : null))

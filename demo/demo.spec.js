@@ -191,7 +191,7 @@ test('04-swipe-to-flip', async ({ page, isMobile }) => {
   await d.swipe('bottom');
   await d.beat(1200);
   await d.open('/play.html?mode=guided&card=472933');
-  await d.say('If no flip, or more than one, is in reach on that edge, a toast says so.');
+  await d.say('If no flip, or more than one, is in reach on that edge, the card shudders.');
   await d.beat(1500);
   await d.swipe('right');
   await d.beat(2000);

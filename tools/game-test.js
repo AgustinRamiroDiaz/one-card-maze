@@ -15,12 +15,15 @@ function tutorial() {
   let res = G.restart(maze);
   assert.deepStrictEqual(res.events, [{ type: 'settled', exit: 'none', items: null }]);
   assert.strictEqual(G.spotStates(maze, res.state).get('spin3'), 'usable');
+  assert.strictEqual(G.spotStates(maze, res.state).get('door2'), 'locked', 'a shut door beside the reach is drawn locked');
+  assert.strictEqual(G.spotStates(maze, res.state).get('flipRight'), undefined, 'spots out of reach show nothing');
   assert.deepStrictEqual(types(G.tap(maze, res.state, 'front', 'flipBottom')), ['blocked'], 'door2 is locked');
   assert.deepStrictEqual(types(G.tap(maze, res.state, 'back', 'exit')), [], 'taps on the other side do nothing');
   res = G.turn(maze, res.state, 'cw'); // the only spin in reach: walked onto it and turned
   assert.deepStrictEqual(types(res), ['spun', 'settled']);
   assert.strictEqual(res.state.at, 'spin3');
   assert.strictEqual(G.spotStates(maze, res.state).get('spin3'), 'here');
+  assert.strictEqual(G.spotStates(maze, res.state).get('door2'), undefined, 'the cw turn opened door2');
   res = G.tap(maze, res.state, 'front', 'flipBottom');
   assert.deepStrictEqual(types(res), ['flipped', 'settled']);
   assert.deepStrictEqual([res.state.side, res.state.at, res.state.rot], ['back', 'flipBottom', 270]);
@@ -37,7 +40,7 @@ function winnable(maze, first) {
   while (queue.length) {
     const s = queue.shift();
     if (s.won) return true;
-    const next = [...G.spotStates(maze, s).keys()].map(id => G.tap(maze, s, s.side, id).state);
+    const next = [...G.spotStates(maze, s)].filter(([, v]) => v === 'usable' || v === 'here').map(([id]) => id).map(id => G.tap(maze, s, s.side, id).state);
     if (G.turnSpin(maze, s)) next.push(G.turn(maze, s, 'cw').state, G.turn(maze, s, 'ccw').state);
     for (const n of next) if (!seen.has(key(n))) { seen.add(key(n)); queue.push(n); }
   }

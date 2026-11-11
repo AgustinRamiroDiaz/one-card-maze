@@ -95,19 +95,28 @@
     return { state, events: [{ type: flips.length ? 'many-flips' : 'no-flip' }] };
   }
 
-  // What each spot on the side in play offers right now: Map id -> 'usable' | 'here' (the spin the player is on).
-  // Spots not in the map have nothing to offer.
+  // What each spot on the side in play shows right now: Map id -> state. Spots not in the map show nothing.
+  //   'usable'  tap it now            'here'  the spin the player stands on (also usable)
+  //   'locked'  a shut door at the edge of the player's reach, or the exit in reach while items are missing
+  //   'used'    an item already picked up
   function spotStates(maze, state) {
     const out = new Map();
     if (state.won) return out;
     const reach = R.reachable(maze, state);
+    const missing = R.missingItems(maze, state).length;
+    const edges = maze.sides?.[state.side]?.edges ?? [];
+    const besideReach = id => edges.some(([a, b]) => (a === id && reach.has(b)) || (b === id && reach.has(a)));
     for (const n of R.nodes(maze, state.side)) {
       const usable = state.choosing ? n.type === 'start'
         : state.inPortal ? n.type === 'portal'
         : reach.has(n.id) && (n.type === 'spin' || (n.type === 'flip' && !!R.flipLanding(maze, state.side, n))
-          || (n.type === 'exit' && R.missingItems(maze, state).length === 0)
+          || (n.type === 'exit' && !missing)
           || (n.type === 'portal' && R.portalExits(maze, { ...state, at: n.id }).length > 0));
       if (usable) out.set(n.id, n.type === 'spin' && n.id === state.at ? 'here' : 'usable');
+      else if (n.type === 'item' && state.items.includes(`${state.side}.${n.id}`)) out.set(n.id, 'used');
+      else if (state.choosing || state.inPortal) continue;
+      else if (n.type === 'exit' && reach.has(n.id)) out.set(n.id, 'locked');
+      else if (n.type === 'door' && !R.doorOpen(n, state.rot) && besideReach(n.id)) out.set(n.id, 'locked');
     }
     return out;
   }

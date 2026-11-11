@@ -12,7 +12,7 @@
 
 ## Switching
 
-- The top-right HUD button switches modes inside a level: **Enforce rules** in free play, **Free play** in rules.
+- The top-right HUD circle (footprints) switches modes inside a level; it is inked in while rules are on.
 - Switching never reloads the page.
 - **To rules**: the card restarts at its own start (or asks the player to pick one, if it has several).
 - **To free play**: the card stays exactly as it lies; Motion is turned off.
@@ -20,6 +20,8 @@
 
 ## HUD
 
-Top of the screen, left to right: **← Levels**, the status message, **Motion** (phones, rules only), **Restart** (rules only), the mode button. On narrow screens the message moves to its own line under the buttons.
+A row of ink circles in the top gutter, each a glyph with an `aria-label`, in fixed slots so none moves when another hides. Left: **back** (to the level picker), then the items tally (`✓ n/m`, cards with items only). Right, inward from the edge: **mode**, **restart** (rules only), **motion** (phones, rules only).
 
-**Unreviewed map**: in rules mode, a card whose map is not reviewed shows a yellow strip above the HUD: "⚠ Unreviewed map: the rules may be wrong". Free play hides it, since it does not use the map.
+The status message is not drawn: it is a screen-reader live region. Only messages a picture cannot say (phone settings, no rules for this card, the unreviewed map) also appear in a speech balloon at the bottom for 3s.
+
+**Unreviewed map**: in rules mode, a card whose map is not reviewed shows a "?" tag in the panel's top-right corner; tapping it says "Unreviewed map: the rules may be wrong." Free play hides it, since it does not use the map.

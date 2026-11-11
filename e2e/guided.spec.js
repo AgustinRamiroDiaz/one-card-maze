@@ -112,13 +112,9 @@ async function playThrough(page, card, startId) {
   expect(R.node(maze, s.side, s.at).type).toBe('exit');
   await expect(page.locator('#hud-message')).toHaveText('The exit is open. Tap it to leave.');
   await expect(page.locator('body')).not.toHaveClass(/\bwon\b/);
-  // Confetti is skipped under reduced motion, which the suite uses; allow motion for the winning tap. The glow
-  // starts pulsing again, so the tap is dispatched instead of waiting for the spot to hold still.
   await expect(spot(page, s.side, s.at)).toHaveClass(/\bcan\b/);
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await spot(page, s.side, s.at).dispatchEvent('click');
-  await expect(page.locator('.confetti i')).toHaveCount(120);
-  await expect(page.locator('.confetti'), 'confetti cleans up after landing').toHaveCount(0, { timeout: 8000 });
+  await spot(page, s.side, s.at).click();
+  await expect(page.locator('#win'), 'the win burst covers the card').toBeVisible();
   await expect(page.locator('#hud-message')).toHaveText('You found the exit!');
   await expect(page.locator('body')).toHaveClass(/\bwon\b/);
   expect(await highlighted(page)).toEqual([]);
@@ -211,7 +207,7 @@ for (const [card, why] of [['MAZE2', 'no spin in reach'], ['MAZE730453', 'two sp
 
 test('switching modes inside a level does not reload; turning rules on restarts the card', async ({ page }) => {
   await page.goto('/play.html?card=MAZERULES');
-  await expect(page.locator('#hud-mode')).toHaveText('Enforce rules');
+  await expect(page.locator('#hud-mode')).toHaveAttribute('aria-pressed', 'false');
   await page.evaluate(() => { window.samePage = true; });
   const settled = () => expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
 
@@ -224,6 +220,7 @@ test('switching modes inside a level does not reload; turning rules on restarts 
 
   await page.locator('#hud-mode').click();
   await expect(page).toHaveURL(/mode=guided/);
+  await expect(page.locator('#hud-mode')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('#card')).toHaveAttribute('style', /rotate\(0deg\) rotateX\(0deg\) rotateY\(0deg\)/);
   await settled();
   await expect(page.locator('#hud-message')).toHaveText('Find the exit.');
@@ -231,7 +228,7 @@ test('switching modes inside a level does not reload; turning rules on restarts 
 
   await page.locator('#hud-mode').click();
   await expect(page).not.toHaveURL(/mode=guided/);
-  await expect(page.locator('#hud-mode')).toHaveText('Enforce rules');
+  await expect(page.locator('#hud-mode')).toHaveAttribute('aria-pressed', 'false');
   expect(await highlighted(page)).toEqual([]);
   await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
   expect(await page.evaluate(() => window.samePage), 'the page did not reload').toBe(true);
@@ -240,10 +237,13 @@ test('switching modes inside a level does not reload; turning rules on restarts 
 test('with one spin in reach the arrows walk onto it and turn the card', async ({ page }) => {
   await open(page, 'MAZERULES');
   await expect(spot(page, 'front', 'spin3')).not.toHaveClass(/\bhere\b/);
+  await expect(spot(page, 'front', 'door2'), 'the shut door is drawn hatched').toHaveClass(/\blocked\b/);
+  await expect(page.locator('.front.card .me'), 'the bean stands on the start').toBeVisible();
   await expect(page.locator('#rotate-clockwise')).not.toHaveClass(/disabled/);
   await page.locator('#rotate-clockwise').click();
   await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
   await expect(spot(page, 'front', 'spin3')).toHaveClass(/\bhere\b/);
+  await expect(spot(page, 'front', 'door2')).not.toHaveClass(/\blocked\b/);
   expect(await highlighted(page), 'door 2 opens as with the cw spin').toEqual(['front.flipBottom', 'front.spin3']);
 });
 
@@ -274,27 +274,27 @@ test('with rules on, a swipe uses the one flip in reach on the opposite edge, li
   expect((await highlighted(page)).every(id => id.startsWith('back.'))).toBe(true);
 });
 
-test('with rules on, a swipe toward an edge with two flips in reach only shows a toast', async ({ page }) => {
+test('with rules on, a swipe toward an edge with two flips in reach only shakes the card', async ({ page }) => {
   await open(page, '472933');
   await expect(page.locator('#hud-message')).not.toBeEmpty();
   const before = await highlighted(page);
   await swipe(page, 'right'); // toward the right: out the left, where both flips are
-  await expect(page.locator('#toast')).toHaveClass(/\bshow\b/);
-  await expect(page.locator('#toast')).toHaveText('More than one flip on that edge is in reach. Tap the one to use.');
+  await expect(page.locator('#card')).toHaveClass(/\bshake\b/);
+  await expect(page.locator('#hud-message')).toHaveText('More than one flip on that edge is in reach. Tap the one to use.');
   expect(await highlighted(page)).toEqual(before);
   await swipe(page, 'top');
-  await expect(page.locator('#toast')).toHaveText('No flip in reach on that edge.');
+  await expect(page.locator('#hud-message')).toHaveText('No flip in reach on that edge.');
   expect(await highlighted(page)).toEqual(before);
 });
 
-test('a card whose map is not reviewed warns at the top while rules are on', async ({ page }) => {
+test('a card whose map is not reviewed shows a "?" tag while rules are on', async ({ page }) => {
   expect(loadMaze('440869').status).toBe('draft');
   await open(page, '440869');
   const banner = page.locator('#draft-banner');
   await expect(banner).toBeVisible();
   await expect(banner).toHaveText(/Unreviewed map/);
-  const hud = await page.locator('#hud').boundingBox();
-  expect(hud.y, 'the HUD sits below the banner').toBeGreaterThanOrEqual((await banner.boundingBox()).height);
+  await banner.click();
+  await expect(page.locator('#toast'), 'tapping it says why').toHaveText(/Unreviewed map/);
   await page.locator('#hud-mode').click(); // free play does not use the map
   await expect(banner).toBeHidden();
 

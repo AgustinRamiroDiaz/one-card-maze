@@ -1,0 +1,347 @@
+/* play.html in the Pantomime Strip style: one wordless comic panel. Ink on white over a halftone gutter; colour
+   lives in the card, plus one hot yellow for whatever can be used right now. */
+@font-face {
+	font-family: 'Gochi Hand';
+	src: url(../assets/fonts/gochi-hand-latin.woff2) format('woff2');
+	font-display: swap;
+}
+:root {
+	--ink: #161412;
+	--paper: #ffffff;
+	--gutter: #e9e6e1;
+	--hot: #ffd23f;
+	--hand: 'Gochi Hand', 'Comic Sans MS', cursive;
+	--dot: 56px; /* HUD circles: a kid's fingertip with room to spare */
+	--balloon: 92px;
+	--turn-ms: 1s; /* matches FLIP_MS in view.js */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+html { -webkit-tap-highlight-color: transparent; }
+body {
+	background-color: var(--gutter);
+	background-image: radial-gradient(rgba(22, 20, 18, .2) 1.2px, transparent 1.5px);
+	background-size: 8px 8px;
+	color: var(--ink);
+	font: 22px/1.2 var(--hand);
+	-webkit-user-select: none;
+	user-select: none;
+	-webkit-touch-callout: none;
+}
+::selection { background: var(--hot); color: var(--ink); }
+:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; touch-action: manipulation; }
+[hidden] { display: none !important; }
+.sr-only {
+	position: absolute; width: 1px; height: 1px; overflow: hidden;
+	clip-path: inset(50%); white-space: nowrap;
+}
+
+/* Ink glyphs from the sprite in play.html. */
+svg.g { width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+/* Sprite parts match selectors where they are defined, not where <use> draws them; custom properties inherit through. */
+symbol .fill { fill: var(--fill, var(--ink)); stroke: var(--fill-edge, none); stroke-width: 3; paint-order: stroke; }
+
+/* Page: the HUD row in the top gutter, the panel below it. */
+#app-wrapper {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	grid-template-rows: var(--dot) minmax(0, 1fr);
+	gap: 12px;
+	padding: max(14px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+		max(14px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+#hud { grid-row: 1; position: relative; }
+#panel { grid-row: 2; position: relative; container-type: size; }
+#panel::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: var(--paper);
+	border: 5px solid var(--ink);
+	border-radius: 10px 16px 8px 14px;
+	filter: url(#wob);
+}
+
+/* HUD: ink circles in fixed slots, so a control never moves when another one comes or goes. */
+.dot {
+	position: absolute;
+	top: 0;
+	width: var(--dot);
+	height: var(--dot);
+	display: grid;
+	place-items: center;
+	padding: 7px;
+	border-radius: 50%;
+	background: var(--paper);
+	border: 4px solid var(--ink);
+	transition: transform 150ms cubic-bezier(.2, .7, .3, 1.4), background-color 150ms;
+}
+.dot svg.g { filter: url(#wob); }
+.dot[aria-pressed="true"] { background: var(--ink); }
+.dot[aria-pressed="true"] svg.g { stroke: var(--paper); --fill: var(--paper); }
+.dot:active { transform: scale(.92); }
+@media (hover: hover) { .dot:hover { transform: rotate(-8deg) scale(1.06); } }
+#hud-back { left: 0; }
+#hud-mode { right: 0; }
+#hud-restart { right: calc(var(--dot) + 10px); }
+#hud-motion { right: calc(2 * (var(--dot) + 10px)); }
+
+/* Items picked up, as a hand-lettered tally tag next to the back circle. */
+#items {
+	position: absolute;
+	left: calc(var(--dot) + 12px);
+	top: 50%;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 12px 4px 8px;
+	background: var(--paper);
+	border: 3px solid var(--ink);
+	border-radius: 6px 10px 5px 9px;
+	transform: translateY(-50%) rotate(-3deg);
+	font-size: 24px;
+	font-variant-numeric: tabular-nums;
+}
+#items svg.g { width: 26px; height: 26px; }
+#items.all { background: var(--hot); }
+
+/* The card, with the two spin balloons beside it (tablet, desktop) or under it (phone). */
+#card-wrapper {
+	--card-w: min(450px, (100cqh - 48px) / 1.4, 100cqw - 2 * var(--balloon) - 2 * clamp(16px, 5cqw, 72px) - 32px);
+	position: absolute;
+	inset: 0;
+	display: grid;
+	grid-template-areas: "ccw card cw";
+	align-items: center;
+	justify-content: center;
+	justify-items: center;
+	column-gap: clamp(16px, 5cqw, 72px);
+	perspective: 2000px;
+}
+#card {
+	grid-area: card;
+	position: relative;
+	width: var(--card-w);
+	aspect-ratio: 5 / 7;
+	transform-style: preserve-3d;
+	transition: transform var(--turn-ms);
+	touch-action: pinch-zoom; /* swipes flip the card instead of panning the page; zoom still works */
+}
+body.free #card { cursor: grab; }
+@container (max-width: 640px) {
+	#card-wrapper {
+		--card-w: min(450px, 100cqw - 32px, (100cqh - var(--balloon) - 48px) / 1.4);
+		grid-template-areas: "card card" "ccw cw";
+		align-content: center;
+		row-gap: 16px;
+		column-gap: 64px;
+	}
+}
+
+.card {
+	position: absolute;
+	inset: 0;
+	border-radius: 4%;
+	background: var(--paper);
+	box-shadow: 0 8px 14px rgba(22, 20, 18, .28);
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+.card.back { transform: rotateY(180deg); }
+.card img { display: block; width: 100%; height: 100%; border-radius: 4%; -webkit-user-drag: none; }
+.card .layer { position: absolute; inset: 0; }
+.card .layer:not(.active) .spot { pointer-events: none; }
+.credit {
+	position: absolute;
+	right: -8px;
+	bottom: -12px;
+	padding: 0 8px 2px;
+	background: var(--paper);
+	border: 3px solid var(--ink);
+	border-radius: 4px;
+	font-size: 16px;
+	line-height: 1.1;
+	transform: rotate(-4deg);
+	pointer-events: none;
+}
+
+/* Spots, drawn as stages: yellow ring = tap me, hatched ring = shut, tick = done. */
+.spot {
+	position: absolute;
+	width: 12%;
+	aspect-ratio: 1;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	touch-action: manipulation;
+}
+.spot:disabled { pointer-events: none; cursor: default; }
+@media (pointer: coarse) {
+	.spot::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; } /* ~44px for a finger */
+}
+.spot.can {
+	border: 5px solid var(--hot);
+	background: rgba(255, 210, 63, .28);
+	box-shadow: 0 0 0 3px var(--ink), inset 0 0 0 2px var(--ink);
+	animation: pulse 1.6s ease-in-out infinite;
+}
+@media (hover: hover) { .spot.can:hover { background: rgba(255, 210, 63, .6); } }
+.spot.locked {
+	border: 3px solid var(--ink);
+	background: repeating-linear-gradient(45deg, var(--ink) 0 2.5px, transparent 2.5px 7px);
+	-webkit-mask: radial-gradient(circle, transparent 46%, #000 48%);
+	mask: radial-gradient(circle, transparent 46%, #000 48%);
+}
+.spot.used {
+	width: 8%;
+	background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M11 25l9 9 17-19' fill='none' stroke='%23161412' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 80% no-repeat;
+	border: 3px solid var(--ink);
+	transform: translate(10%, -110%);
+}
+@keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.12); } }
+
+/* The player: an ink bean standing on its spot, kept upright however the card is turned. */
+svg.me {
+	position: absolute;
+	width: 12%;
+	height: auto;
+	aspect-ratio: 48 / 52;
+	transform-origin: 50% 78%;
+	transform: translate(-50%, -78%) rotate(var(--upright, 0deg));
+	transition: left 300ms cubic-bezier(.2, .8, .3, 1), top 300ms cubic-bezier(.2, .8, .3, 1), transform var(--turn-ms);
+	filter: drop-shadow(0 3px 2px rgba(22, 20, 18, .35));
+	pointer-events: none;
+}
+svg.me { --fill-edge: var(--paper); }
+
+/* Spin balloons: tails point at the card; in rules mode they only exist while a spin can be used. */
+.rotate-button {
+	width: var(--balloon);
+	height: var(--balloon);
+	transition: transform 220ms cubic-bezier(.2, .7, .3, 1.5), opacity 150ms;
+	touch-action: manipulation;
+}
+#rotate-counterclockwise { grid-area: ccw; --tail: 90deg; }
+#rotate-clockwise { grid-area: cw; --tail: -90deg; }
+@container (max-width: 640px) {
+	#rotate-counterclockwise { --tail: 30deg; }
+	#rotate-clockwise { --tail: -30deg; }
+}
+.rotate-button > svg { width: 100%; height: 100%; overflow: visible; filter: url(#wob); }
+.rotate-button circle, .rotate-button .tail { fill: var(--paper); stroke: var(--ink); stroke-width: 4.5; stroke-linejoin: round; }
+.rotate-button .tail { transform: rotate(var(--tail)); transform-origin: 46px 46px; }
+.rotate-button .tail-cover { stroke: none; }
+.rotate-button svg.g { stroke-width: 5; }
+body:not(.free) .rotate-button circle, body:not(.free) .rotate-button .tail { fill: var(--hot); }
+.rotate-button:active { transform: scale(.92); }
+@media (hover: hover) { .rotate-button:hover { transform: rotate(-6deg) scale(1.05); } }
+.rotate-button.disabled { visibility: hidden; opacity: 0; transform: scale(.5); pointer-events: none; }
+
+/* Motion lines drawn around the card while it moves. */
+.marks {
+	grid-area: card;
+	width: min(var(--card-w) * 1.5, 100cqw - 8px); /* narrow panels draw the lines over the card's edges */
+	height: calc(var(--card-w) * 1.4);
+	overflow: visible;
+	pointer-events: none;
+	fill: none;
+	stroke: var(--ink);
+	stroke-width: 3.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	opacity: 0;
+}
+.marks g { display: none; }
+#card-wrapper[data-move] .marks { animation: marks var(--turn-ms) cubic-bezier(.2, .8, .3, 1); }
+#card-wrapper[data-move="cw"] .spin, #card-wrapper[data-move="ccw"] .spin { display: inline; }
+#card-wrapper[data-move="ccw"] .marks { transform: scaleX(-1); }
+#card-wrapper[data-move="flip-x"] .flip-x, #card-wrapper[data-move="flip-y"] .flip-y { display: inline; }
+@keyframes marks { 0% { opacity: 0; scale: .92; } 20% { opacity: .85; } 100% { opacity: 0; scale: 1.06; } }
+
+/* A move that goes nowhere: the card shudders. `translate` composes with the card's inline transform. */
+#card.shake { animation: shake 360ms cubic-bezier(.3, .6, .4, 1); }
+@keyframes shake { 20% { translate: -7px 0; } 40% { translate: 6px 0; } 60% { translate: -4px 0; } 80% { translate: 2px 0; } }
+
+/* Unreviewed map: a small ink "?" tag in the panel corner; tapping it says why. */
+#draft-banner {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	z-index: 2;
+	width: 44px;
+	height: 44px;
+	padding: 5px;
+	border-radius: 50%;
+	background: var(--paper);
+	border: 3px solid var(--ink);
+	transform: rotate(8deg);
+}
+body:not(.draft) #draft-banner { display: none; }
+
+/* Speech balloon for the few things only words can say (phone settings, the unreviewed map). */
+#toast {
+	position: fixed;
+	left: 50%;
+	bottom: calc(max(14px, env(safe-area-inset-bottom)) + 24px);
+	z-index: 15;
+	width: max-content;
+	max-width: min(30rem, calc(100% - 48px));
+	padding: 10px 18px 12px;
+	background: var(--paper);
+	border: 4px solid var(--ink);
+	border-radius: 26px 30px 24px 28px;
+	text-align: center;
+	pointer-events: none;
+	opacity: 0;
+	transform: translate(-50%, 12px) scale(.9);
+	transition: opacity 180ms, transform 220ms cubic-bezier(.2, .7, .3, 1.4);
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* With Motion on: which way is world up, as the phone turns. */
+#north {
+	position: fixed;
+	right: 18px;
+	bottom: max(18px, env(safe-area-inset-bottom));
+	z-index: 10;
+	width: var(--dot);
+	height: var(--dot);
+	padding: 6px;
+	border-radius: 50%;
+	background: var(--paper);
+	border: 4px solid var(--ink);
+	pointer-events: none;
+}
+#north svg { width: 100%; height: 100%; }
+#north path { fill: var(--ink); }
+#north text { font: 13px var(--hand); fill: var(--ink); }
+
+/* Exit found: a starburst panel over the card, then again / next / all cards. */
+#win {
+	position: absolute;
+	inset: 0;
+	z-index: 5;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	justify-items: center;
+	padding-bottom: 28px;
+	background: rgba(255, 255, 255, .55);
+	border-radius: 10px 16px 8px 14px;
+}
+body:not(.won) #win { display: none; }
+#win .burst { width: min(92cqw, 70cqh); align-self: center; overflow: visible; animation: slam 420ms cubic-bezier(.2, .7, .3, 1.4); }
+#win .burst .edge { fill: var(--paper); stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
+#win .burst .echo { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; opacity: .5; }
+#win .burst .star { fill: var(--ink); }
+#win .burst .cheer { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+#win .choices { display: flex; align-items: center; gap: 24px; }
+#win .dot { position: static; width: 72px; height: 72px; padding: 10px; }
+#win .dot.next { width: 96px; height: 96px; padding: 14px; background: var(--hot); }
+@keyframes slam { from { transform: scale(.4) rotate(-12deg); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+	.spot.can, .marks, #card.shake, #win .burst { animation: none !important; }
+	.me { transition: none; }
+}
