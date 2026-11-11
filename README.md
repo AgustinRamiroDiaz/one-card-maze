@@ -14,9 +14,40 @@ Open http://localhost:8000, then pick a card. Drag or swipe to flip it; the side
 
 ## Demo
 
-Recorded on a phone-sized screen. Click a clip to play it. `make demo` records them again, plus desktop versions in `demo/clips/desktop/`.
+Recorded on a phone-sized screen. `make demo` records them again into `demo/clips/`, plus desktop versions; the players below are copies uploaded to GitHub, so re-upload a clip after recording it again.
 
-| [![Full tutorial](demo/clips/phone/tutorial.jpg)](demo/clips/phone/tutorial.mp4)<br>**Full tutorial** | [![Level picker](demo/clips/phone/01-level-picker.jpg)](demo/clips/phone/01-level-picker.mp4)<br>Level picker | [![Free play](demo/clips/phone/02-free-play.jpg)](demo/clips/phone/02-free-play.mp4)<br>Free play |
-|:-:|:-:|:-:|
-| [![Spin and flip](demo/clips/phone/03-rules-spin-and-flip.jpg)](demo/clips/phone/03-rules-spin-and-flip.mp4)<br>Spin and flip with rules | [![Swipe to flip](demo/clips/phone/04-swipe-to-flip.jpg)](demo/clips/phone/04-swipe-to-flip.mp4)<br>Swipe to flip | [![Switch modes](demo/clips/phone/05-switch-modes.jpg)](demo/clips/phone/05-switch-modes.mp4)<br>Switch modes |
-| [![Pick a start](demo/clips/phone/06-pick-a-start.jpg)](demo/clips/phone/06-pick-a-start.mp4)<br>Pick a start | [![Portals](demo/clips/phone/07-portals.jpg)](demo/clips/phone/07-portals.mp4)<br>Portals | [![Motion control](demo/clips/phone/08-motion-control.jpg)](demo/clips/phone/08-motion-control.mp4)<br>Motion control |
+### Full tutorial
+
+https://github.com/user-attachments/assets/d5fff1ef-0f3e-46e2-8df1-589eca0906ee
+
+### Level picker
+
+https://github.com/user-attachments/assets/172d7b21-ceb1-4c91-9601-82f578ae8ce3
+
+### Free play
+
+https://github.com/user-attachments/assets/fb02063e-3a23-4389-a16e-9792e5cb270c
+
+### Spin and flip with rules
+
+https://github.com/user-attachments/assets/616afc10-36e3-4ee5-b523-e938fcf02d67
+
+### Swipe to flip
+
+https://github.com/user-attachments/assets/00560043-0364-471e-b602-739105d10ba9
+
+### Switch modes
+
+https://github.com/user-attachments/assets/b9b52092-cec0-4cb6-87e1-3f4b5d5184c3
+
+### Pick a start
+
+https://github.com/user-attachments/assets/81f364cc-a80a-4203-b9a1-4ec25721f135
+
+### Portals
+
+https://github.com/user-attachments/assets/15d42579-c98a-4b2f-a672-3e558bcadfc3
+
+### Motion control
+
+https://github.com/user-attachments/assets/a3a63712-620d-4557-9294-90c3b3d6e231

@@ -25,12 +25,11 @@ winnable:
 e2e:
 	npx playwright test
 
-# Demo videos (and a poster frame each) of every feature and the whole tutorial, desktop and phone, in
-# demo/clips/<desktop|phone>/ (needs ffmpeg). Only the phone clips are committed.
+# Demo videos of every feature and the whole tutorial, desktop and phone, in demo/clips/<desktop|phone>/ (needs
+# ffmpeg). Only the phone clips are committed; the README plays copies of them uploaded to GitHub.
 demo:
 	npx playwright test -c playwright.demo.config.js
 	for f in demo/clips/*/*.webm; do ffmpeg -loglevel error -y -i "$$f" -c:v libx264 -crf 28 -pix_fmt yuv420p -movflags +faststart "$${f%.webm}.mp4"; done
-	for f in demo/clips/*/*.mp4; do ffmpeg -loglevel error -y -ss "$$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$$f" | LC_ALL=C awk '{print $$1 * 0.6}')" -i "$$f" -frames:v 1 -vf scale=200:-1 -q:v 4 "$${f%.mp4}.jpg"; done
 
 hooks:
 	pre-commit install
