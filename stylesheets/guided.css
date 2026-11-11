@@ -76,8 +76,31 @@ body.guided .spot, body.guided .rotate-button, .hud-button { touch-action: manip
 }
 
 /* Phones in portrait: the turn buttons go under the card instead of beside it. */
+/* Rules on a card whose map is still a draft: a strip across the top, with the HUD moved below it. */
+#draft-banner {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 11;
+	padding: calc(env(safe-area-inset-top) + .4rem) 1rem .4rem;
+	line-height: 1.1rem;
+	background: #FFD600;
+	color: #000000;
+	font-size: .85rem;
+	font-weight: 700;
+	text-align: center;
+	white-space: nowrap; /* one line: the HUD below is placed for exactly this height */
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+body.draft #draft-banner { display: block; }
+body.draft #hud { top: calc(env(safe-area-inset-top) + 1.9rem + 12px); }
+
 @media only screen and (max-width: 600px) {
 	body.guided #card-wrapper { flex-wrap: wrap; align-content: center; gap: 1.25rem 3rem; padding-top: 5.5rem; }
+	body.guided.draft #card-wrapper { padding-top: 7.5rem; }
 	body.guided #card { flex-basis: 100%; order: -1; }
 	body.guided .rotate-button {
 		display: flex !important;

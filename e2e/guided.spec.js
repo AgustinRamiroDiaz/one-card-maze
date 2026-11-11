@@ -264,11 +264,11 @@ test('a card without a rules map plays free, with no way to turn rules on', asyn
 });
 
 test('with rules on, a swipe uses the one flip in reach on the opposite edge, like scrolling', async ({ page }) => {
-  await open(page, '25502893');
+  await open(page, '3017342');
   await expect(spot(page, 'front', 'flipTop')).toHaveClass(/\bcan\b/);
   await swipe(page, 'bottom'); // swipe down to go out the top
   await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);
-  const maze = loadMaze('25502893');
+  const maze = loadMaze('3017342');
   const landed = R.flip(maze, R.walk(maze, R.start(maze), 'flipTop').state).state;
   await expect(page.locator(`.back.card .spot[data-id="${landed.at}"]`), 'the player stands where the flip lands').toHaveClass(/\bcan\b/);
   expect((await highlighted(page)).every(id => id.startsWith('back.'))).toBe(true);
@@ -285,4 +285,21 @@ test('with rules on, a swipe toward an edge with two flips in reach only shows a
   await swipe(page, 'top');
   await expect(page.locator('#toast')).toHaveText('No flip in reach on that edge.');
   expect(await highlighted(page)).toEqual(before);
+});
+
+test('a card whose map is not reviewed warns at the top while rules are on', async ({ page }) => {
+  expect(loadMaze('440869').status).toBe('draft');
+  await open(page, '440869');
+  const banner = page.locator('#draft-banner');
+  await expect(banner).toBeVisible();
+  await expect(banner).toHaveText(/Unreviewed map/);
+  const hud = await page.locator('#hud').boundingBox();
+  expect(hud.y, 'the HUD sits below the banner').toBeGreaterThanOrEqual((await banner.boundingBox()).height);
+  await page.locator('#hud-mode').click(); // free play does not use the map
+  await expect(banner).toBeHidden();
+
+  expect(loadMaze('MAZERULES').status).toBe('reviewed');
+  await open(page, 'MAZERULES');
+  await expect(page.locator('#hud-message')).not.toBeEmpty();
+  await expect(banner).toBeHidden();
 });

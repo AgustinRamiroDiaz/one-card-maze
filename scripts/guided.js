@@ -27,6 +27,13 @@ hud.innerHTML = `
   <button type="button" id="hud-mode" class="hud-button" hidden></button>`;
 document.querySelector('#app-wrapper').append(hud);
 
+// Rules run on a hand-drawn map of the card; until someone has checked it against the picture it may be wrong.
+const draftBanner = document.createElement('div');
+draftBanner.id = 'draft-banner';
+draftBanner.setAttribute('role', 'note');
+draftBanner.textContent = '⚠ Unreviewed map: the rules may be wrong';
+document.querySelector('#app-wrapper').prepend(draftBanner);
+
 // With Motion on, points to world up (where a door's arrow must point to open) as the phone turns.
 const north = document.createElement('div');
 north.id = 'north';
@@ -74,6 +81,7 @@ function setFree(on) {
   if (on && motionOn) setMotion(false); // motion only turns the card on a spin, so it belongs to rules
   free = on;
   document.body.classList.toggle('free', on);
+  document.body.classList.toggle('draft', !on && maze?.status !== 'reviewed'); // shows #draft-banner
   document.body.classList.remove('won');
   const modeButton = document.querySelector('#hud-mode');
   modeButton.textContent = on ? 'Enforce rules' : 'Free play';
