@@ -1,4 +1,5 @@
-// One Card Maze rules engine, shared by the guided game (browser) and tools/solve.js (Node).
+// One Card Maze rules engine: what each move does to the state. No DOM, no drawing, no input.
+// Shared by game.js and tools/solve.js (Node).
 // State: { side: 'front'|'back', rot: 0|90|180|270 (clockwise turn of the visible image), at: nodeId, items: [ids] }
 (function (root) {
   const EDGES_CW = ['top', 'right', 'bottom', 'left'];
@@ -16,24 +17,6 @@
   // over an edge that is top/bottom on screen it also adds a half turn (t -> 180 - t).
   const rotAfterFlip = (rot, edgeOnScreen) =>
     mod((edgeOnScreen === 'left' || edgeOnScreen === 'right') ? -rot : 180 - rot, 360);
-
-  // The game draws the card like the original UI: rotate(R) rotateX(X) rotateY(Y).
-  // A flip turns X or Y by 180 depending on which local axis lies along the screen edge.
-  // The sign only changes the animation: the card must roll toward the edge (a swipe right lifts the left edge
-  // toward the viewer and lays it down on the right). Animating X turns the card about rotate(R)·x on screen,
-  // Y about rotate(R)·rotateX(X)·y, so the sign depends on R and on whether X is flipped. Matches the original UI.js.
-  function cssFlip(css, edgeOnScreen) {
-    const sideways = edgeOnScreen === 'left' || edgeOnScreen === 'right';
-    const axis = sideways === (mod(css.R, 180) === 0) ? 'Y' : 'X';
-    const q = mod(css.R, 360) / 90;
-    const along = axis === 'X' ? (q <= 1 ? 1 : -1) : (q === 0 || q === 3 ? 1 : -1) * (mod(css.X, 360) === 180 ? -1 : 1);
-    const toward = edgeOnScreen === 'right' || edgeOnScreen === 'top' ? 1 : -1;
-    return { ...css, [axis]: css[axis] + 180 * toward * along };
-  }
-  function cssView(css) {
-    const x = mod(css.X, 360) === 180, y = mod(css.Y, 360) === 180;
-    return { side: x !== y ? 'back' : 'front', rot: mod(css.R + (x ? 180 : 0), 360) };
-  }
 
   function nodes(maze, side) { return maze.sides?.[side]?.nodes ?? []; }
   function node(maze, side, id) { return nodes(maze, side).find(n => n.id === id); }
@@ -132,6 +115,6 @@
     ['front', 'back'].some(s => nodes(maze, s).some(n => n.type === 'exit'));
 
   const api = { EDGES_CW, ARROWS_CW, doorOpen, screenEdge, rotAfterFlip, node, nodes, reachable, flipLanding,
-    start, starts, walk, spin, flip, portalExits, teleport, missingItems, won, playable, other, mod, cssFlip, cssView };
+    start, starts, walk, spin, flip, portalExits, teleport, missingItems, won, playable, other, mod };
   if (typeof module !== 'undefined') module.exports = api; else root.MazeRules = api;
 })(this);

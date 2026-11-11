@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 const R = require('../scripts/rules.js');
+const C = require('../scripts/card-view.js');
 const cardsDir = path.join(__dirname, '..', 'cards');
 
 const key = s => `${s.side}|${s.rot}|${s.at}|${[...s.items].sort()}`;
@@ -36,8 +37,8 @@ function solve(maze, first = R.start(maze)) {
 function selfTest() {
   for (const R0 of [0, 90, 180, 270, -90, 450]) for (const X of [0, 180, -180]) for (const Y of [0, 180, 360])
     for (const edge of R.EDGES_CW) {
-      const before = R.cssView({ R: R0, X, Y });
-      const after = R.cssView(R.cssFlip({ R: R0, X, Y }, edge));
+      const before = C.cssView({ R: R0, X, Y });
+      const after = C.cssView(C.cssFlip({ R: R0, X, Y }, edge));
       assert.notStrictEqual(after.side, before.side);
       assert.strictEqual(after.rot, R.rotAfterFlip(before.rot, edge), `R=${R0} X=${X} Y=${Y} ${edge}`);
     }
@@ -49,7 +50,7 @@ function selfTest() {
     const swipe = edge === 'left' || edge === 'right' ? 'h' : 'v', dir = edge === 'right' || edge === 'bottom' ? 1 : -1;
     const axis = original[R0].X[0] === swipe ? 'X' : 'Y';
     const want = 180 * dir * original[R0][axis][1] * (axis === 'Y' && X === 180 ? -1 : 1);
-    const got = R.cssFlip({ R: R0, X, Y: 0 }, edge);
+    const got = C.cssFlip({ R: R0, X, Y: 0 }, edge);
     assert.deepStrictEqual(got, { R: R0, X, Y: 0, [axis]: (axis === 'X' ? X : 0) + want }, `animation R=${R0} X=${X} ${edge}`);
   }
   const maze = JSON.parse(fs.readFileSync(path.join(cardsDir, 'MAZERULES', 'maze.json'), 'utf8'));

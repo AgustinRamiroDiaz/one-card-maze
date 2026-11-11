@@ -1,6 +1,15 @@
 # Rules mode
 
-The rules engine is `scripts/rules.js`; the game (`scripts/guided.js`) only offers moves it allows.
+The rules engine is `scripts/rules.js`; the game only offers moves it allows. Code layers, lowest first (each uses only the ones below it; `node tools/game-test.js` checks this):
+
+| File | Layer |
+|---|---|
+| `scripts/rules.js` | Rules: what each move does to the state |
+| `scripts/game.js` | Game session: taps, turns and swipes in, new state and events out (`settled`, `spun`, `flipped`, `won`, `blocked`, …) |
+| `scripts/card-view.js` | Card maths: the CSS transform for a side and turn |
+| `scripts/motion.js` | Phone-turn maths |
+| `scripts/view.js` | Drawing: card, spots, HUD, messages; turns events into what the player sees |
+| `scripts/guided.js` | Controller: input to the game, results to the view |
 
 ## Moves
 

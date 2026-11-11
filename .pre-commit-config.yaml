@@ -11,7 +11,7 @@ repos:
         name: rules engine self-test
         entry: make test
         language: system
-        files: ^(scripts/(rules|motion)\.js|tools/(solve|motion-test)\.js|cards/MAZERULES/maze\.json)$
+        files: ^(scripts/(rules|game|card-view|motion)\.js|tools/(solve|game-test|motion-test)\.js|cards/MAZERULES/maze\.json)$
         pass_filenames: false
       - id: winnable
         name: every level winnable from every start
