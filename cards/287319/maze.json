@@ -1,5 +1,5 @@
 {
-  "status": "draft",
+  "status": "reviewed",
   "notes": "EARLYBIRD #28 tutorial. Route: start, door1, room2, spin3 (rotate so door2 left arrow is up), door2, right strand, '4' room, flip top; back: top area, centre vine to the right-flip area, flip right; front: left area, arc to the bottom area (use the bottom spins via their doors to set the orientation), flip bottom; back: bottom area, door down (0.42,0.74) into the exit room (needs the card at 180). Room2 and the spin room are joined by two short strands; mapped as one edge.",
   "mechanics": [],
   "sides": {
@@ -7,13 +7,13 @@
       "nodes": [
         {"id": "start", "type": "start", "x": 0.2, "y": 0.3},
         {"id": "door1", "type": "door", "x": 0.36, "y": 0.59, "arrow": "up"},
-        {"id": "room2", "type": "room", "x": 0.6, "y": 0.57},
-        {"id": "spinRoom", "type": "room", "x": 0.7, "y": 0.38},
-        {"id": "spin3", "type": "spin", "x": 0.75, "y": 0.29},
+        {"id": "room2", "type": "room", "x": 0.49, "y": 0.585},
+        {"id": "spinRoom", "type": "room", "x": 0.503, "y": 0.33},
+        {"id": "spin3", "type": "spin", "x": 0.753, "y": 0.292},
         {"id": "door2", "type": "door", "x": 0.71, "y": 0.69, "arrow": "left"},
-        {"id": "room4", "type": "room", "x": 0.6, "y": 0.12},
+        {"id": "room4", "type": "room", "x": 0.912, "y": 0.152},
         {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top"},
-        {"id": "leftArea", "type": "room", "x": 0.1, "y": 0.68},
+        {"id": "leftArea", "type": "room", "x": 0.376, "y": 0.662},
         {"id": "flipLeft", "type": "flip", "x": 0.07, "y": 0.63, "edge": "left"},
         {"id": "bottomArea", "type": "room", "x": 0.5, "y": 0.9},
         {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
@@ -51,12 +51,12 @@
         {"id": "topArea", "type": "room", "x": 0.48, "y": 0.14},
         {"id": "flipTop", "type": "flip", "x": 0.5, "y": 0.05, "edge": "top"},
         {"id": "doorT1", "type": "door", "x": 0.29, "y": 0.12, "arrow": "up"},
-        {"id": "spinTL", "type": "spin", "x": 0.12, "y": 0.12},
+        {"id": "spinTL", "type": "spin", "x": 0.127, "y": 0.118},
         {"id": "doorT2", "type": "door", "x": 0.1, "y": 0.25, "arrow": "left"},
         {"id": "doorT3", "type": "door", "x": 0.7, "y": 0.12, "arrow": "right"},
-        {"id": "spinTR", "type": "spin", "x": 0.85, "y": 0.12},
+        {"id": "spinTR", "type": "spin", "x": 0.846, "y": 0.129},
         {"id": "doorT4", "type": "door", "x": 0.87, "y": 0.27, "arrow": "down"},
-        {"id": "rightArea", "type": "room", "x": 0.86, "y": 0.63},
+        {"id": "rightArea", "type": "room", "x": 0.692, "y": 0.644},
         {"id": "flipRight", "type": "flip", "x": 0.93, "y": 0.64, "edge": "right"},
         {"id": "bottomArea", "type": "room", "x": 0.5, "y": 0.91},
         {"id": "flipBottom", "type": "flip", "x": 0.5, "y": 0.95, "edge": "bottom"},
@@ -77,9 +77,6 @@
         ["rightArea", "doorT2"],
         ["rightArea", "doorT4"],
         ["rightArea", "topArea"],
-        ["doorT2", "doorT4"],
-        ["doorT2", "topArea"],
-        ["doorT4", "topArea"],
         ["bottomArea", "doorX"]
       ]
     }
