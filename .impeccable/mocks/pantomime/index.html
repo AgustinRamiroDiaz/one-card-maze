@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pantomime Strip mocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #161412;
+  --paper: #ffffff;
+  --gutter: #e9e6e1;
+  --hot: #ffd23f;
+  --board: #2b2926;
+  --hand: "Gochi Hand", cursive;
+}
+* { box-sizing: border-box; }
+::selection { background: var(--hot); color: var(--ink); }
+body { margin: 0; background: var(--board); color: #f3f0ea; font: 18px/1.4 var(--hand); }
+.board { padding: 40px 32px 80px; max-width: 1900px; margin: 0 auto; }
+.board > h1 { font-size: 44px; font-weight: 400; margin: 0 0 4px; }
+.board > p { margin: 0 0 40px; max-width: 70ch; color: #cfc9bf; }
+.row { display: flex; flex-wrap: wrap; gap: 48px 40px; align-items: flex-start; margin-bottom: 64px; }
+.row > h2 { flex-basis: 100%; font-size: 30px; font-weight: 400; margin: 0 0 -24px; color: #fff; }
+figure { margin: 0; width: 410px; }
+figure.wide { width: auto; }
+figcaption { margin-top: 14px; color: #d8d2c8; }
+figcaption b { color: #fff; font-weight: 400; font-size: 22px; display: block; }
+
+/* device frames */
+.phone { width: 410px; height: 864px; padding: 10px; border-radius: 52px; background: #0d0c0b; }
+.tablet { width: 1200px; height: 840px; padding: 10px; border-radius: 36px; background: #0d0c0b; }
+.screen {
+  position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 42px;
+  background-color: var(--gutter);
+  background-image: radial-gradient(rgba(22,20,18,.2) 1.2px, transparent 1.5px);
+  background-size: 8px 8px;
+}
+.tablet .screen { border-radius: 26px; }
+
+/* wobbly ink */
+.ink { filter: url(#wob); }
+svg.g { width: 100%; height: 100%; fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+
+/* HUD: fixed slots */
+.hud { position: absolute; left: 14px; right: 14px; top: 14px; height: 56px; }
+.dot {
+  position: absolute; top: 0; width: 56px; height: 56px; border-radius: 50%;
+  background: var(--paper); border: 4px solid var(--ink); padding: 7px;
+}
+.dot.inv { background: var(--ink); }
+.dot.inv svg.g { stroke: var(--paper); }
+.dot.inv svg.g .fill { fill: var(--paper); }
+.slot-l { left: 0; } .slot-r1 { right: 0; } .slot-r2 { right: 66px; } .slot-r3 { right: 132px; }
+svg.g .fill { fill: var(--ink); stroke: none; }
+
+/* the panel */
+.panel { position: absolute; left: 12px; right: 12px; top: 82px; bottom: 14px; }
+.panel::before {
+  content: ""; position: absolute; inset: 0; background: var(--paper);
+  border: 5px solid var(--ink); border-radius: 10px 16px 8px 14px; filter: url(#wob);
+}
+.stage { position: absolute; inset: 0; display: grid; place-items: center; }
+
+/* the card */
+.card { position: relative; width: 300px; aspect-ratio: 755 / 1055; transform-origin: 50% 50%; }
+.card img {
+  display: block; width: 100%; height: 100%; border-radius: 4%;
+  filter: drop-shadow(0 8px 10px rgba(22,20,18,.28));
+}
+.credit {
+  position: absolute; right: -10px; bottom: -14px; padding: 2px 10px 3px;
+  background: var(--paper); border: 3px solid var(--ink); border-radius: 4px;
+  font: 16px/1 var(--hand); color: var(--ink); transform: rotate(-4deg);
+}
+
+/* spots on the card */
+.spot { position: absolute; width: 15%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; }
+.spot.on {
+  border: 5px solid var(--hot); box-shadow: 0 0 0 3px var(--ink), inset 0 0 0 2px var(--ink);
+  background: rgba(255,210,63,.28); animation: pulse 1.6s ease-in-out infinite;
+}
+.spot.locked {
+  border: 3px solid var(--ink);
+  background: repeating-linear-gradient(45deg, var(--ink) 0 2.5px, transparent 2.5px 7px);
+  -webkit-mask: radial-gradient(circle, transparent 46%, #000 48%); mask: radial-gradient(circle, transparent 46%, #000 48%);
+}
+.spot.used { width: 9%; background: var(--paper); border: 3px solid var(--ink); transform: translate(10%, -110%); padding: 2px; }
+.spot.me { width: 15%; transform: translate(-50%, -78%); border-radius: 0; overflow: visible; filter: drop-shadow(0 3px 2px rgba(22,20,18,.35)); }
+.spot.me path, .spot.me circle.fill { stroke: #fff; stroke-width: 3; paint-order: stroke; }
+@keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.12); } }
+@media (prefers-reduced-motion: reduce) { .spot.on { animation: none; } }
+
+/* spin balloons */
+.balloon { position: absolute; width: 92px; height: 104px; }
+.balloon svg { width: 100%; height: 100%; overflow: visible; }
+
+/* motion marks drawn over the stage */
+.marks { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+
+/* picker */
+.mode { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 0; }
+.mode .dot { position: static; }
+.mode .dot + .dot { margin-left: -4px; }
+.page {
+  position: absolute; left: 12px; right: 12px; top: 82px; bottom: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; align-content: start; padding-bottom: 20px;
+}
+.cell { position: relative; padding: 10px; }
+.cell::before {
+  content: ""; position: absolute; inset: 0; background: var(--paper);
+  border: 4px solid var(--ink); border-radius: 6px 10px 5px 9px; filter: url(#wob);
+}
+.cell:nth-child(4n+2)::before { border-radius: 10px 5px 9px 6px; }
+.cell img { position: relative; display: block; width: 100%; aspect-ratio: 755/1055; border-radius: 4%; }
+.cell.free img { opacity: .55; }
+.cell.free::after {
+  content: ""; position: absolute; inset: 10px; border-radius: 4%;
+  background: repeating-linear-gradient(45deg, rgba(22,20,18,.55) 0 2px, transparent 2px 9px);
+}
+.cell .badge { position: absolute; right: 2px; bottom: 2px; z-index: 2; width: 44px; height: 44px; padding: 5px; }
+.cell.big { grid-column: span 2; padding: 12px 70px; }
+
+/* win burst */
+.burst { position: absolute; inset: 0; }
+.burst svg { width: 100%; height: 100%; overflow: visible; }
+.dim::after { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,.55); }
+
+.note { color: #b9b2a6; font-size: 16px; }
+.legend { display: flex; flex-wrap: wrap; gap: 28px; align-items: center; margin: -8px 0 48px; }
+.legend div { display: flex; align-items: center; gap: 12px; }
+.legend .sw { position: relative; width: 52px; height: 52px; background: #3a7fa8; border-radius: 8px; }
+.legend .sw .spot { width: 40px; left: 50%; top: 50%; }
+.legend .sw .spot.used { width: 28px; transform: translate(-50%, -50%); }
+.legend .sw .spot.me { width: 34px; transform: translate(-50%, -50%); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <symbol id="i-back" viewBox="0 0 48 48"><path d="M19 13 8 23l11 10"/><path d="M9 23h17c8 0 13 5 13 13"/></symbol>
+    <symbol id="i-restart" viewBox="0 0 48 48"><path d="M12 12v24"/><path class="fill" d="M37 11 17 24l20 13z"/></symbol>
+    <symbol id="i-rules" viewBox="0 0 48 48">
+      <ellipse class="fill" cx="16" cy="31" rx="5.5" ry="8.5" transform="rotate(-12 16 31)"/>
+      <circle class="fill" cx="12" cy="19" r="2"/><circle class="fill" cx="16.5" cy="18" r="2"/><circle class="fill" cx="21" cy="19.5" r="2"/>
+      <ellipse class="fill" cx="32" cy="22" rx="5.5" ry="8.5" transform="rotate(12 32 22)"/>
+      <circle class="fill" cx="28" cy="10" r="2"/><circle class="fill" cx="32.5" cy="9" r="2"/><circle class="fill" cx="37" cy="10.5" r="2"/>
+    </symbol>
+    <symbol id="i-free" viewBox="0 0 48 48"><path d="M15 27v-9a3 3 0 0 1 6 0v4M21 22V10a3 3 0 0 1 6 0v12M27 22V12a3 3 0 0 1 6 0v11M33 23v-6a3 3 0 0 1 6 0v11c0 8-5 14-13 14h-2c-5 0-8-3-10-7l-6-9a3 3 0 0 1 5-3l3 4"/></symbol>
+    <symbol id="i-motion" viewBox="0 0 48 48"><rect x="16" y="9" width="16" height="30" rx="3" transform="rotate(-14 24 24)"/><path d="M7 17a17 17 0 0 0 0 14M41 17a17 17 0 0 1 0 14"/></symbol>
+    <symbol id="i-cw" viewBox="0 0 48 48"><path d="M37 29a14 14 0 1 1-3-15"/><path d="M36 6v9h-9"/></symbol>
+    <symbol id="i-ccw" viewBox="0 0 48 48"><path d="M11 29a14 14 0 1 0 3-15"/><path d="M12 6v9h9"/></symbol>
+    <symbol id="i-next" viewBox="0 0 48 48"><path d="M9 24h28M26 12l12 12-12 12"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 48 48"><rect x="9" y="8" width="12" height="15" rx="2"/><rect x="27" y="8" width="12" height="15" rx="2"/><rect x="9" y="27" width="12" height="15" rx="2"/><rect x="27" y="27" width="12" height="15" rx="2"/></symbol>
+    <symbol id="i-tick" viewBox="0 0 48 48"><path d="M11 25l9 9 17-19" stroke-width="6"/></symbol>
+    <symbol id="i-me" viewBox="0 0 48 52">
+      <path class="fill" d="M24 4c10 0 15 10 15 22s-5 18-15 18S9 38 9 26 14 4 24 4z"/>
+      <path d="M17 44l-2 5M31 44l2 5" stroke-width="4"/>
+      <circle cx="19" cy="21" r="5" fill="#fff" stroke="none"/><circle cx="30" cy="21" r="5" fill="#fff" stroke="none"/>
+      <circle class="fill" cx="20" cy="22" r="2.2"/><circle class="fill" cx="31" cy="22" r="2.2"/>
+    </symbol>
+    <symbol id="i-q" viewBox="0 0 48 48"><path d="M17 17c0-6 5-9 8-9 5 0 8 3 8 7 0 6-8 7-8 13v2" stroke-width="5"/><circle class="fill" cx="25" cy="39" r="3.2"/></symbol>
+  </defs>
+</svg>
+
+<main class="board">
+  <h1>Pantomime Strip</h1>
+  <p>Mocks of the chosen direction at real phone size (390×844), plus one tablet. Real card art and real map positions from <code>maze.json</code>. Everything inside the screens is wordless except the artist tag; the hand-drawn captions on this board are for us.</p>
+
+  <div class="legend" id="legend"></div>
+
+  <section class="row" id="flow"><h2>Pick and play</h2></section>
+  <section class="row" id="moves"><h2>Moves and feedback</h2></section>
+  <section class="row" id="ends"><h2>Edges of the game</h2></section>
+  <section class="row" id="tablet"><h2>Tablet</h2></section>
+</main>
+
+<script>
+const CARDS = "../../../cards";
+const use = (id, cls = "") => `<svg class="g ink ${cls}" viewBox="0 0 48 48"><use href="#i-${id}"/></svg>`;
+const dot = (id, slot, extra = "") => `<div class="dot ${slot} ${extra}" role="button" aria-label="${id}">${use(id)}</div>`;
+
+function hud({ mode = "rules", motion = true } = {}) {
+  return `<div class="hud">
+    ${dot("back", "slot-l")}
+    ${dot(mode === "rules" ? "rules" : "free", "slot-r1")}
+    ${mode === "rules" ? dot("restart", "slot-r2") : ""}
+    ${mode === "rules" && motion ? dot("motion", "slot-r3") : ""}
+  </div>`;
+}
+
+function spotHTML(s) {
+  if (s.k === "me") return `<svg class="spot me" style="left:${s.x * 100}%;top:${s.y * 100}%" viewBox="0 0 48 52"><use href="#i-me"/></svg>`;
+  if (s.k === "used") return `<div class="spot used" style="left:${s.x * 100}%;top:${s.y * 100}%">${use("tick")}</div>`;
+  return `<i class="spot ${s.k}" style="left:${s.x * 100}%;top:${s.y * 100}%"></i>`;
+}
+
+function card({ name = "MAZERULES", side = "front", spots = [], style = "", credit = "art: singingsimon", width = 336 } = {}) {
+  return `<div class="card" style="width:${width}px;${style}">
+    <img src="${CARDS}/${name}/${side}.png" alt="${name} ${side}">
+    ${spots.map(spotHTML).join("")}
+    ${credit ? `<span class="credit">${credit}</span>` : ""}
+  </div>`;
+}
+
+// speech balloon with a tail pointing toward (tx, ty) in the balloon's own 92x104 box
+function balloon(icon, x, y, tail = "up-right", hot = false) {
+  const tails = {
+    "up-right": "M58 22 L78 -6 L68 30",
+    "up-left": "M34 22 L14 -6 L24 30",
+    "left": "M18 40 L-14 30 L20 58",
+    "right": "M74 40 L106 30 L72 58",
+  };
+  const fill = hot ? "var(--hot)" : "#fff";
+  return `<div class="balloon" style="left:${x}px;top:${y}px" role="button" aria-label="spin ${icon}">
+    <svg viewBox="0 0 92 104" class="ink">
+      <path d="${tails[tail]}" fill="${fill}" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="46" cy="56" r="40" fill="${fill}" stroke="var(--ink)" stroke-width="4.5"/>
+      <path d="${tails[tail]}" fill="${fill}" stroke="none" transform="translate(0 0)" />
+      <svg x="18" y="28" width="56" height="56" viewBox="0 0 48 48" class="g" style="stroke-width:5"><use href="#i-${icon}"/></svg>
+    </svg>
+  </div>`;
+}
+
+function phone(inner, caption, title) {
+  return `<figure><div class="phone"><div class="screen">${inner}</div></div>
+    <figcaption><b>${title}</b>${caption}</figcaption></figure>`;
+}
+
+const panel = (stage, extra = "") => `<div class="panel">${extra}<div class="stage">${stage}</div></div>`;
+
+/* map positions, MAZERULES */
+const F = { start: [.45, .31], door1: [.17, .39], door2: [.40, .60], spin3: [.23, .88], flipB: [.5, .95] };
+const B = { exit: [.595, .268], doorDown: [.32, .13], spinNW: [.19, .15], top: [.47, .12] };
+const at = (p, k) => ({ x: p[0], y: p[1], k });
+
+/* legend */
+document.getElementById("legend").innerHTML = [
+  ["me", "You (the ink bean)"], ["on", "Tap me: the only yellow on screen"], ["locked", "Locked door: hatched ring"], ["used", "Done: tick"],
+].map(([k, t]) => `<div><div class="sw">${spotHTML({ x: .5, y: .5, k })}</div><span>${t}</span></div>`).join("");
+
+/* ---------- Pick and play ---------- */
+const picks = ["MAZERULES", "BURGER", "DRAGON", "COFFEE", "CUBE", "ALIEN", "BOSSRULES", "cupcake", "LOOT", "hieroglyphs"];
+const picker = `
+  <div class="mode">
+    <div class="dot" role="button" aria-label="free play">${use("free")}</div>
+    <div class="dot inv" role="button" aria-label="rules" aria-pressed="true">${use("rules")}</div>
+  </div>
+  <div class="page">
+    ${picks.map((c, i) => `<div class="cell ${c === "BOSSRULES" ? "free" : ""}">
+      <img src="${CARDS}/${c}/front.png" alt="${c}">
+      ${c === "BOSSRULES" ? `<div class="dot badge">${use("free")}</div>` : ""}
+    </div>`).join("")}
+  </div>`;
+document.getElementById("flow").insertAdjacentHTML("beforeend",
+  phone(picker,
+    "A comic page of panels. Mode switch is two joined ink circles, the chosen one inked in. Cards without a map are hatched with a hand badge (free play only). No names, no instructions.",
+    "Level picker") +
+  phone(hud() + panel(card({ spots: [at(F.start, "me"), at(F.door1, "on"), at(F.door2, "locked")] })),
+    "Rules mode on arrival. You stand on start; the one reachable spot glows. The locked door shows hatched so a kid sees why that way is shut. HUD slots never move.",
+    "Play: first look") +
+  phone(hud() + panel(
+      card({ spots: [at(F.door1, "used"), at(F.door2, "locked"), at(F.spin3, "me")] }) ,
+      balloon("ccw", 14, 600, "up-right", true) + balloon("cw", 250, 600, "up-left", true)),
+    "Standing on a spin: two balloons pop out with tails pointing at the card. They exist only while a spin is usable, so their appearance is the hint.",
+    "Play: on a spin") +
+  phone(hud({ mode: "free" }) + panel(
+      card({ style: "transform:rotate(90deg) scale(.78)" }) +
+      `<svg class="marks ink" viewBox="0 0 366 748"><g fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" opacity=".55">
+        <path d="M80 380 C140 330 230 330 290 380"/><path d="M280 366l12 16-20 4"/></g>
+        <g transform="translate(90 340)" opacity=".8"><svg width="56" height="56" viewBox="0 0 48 48" class="g"><use href="#i-free"/></svg></g></svg>`,
+      balloon("ccw", 14, 600, "up-right") + balloon("cw", 250, 600, "up-left")),
+    "Free play: no spots, spin balloons always out (white, since nothing is 'the move'). First visit only: a ghost hand swipes across the card once, then never again.",
+    "Free play")
+);
+
+/* ---------- Moves and feedback ---------- */
+const spinMarks = `<svg class="marks ink" viewBox="0 0 366 748"><g fill="none" stroke="var(--ink)" stroke-width="4.5" stroke-linecap="round">
+  <path d="M40 250 C10 330 10 420 40 500"/><path d="M22 290 C8 340 8 410 22 460"/>
+  <path d="M326 500 C356 420 356 330 326 250"/><path d="M344 460 C358 410 358 340 344 290"/>
+  <path d="M38 252l-2 20 18-8"/><path d="M328 498l2-20-18 8"/></g></svg>`;
+const ghost = (deg, o) => `<div style="position:absolute;width:269px;aspect-ratio:755/1055;border:3px solid var(--ink);border-radius:12px;opacity:${o};transform:rotate(${deg}deg)"></div>`;
+const flipMarks = `<svg class="marks ink" viewBox="0 0 366 748"><g fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round">
+  <path d="M60 300h-40M70 340h-55M60 380h-45M70 420h-30M60 460h-44"/>
+  <path d="M306 300h40M296 340h55M306 380h45M296 420h30M306 460h44"/></g></svg>`;
+const shake = `<svg class="marks ink" viewBox="0 0 366 748"><g fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round">
+  <path d="M18 330q-8 20 0 40M8 320q-10 30 0 60"/><path d="M348 330q8 20 0 40M358 320q10 30 0 60"/>
+  <path d="M120 420c-14-6-10-24 4-22 0-14 20-16 24-4 10-10 26-2 22 10 14 2 14 20 0 22 2 12-14 18-22 10-8 10-26 6-26-6-12 2-16-8-2-10z" fill="#fff"/>
+  <path d="M132 420c8-8 12 6 20-2s10 8 18 0" stroke-width="3"/></g></svg>`;
+
+document.getElementById("moves").insertAdjacentHTML("beforeend",
+  phone(hud() + panel(ghost(0, .15) + ghost(22, .3) + card({ credit: "", style: "transform:rotate(45deg) scale(.8)", spots: [at(F.spin3, "me")] }) + spinMarks),
+    "Mid-spin: curved motion lines on both sides and two fading ink outlines of where the card was. Lines fade as the card settles (≈350ms, ease-out).",
+    "Spin, in motion") +
+  phone(hud() + panel(card({ credit: "", style: "transform:perspective(900px) rotateY(72deg)" }) + flipMarks),
+    "Flip: the card turns on its edge with speed lines, squashes for a frame, and lands on the other side with the bean on the matching triangle.",
+    "Flip, in motion") +
+  phone(hud() + panel(card({ style: "transform:translateX(-5px) rotate(-1.2deg)", spots: [at(F.start, "me"), at(F.door1, "on"), at(F.door2, "locked")] }) + shake),
+    "Tapping a locked door: the card shudders, a scribble cloud puffs over the door and fades. No error text; the hatch already said 'shut'.",
+    "Blocked")
+);
+
+/* ---------- Edges ---------- */
+function burstPath(cx, cy, r1, r2, n, seed = 3) {
+  let d = "", s = seed;
+  const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < n * 2; i++) {
+    const a = (i / (n * 2)) * Math.PI * 2 - Math.PI / 2;
+    const r = i % 2 ? r2 * (0.9 + rnd() * 0.15) : r1 * (0.88 + rnd() * 0.2);
+    d += (i ? "L" : "M") + (cx + Math.cos(a) * r).toFixed(1) + " " + (cy + Math.sin(a) * r).toFixed(1);
+  }
+  return d + "Z";
+}
+const win = `<div class="burst"><svg viewBox="0 0 366 748" class="ink">
+    <path d="${burstPath(183, 330, 190, 120, 16)}" fill="#fff" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="${burstPath(183, 330, 150, 112, 16, 9)}" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round" opacity=".5"/>
+    <g fill="var(--ink)"><path d="M70 150l6 12 13 2-10 9 3 13-12-7-12 7 3-13-10-9 13-2z"/><path d="M300 520l5 10 11 2-8 7 2 11-10-6-10 6 2-11-8-7 11-2z"/><path d="M290 140l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z"/></g>
+    <svg x="128" y="250" width="110" height="120" viewBox="0 0 48 52" class="g"><use href="#i-me"/></svg>
+    <path d="M150 248l-10-22M216 248l10-22M183 240v-24" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+  </svg></div>
+  <div style="position:absolute;left:0;right:0;bottom:70px;display:flex;justify-content:center;gap:28px;align-items:center">
+    <div class="dot" style="position:static;width:72px;height:72px;padding:10px" role="button" aria-label="play again">${use("restart")}</div>
+    <div class="dot" style="position:static;width:96px;height:96px;padding:14px;background:var(--hot)" role="button" aria-label="next card">${use("next")}</div>
+    <div class="dot" style="position:static;width:72px;height:72px;padding:10px" role="button" aria-label="all cards">${use("grid")}</div>
+  </div>`;
+
+const starts = `<div class="panel"><div class="stage">${card({ name: "buffet", credit: "art: singingsimon", spots: [{ x: .163, y: .26, k: "on" }, { x: .715, y: .24, k: "on" }] })}</div>
+  <div style="position:absolute;left:50%;top:22px;transform:translateX(-50%);width:120px;height:86px">
+    <svg viewBox="0 0 120 86" class="ink" style="width:100%;height:100%;overflow:visible">
+      <ellipse cx="60" cy="40" rx="56" ry="36" fill="#fff" stroke="var(--ink)" stroke-width="4"/>
+      <circle cx="30" cy="84" r="5" fill="#fff" stroke="var(--ink)" stroke-width="3"/>
+      <svg x="18" y="14" width="44" height="50" viewBox="0 0 48 52" class="g"><use href="#i-me"/></svg>
+      <svg x="62" y="14" width="44" height="50" viewBox="0 0 48 48" class="g"><use href="#i-q"/></svg>
+    </svg></div></div>`;
+
+document.getElementById("ends").insertAdjacentHTML("beforeend",
+  phone(hud() + starts,
+    "A card with several starts: every start glows; a thought balloon shows the bean wondering. Tap one and the bean drops onto it.",
+    "Pick a start") +
+  phone(hud() + `<div class="panel dim"><div class="stage">${card({ side: "back", credit: "", spots: [at(B.exit, "me")] })}</div></div>` + win,
+    "Win: a starburst panel slams over the card, the bean cheers. Three choices, all glyphs: again, next card (big, yellow: the obvious move), all cards.",
+    "Exit found") +
+  phone(hud() + panel(card({ spots: [at(F.start, "me"), at(F.door1, "on"), at(F.door2, "locked")] }),
+      `<div class="dot" style="left:auto;right:14px;top:14px;width:44px;height:44px;padding:5px;z-index:2" role="img" aria-label="map not checked yet">${use("q")}</div>`),
+    "Unreviewed map: replaces the yellow text strip with a small ink question-mark tag in the panel corner. Tap it for the one-line explanation (the only sentence left, and optional).",
+    "Unreviewed map")
+);
+
+/* ---------- Tablet ---------- */
+document.getElementById("tablet").insertAdjacentHTML("beforeend",
+  `<figure class="wide"><div class="tablet"><div class="screen">${hud()}
+    <div class="panel" style="left:14px;right:14px">
+      <div class="stage">${card({ width: 500, spots: [at(F.door1, "used"), at(F.door2, "locked"), at(F.spin3, "me")] })}</div>
+      ${balloon("ccw", 170, 330, "right", true)}${balloon("cw", 908, 330, "left", true)}
+    </div></div></div>
+    <figcaption><b>Tablet landscape, on a spin</b>Same panel, card as tall as it fits; spin balloons move to the sides with tails pointing in. Everything else is identical, so a kid who learned it on a phone already knows it.</figcaption></figure>`
+);
+</script>
+</body>
+</html>
